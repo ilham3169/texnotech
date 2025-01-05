@@ -41,7 +41,7 @@
 }
 
 .search-box {
-  width: 60%;
+  width: 100%;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   background: white;
@@ -177,6 +177,10 @@ button {
 
 .boxShadow {
   box-shadow: rgb(43 52 69 / 10%) 0 4px 16px;
+}
+
+.header-container {
+  padding: 0 3%;
 }
 
 @media only screen and (max-width: 768px) {
