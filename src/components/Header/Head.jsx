@@ -8,28 +8,28 @@ export const Head = () => {
           <div className="left-row">
             <a
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=8801317089432"
+              href="https://api.whatsapp.com/send?phone=994775116975"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-phone"></i>
               <label className="phone-icon" htmlFor="">
-                +8801317089432
+                +994775116975
               </label>
             </a>
             <a
               target="_blank"
-              href="mailto:arshadchowdhury46@gmail.com"
+              href="mailto:xxxxxxxx@gmail.com"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-envelope"></i>
               <label className="phone-icon" htmlFor="">
-                arshadchowdhury46@gmail.com
+                xxxxxxxx@gmail.com
               </label>
             </a>
           </div>
           <div className="right-row">
             <span>
-              <label htmlFor="">Need Help ?</label>
+              <label htmlFor="">Kömək Lazımdır ?</label>
             </span>
             <span>
               <span>🇧🇩 </span>
