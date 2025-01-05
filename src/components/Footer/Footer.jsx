@@ -27,25 +27,25 @@ const Footer = () => {
       <div className="">
         <h2>Contact Us</h2>
         <ul>
-          <li>Sumsumsumsumqayıt</li>
+          <li>12/2 Shat Masjid Road, Dhanmondi, Dhaka</li>
           <li className="contact-info-flex">
             Email :
             <a
               target="_blank"
-              href="mailto:xxxxxxxx@gmail.com"
+              href="mailto:arshadchowdhury46@gmail.com"
               className="icon-flex phone-icon"
             >
-              xxxxxxxx@gmail.com
+              arshadchowdhury46@gmail.com
             </a>
           </li>
           <li className="contact-info-flex">
-            Telefon :{" "}
+            Phone :{" "}
             <a
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=994775116975"
+              href="https://api.whatsapp.com/send?phone=8801317089432"
               className="icon-flex phone-icon"
             >
-              +994775116975
+              +8801317089432
             </a>
           </li>
           <li>
@@ -61,7 +61,7 @@ const Footer = () => {
       </div>
 
       <div className="">
-        <img src="/assets/main-logo/logo.jpg" alt="" />
+        <img src="/assets/main-logo/logo.jpg.png" alt="" />
       </div>
     </footer>
   );
