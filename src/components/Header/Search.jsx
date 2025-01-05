@@ -19,7 +19,7 @@ const Search = ({ cartItems }) => {
 
           <div className="search-box f_flex">
             <i className="fa fa-search"></i>
-            <input type="text" placeholder="Search here..." />
+            <input type="text" placeholder="Axtarış edin..." />
             <span>Bütün Növlər</span>
           </div>
 
