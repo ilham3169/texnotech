@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import {React, useState} from "react";
+
+import { CgProfile } from 'react-icons/cg';
+import { RiLockPasswordLine } from "react-icons/ri";
+import { MdOutlineDriveFileRenameOutline, MdOutlineLocalPhone } from "react-icons/md";
+
+
+import "./registerform.css"
 
 const Registrationform = () => {
   function handleRegister(event) {
@@ -7,39 +15,72 @@ const Registrationform = () => {
     return toast.error("Register functionality is not live yet");
   }
 
+  const [isEmailEmpty, setIsEmailEmpty] = useState(true);
+  const [isNameEmpty, setIsNameEmpty] = useState(true);
+  const [isPhoneEmpty, setIsPhoneEmpty] = useState(true);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(true);
+  const [isPasswordRepeatEmpty, setIsPasswordRepeatEmpty] = useState(true);
+
+
   return (
-    <section className="loginform">
+    <section className="loginform" style={{height:"60vh"}}>
       <div className="container-login">
         <div className="wrapper">
           <div className="heading-login">
             <h1>Sign Up</h1>
-            <p>
-              Already a user ?{" "}
-              <span>
-                <Link to="/login">Login here</Link>
-              </span>
-            </p>
           </div>
           <form onSubmit={handleRegister} className="form" action="">
-            <label className="label name">
-              Name
-              <input type="text" name="name" />
-            </label>
-            <label className="label">
-              Username
-              <input type="text" name="name" />
-            </label>
-            <label className="label">
-              Password
-              <input type="text" name="password" />
-            </label>
-            <p className="forgot-pass">
-              By signing up you agree to our{" "}
-              <span>
-                <Link to="/termsNconditions">terms & conditions</Link>
-              </span>
-            </p>
-            <button className="submit-btn">Sign Up</button>
+            <div>
+              <div className="credentials-container" style={{marginTop:"3vh"}}>
+                {/* Name, Surname */}
+                <div>
+                    <div className="name-input-icon" style={{bottom: "5vh", left:"1.5vh"}}><MdOutlineDriveFileRenameOutline /></div>
+                    <input type="text" name="name" 
+                    placeholder="Name, surname" className="name-input-field" 
+                    onChange={(e) => setIsNameEmpty(e.target.value === "")}
+                    />
+                </div>
+                {/* Email */}
+                <div>
+                  <div className="email-input-icon" style={{top: "8.2vh", left:"1.5vh"}}><CgProfile/></div>
+                  <input type="email" name="email" 
+                  placeholder="Email" className="email-input-field" 
+                  onChange={(e) => setIsEmailEmpty(e.target.value === "")}
+                  />
+                </div>
+                {/* Phone */}
+                <div>
+                  <div className="phone-input-icon" style={{top: "13.7vh", left:"1.5vh"}}><MdOutlineLocalPhone /></div>
+                  <input type="phone" name="phone" 
+                  placeholder="Phone number" className="phone-input-field" 
+                  onChange={(e) => setIsPhoneEmpty(e.target.value === "")}
+                  />
+                </div>
+                {/* Password */}
+                <div>
+                  <div className="password-input-icon" style={{top: "19.2vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
+                  <input type="password" name="password"
+                  placeholder="Password" className="password-input-field" 
+                  onChange={(e) => setIsPasswordEmpty(e.target.value === "")}
+                  />
+                </div>
+                {/* Repeat Password */}
+                <div>
+                  <div className="password-input-icon" style={{top: "24.8vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
+                  <input type="password" name="repeat-password"
+                    placeholder="Confirm Password" className="repeat-password-input-field" 
+                    onChange={(e) => setIsPasswordRepeatEmpty(e.target.value === "")}
+                    />
+                </div>
+
+              </div>
+
+              <div className="submit-btn-container" style={{marginTop:"9vh"}}>
+                <button className="signin-btn">Sign Up</button>
+                <button className="signup-btn">Sign In</button>
+              </div>
+
+            </div>
           </form>
         </div>
       </div>
