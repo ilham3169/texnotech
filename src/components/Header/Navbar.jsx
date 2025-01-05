@@ -19,7 +19,7 @@ const Navbar = () => {
             <li>
               <Link aria-label="Home" className="link-hover" to="/" 
               style={{textDecoration: "none", color: "black"}}>
-                Home
+                Əsas Səhifə
               </Link>
             </li>
             <li>
