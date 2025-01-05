@@ -1,0 +1,133 @@
+.allProductsSection{
+    min-height: 100vh;
+}
+
+.allproductsheading{
+    text-align: center;
+    padding-top: 30px;
+    font-size: 2rem;
+}
+
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    width: 80%; 
+    max-width: 800px;
+}
+
+.filter-select {
+    width: 400px; /* Adjust width to your desired size */
+    height: 40px; /* Adjust height to make the dropdown taller */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px 10px; /* Adjust padding to change the space inside the select box */
+    border-radius: 5px; /* Optional: Round the corners */
+    border: 1px solid #ccc; /* Optional: Change the border color */
+  }
+  
+
+.filter-button {
+    background-color: #6c5ce7;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.filter-button:hover {
+    background-color: #5b4ed3;
+}
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 1000px; /* Adjust the width of the section */
+}
+
+.category-button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-button.active {
+    background-color: #6c5ce7; /* Active button color */
+    color: #fff;
+    border-color: #6c5ce7;
+}
+
+.category-button:hover {
+    background-color: #f3f3f3; /* Hover effect */
+}
+
+
+.custom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive column width */
+    gap: 15px; /* Adjust spacing between items */
+    padding: 1rem; /* Add some padding around the grid */
+    margin: 0 auto; /* Center the grid on the page */
+    max-width: 100%; /* Ensure grid doesn't exceed container width */
+}
+
+.custom-grid .custom-box {
+    background: #fff; /* Optional: Set a background color */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for style */
+    overflow: hidden; /* Prevent content overflow */
+    padding: 10px; /* Add internal spacing */
+    text-align: center; /* Center-align content inside the box */
+}
+
+.price-range-container {
+    flex-grow: 1; /* This allows the price range to take up available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.price-range-input {
+    width: 70%; /* Adjust the width of the slider as needed */
+}
+
+.price-range-label-container {
+    margin-bottom: 10px; /* Add some space between the label and slider */
+    text-align: center;
+}
+
+.price-range-label {
+    font-size: 14px; /* Adjust the font size as needed */
+}
+
+.price-range-value {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.available-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.available-text {
+    margin-right: 10px; 
+}
+
+.available-checkbox {
+    margin-left: 5px; 
+    height: 15px;
+    width: 15px;
+}
