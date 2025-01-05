@@ -1,15 +1,20 @@
 .loginform {
-  min-height: 100vh;
-  width: 50%;
-  background-color: #f1efef;
-  margin: 50px auto;
+  height: 50vh;
+  width: 50vh;
+  background-color: white;
+  margin: auto;
+  margin-bottom: 20vh;
   border-radius: 10px;
 }
 
 .heading-login {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  margin-bottom: 3vh;
+}
+
+.heading-login h1 {
+  font-size: 26px;
 }
 
 .container-login {
@@ -18,32 +23,15 @@
 }
 
 .wrapper input {
-  font-size: 20px;
+  font-size: 12px;
   padding: 5px;
-  margin-left: 10px;
-  margin-top: 20px;
-  border-radius: 5px;
-  width: 300px;
+  border-radius: 3px;
+  width: 30.5vh;
+  padding-left: 23px
 }
 
 .name {
   padding-left: 25px;
-}
-
-.heading-login h1 {
-  font-size: 26px;
-}
-
-.heading-login p {
-  font-size: 18px;
-  padding-bottom: 30px;
-}
-
-.heading-login p span a {
-  color: blue;
-}
-.heading-login p span a:hover {
-  text-decoration: underline;
 }
 
 .form {
@@ -54,26 +42,92 @@
   align-items: center;
 }
 
-.submit-btn {
+.signup-btn {
   height: 50px;
   width: 150px;
-  margin-top: 40px;
-  background-color: lightblue;
+  background-color: transparent;
   border-radius: 10px;
   font-weight: 500;
+  font-size: large;
+  color: #0f3460;
 }
 
-.submit-btn:hover {
+.signup-btn:hover {
   cursor: pointer;
-  background-color: grey;
 }
 
-.forgot-pass {
-  margin-top: 40px;
+.signin-btn {
+  height: 50px;
+  width: 150px;
+  background-color: #c3e2e6;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: large;
+  color: #0f3460;
+}
+
+.signin-btn:hover {
+  cursor: pointer;
+  background-color: #b4d0d4;
+}
+
+.submit-btn-container {
+  display: flex; 
+  justify-content: center;
+  margin-left: 2vh;
+  margin-top: 2vh;
+}
+
+.credentials-container {
+  display: flex;
+  flex-direction: column; 
+  transform: scale(1.4);
+  gap: 1vh;
+}
+
+.email-input-field {
+  height: 4.5vh;
+  padding: 10px;
+  border: .1px solid #b3b3b3;
+  border-radius: 0.5px;
+}
+
+.email-input-icon {
+  position: absolute;
+  left: 7.8vh;
+  top: 2.6vh;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #979999;
+}
+
+.password-input-icon {
+  position: absolute;
+  left: 7.8vh;
+  top: 8.1vh;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #979999;
+}
+
+.password-input-field {
+  height: 4.5vh;
+  padding: 10px;
+  border: 1px solid #b3b3b3;
+  border-radius: 0.5px;
+}
+
+.forgot-pass-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 45vh;
+  height: 3vh;
+  margin-top: 2vh;
+  padding: 5px;
 }
 
 .forgot-pass span a {
-  color: blue;
+  color: #0f3460;
 }
 
 .forgot-pass span a:hover {
