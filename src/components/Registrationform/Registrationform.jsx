@@ -27,7 +27,7 @@ const Registrationform = () => {
       <div className="container-login">
         <div className="wrapper">
           <div className="heading-login">
-            <h1>Sign Up</h1>
+            <h1>Qeydiyyat</h1>
           </div>
           <form onSubmit={handleRegister} className="form" action="">
             <div>
@@ -36,7 +36,7 @@ const Registrationform = () => {
                 <div>
                     <div className="name-input-icon" style={{bottom: "5vh", left:"1.5vh"}}><MdOutlineDriveFileRenameOutline /></div>
                     <input type="text" name="name" 
-                    placeholder="Name, surname" className="name-input-field" 
+                    placeholder="Ad, soyad" className="name-input-field" 
                     onChange={(e) => setIsNameEmpty(e.target.value === "")}
                     />
                 </div>
@@ -52,7 +52,7 @@ const Registrationform = () => {
                 <div>
                   <div className="phone-input-icon" style={{top: "13.7vh", left:"1.5vh"}}><MdOutlineLocalPhone /></div>
                   <input type="phone" name="phone" 
-                  placeholder="Phone number" className="phone-input-field" 
+                  placeholder="Telefon" className="phone-input-field" 
                   onChange={(e) => setIsPhoneEmpty(e.target.value === "")}
                   />
                 </div>
@@ -60,7 +60,7 @@ const Registrationform = () => {
                 <div>
                   <div className="password-input-icon" style={{top: "19.2vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
                   <input type="password" name="password"
-                  placeholder="Password" className="password-input-field" 
+                  placeholder="Şifrə" className="password-input-field" 
                   onChange={(e) => setIsPasswordEmpty(e.target.value === "")}
                   />
                 </div>
@@ -68,7 +68,7 @@ const Registrationform = () => {
                 <div>
                   <div className="password-input-icon" style={{top: "24.8vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
                   <input type="password" name="repeat-password"
-                    placeholder="Confirm Password" className="repeat-password-input-field" 
+                    placeholder="Şifrəni Təsdiqlə" className="repeat-password-input-field" 
                     onChange={(e) => setIsPasswordRepeatEmpty(e.target.value === "")}
                     />
                 </div>
@@ -76,8 +76,8 @@ const Registrationform = () => {
               </div>
 
               <div className="submit-btn-container" style={{marginTop:"9vh"}}>
-                <button className="signin-btn">Sign Up</button>
-                <button className="signup-btn">Sign In</button>
+                <button className="signin-btn">Qeydiyyatdan Keç</button>
+                <button className="signup-btn">Daxil ol</button>
               </div>
 
             </div>
