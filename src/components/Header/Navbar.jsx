@@ -29,13 +29,13 @@ const Navbar = () => {
                 to="/all-products"
                 style={{textDecoration: "none", color: "black"}}
               >
-                All Products
+                Bütün Məhsullar
               </Link>
             </li>
             <li>
               <Link aria-label="Login" className="link-hover" to="/login" 
               style={{textDecoration: "none", color: "black"}}>
-                Login
+                Giriş
               </Link>
             </li>
             <li>
@@ -45,7 +45,7 @@ const Navbar = () => {
                 to="/registration"
                 style={{textDecoration: "none", color: "black"}}
               >
-                Registration
+                Qeydiyyat
               </Link>
             </li>
             {/* <li>
