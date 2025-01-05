@@ -23,7 +23,7 @@ const Loginform = () => {
         <div className="container-login">
           <div className="wrapper">
             <div className="heading-login">
-              <h1>Sign In</h1>
+              <h1>Daxil ol </h1>
             </div>
             <form onSubmit={handleLogin} className="form" action="">
               <div>
@@ -40,7 +40,7 @@ const Loginform = () => {
                   <div>
                     <div className="password-input-icon"><RiLockPasswordLine/></div>
                     <input type="password" name="password"
-                    placeholder="Password" className="password-input-field" 
+                    placeholder="Şifrə" className="password-input-field" 
                     onChange={(e) => setIsPasswordEmpty(e.target.value === "")}
                     />
                   </div>
@@ -49,14 +49,14 @@ const Loginform = () => {
                 <div className="forgot-pass-container">
                   <p className="forgot-pass">
                     <span>
-                      <Link to="/forgot-password">Forgot Password?</Link>
+                      <Link to="/forgot-password">Şifrəni unutmusan?</Link>
                     </span>
                   </p>
                 </div>
 
                 <div className="submit-btn-container">
-                  <button className="signin-btn">Sign In</button>
-                  <button className="signup-btn">Sign Up</button>
+                  <button className="signin-btn">Daxil ol</button>
+                  <button className="signup-btn">Qeydiyyatdan Keç</button>
                 </div>
 
               </div>
