@@ -9,27 +9,27 @@ const Search = ({ cartItems }) => {
 
   return (
     <>
-      <section className="search">
-        <div className="container c_flex">
+      <section className="search" style={{width: "100%"}}>
+        <div className="header-container c_flex">
           <div className="logo width">
             <Link aria-label="Daraz Home" to="/">
-              <img src="/assets/main-logo/logo.jpg" alt="" />
+              <img src="/assets/main-logo/Daraz-Logo.jpg" alt="" />
             </Link>
           </div>
 
           <div className="search-box f_flex">
             <i className="fa fa-search"></i>
-            <input type="text" placeholder="Axtarış.." />
-            <span>Bütün Növlər</span>
+            <input type="text" placeholder="Search here..." />
+            <span>All Categories</span>
           </div>
 
           <div className="icon f_flex width">
             <Link aria-label="Login page" to="/login">
-              <i className="fa fa-user icon-circle"></i>
+              <i className="fa fa-user icon-circle" style={{color: "black"}}></i>
             </Link>
             <div className="cart">
               <Link to="/cart">
-                <i className="fa fa-shopping-bag icon-circle"></i>
+                <i className="fa fa-shopping-bag icon-circle" style={{color: "black"}}></i>
                 <span>{cartItems.length === 0 ? 0 : cartItems.length}</span>
               </Link>
             </div>
