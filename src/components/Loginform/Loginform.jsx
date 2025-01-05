@@ -1,9 +1,17 @@
-import React from "react";
+import {React, useState} from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import "./loginform.css";
 
+import { CgProfile } from 'react-icons/cg';
+import { RiLockPasswordLine } from "react-icons/ri";
+
+
 const Loginform = () => {
+
+  const [isEmailEmpty, setIsEmailEmpty] = useState(true);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(true);
+
   function handleLogin(event) {
     event.preventDefault();
     return toast.error("Login functionality is not live yet");
@@ -16,29 +24,42 @@ const Loginform = () => {
           <div className="wrapper">
             <div className="heading-login">
               <h1>Sign In</h1>
-              <p>
-                New User ?{" "}
-                <span>
-                  <Link to="/registration">Create an account</Link>
-                </span>
-              </p>
             </div>
             <form onSubmit={handleLogin} className="form" action="">
-              <label className="label">
-                Username
-                <input type="text" name="name" />
-              </label>
-              <label className="label">
-                Password
-                <input type="text" name="password" />
-              </label>
-              <p className="forgot-pass">
-                Forgot Password ?{" "}
-                <span>
-                  <Link to="/forgot-password">Cick here to reset</Link>
-                </span>
-              </p>
-              <button className="submit-btn">Sign In</button>
+              <div>
+                <div className="credentials-container">
+                  
+                  <div>
+                    <div className="email-input-icon"><CgProfile/></div>
+                    <input type="email" name="email" 
+                    placeholder="Email" className="email-input-field" 
+                    onChange={(e) => setIsEmailEmpty(e.target.value === "")}
+                    />
+                  </div>
+
+                  <div>
+                    <div className="password-input-icon"><RiLockPasswordLine/></div>
+                    <input type="password" name="password"
+                    placeholder="Password" className="password-input-field" 
+                    onChange={(e) => setIsPasswordEmpty(e.target.value === "")}
+                    />
+                  </div>
+
+                </div>
+                <div className="forgot-pass-container">
+                  <p className="forgot-pass">
+                    <span>
+                      <Link to="/forgot-password">Forgot Password?</Link>
+                    </span>
+                  </p>
+                </div>
+
+                <div className="submit-btn-container">
+                  <button className="signin-btn">Sign In</button>
+                  <button className="signup-btn">Sign Up</button>
+                </div>
+
+              </div>
             </form>
           </div>
         </div>
