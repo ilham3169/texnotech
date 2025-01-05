@@ -4,26 +4,26 @@ export const Head = () => {
   return (
     <>
       <section className="head">
-        <div className="container d_flex">
+        <div className="header-container d_flex">
           <div className="left-row">
             <a
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=994775116975"
+              href="https://api.whatsapp.com/send?phone=8801317089432"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-phone"></i>
               <label className="phone-icon" htmlFor="">
-                +994775116975
+                +8801317089432
               </label>
             </a>
             <a
               target="_blank"
-              href="mailto:xxxxxxxx@gmail.com"
+              href="mailto:arshadchowdhury46@gmail.com"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-envelope"></i>
               <label className="phone-icon" htmlFor="">
-                xxxxxxxx@gmail.com
+                arshadchowdhury46@gmail.com
               </label>
             </a>
           </div>
