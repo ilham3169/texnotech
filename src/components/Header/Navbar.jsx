@@ -6,11 +6,9 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="container">
+      <header className="header-container">
         <div className="menu-items">
           <div className="categories">
-            {/* <span className="fa-solid fa-border-all"></span> */}
-            {/* <h4 className="head-categories">One Place To Buy Everything</h4> */}
           </div>
           <ul
             className={
@@ -18,19 +16,26 @@ const Navbar = () => {
             }
             onClick={() => setMobileMenu(false)}
           >
-
             <li>
-              <Link
-                aria-label="All products"
-                className="link-hover"
-                to="/all-products"
-              >
-                Bütün Məhsullar
+              <Link aria-label="Home" className="link-hover" to="/" 
+              style={{textDecoration: "none", color: "black"}}>
+                Home
               </Link>
             </li>
             <li>
-              <Link aria-label="Login" className="link-hover" to="/login">
-                Giriş
+              <Link
+                aria-label="All Products"
+                className="link-hover"
+                to="/all-products"
+                style={{textDecoration: "none", color: "black"}}
+              >
+                All Products
+              </Link>
+            </li>
+            <li>
+              <Link aria-label="Login" className="link-hover" to="/login" 
+              style={{textDecoration: "none", color: "black"}}>
+                Login
               </Link>
             </li>
             <li>
@@ -38,8 +43,9 @@ const Navbar = () => {
                 aria-label="Registration"
                 className="link-hover"
                 to="/registration"
+                style={{textDecoration: "none", color: "black"}}
               >
-                Qeydiyyat
+                Registration
               </Link>
             </li>
             {/* <li>
