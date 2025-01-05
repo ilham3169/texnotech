@@ -8,7 +8,10 @@ const Registrationpage = ({ cartItems }) => {
   return (
     <>
       <Header cartItems={cartItems} />
-      <Registrationform />
+      <div style={{background : "#f2f2f2", height: "80vh", 
+          display: "flex"}}>
+        <Registrationform />
+      </div>
       <Footer />
     </>
   );
