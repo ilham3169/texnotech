@@ -31,10 +31,6 @@ export const Head = () => {
             <span>
               <label htmlFor="">Kömək Lazımdır ?</label>
             </span>
-            <span>
-              <span>🇧🇩 </span>
-              <label htmlFor="">EN</label>
-            </span>
           </div>
         </div>
       </section>
