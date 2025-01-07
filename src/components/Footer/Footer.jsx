@@ -38,11 +38,11 @@ const Footer = () => {
       <div className="">
         <h2>Müştərilər üçün</h2>
         <ul>
-          <li>Trade-in</li>
-          <li>Çatdırılma və ödəmə</li>
+          <li>Çatdırılma və istifadə şərtləri</li>
+          <li>Məhsulun geri qaytarılması şərtləri </li>
           <li>Geri qaytarma siyasəti</li>
-          <li>Zəmanətlər</li>
-          <li>Naxçıvana çatdırılma</li>
+          <li>Zəmanət şərtləri</li>
+          <li>Kredit şərtləri</li>
         </ul>
 
         <br />
