@@ -12,8 +12,7 @@ const Footer = () => {
 
         <br/><h2>İş saatları</h2>
         <ul>
-          <li>B.e. - C. 9:00 –- 00:00</li>
-          <li>Ş - B. 10:00 -– 00:00</li>
+          <li>Hər gün - 9:00 –- 19:00</li>
         </ul>
 
         
