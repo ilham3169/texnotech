@@ -57,14 +57,14 @@ const Footer = () => {
       <div className="">
         <h2>Kontakt</h2>
         <ul>
-          <li>12/2 Shat Masjid Road, Dhanmondi, Dhaka</li>
+          <li>Sumqayıt şəhər 9 mk Ü.HACIBƏYOV küçəsi</li>
           <li className="contact-info-flex">
             <a
               target="_blank"
               href="mailto:xxxxxxxx@gmail.com"
               className="icon-flex phone-icon"
             >
-              arshadchowdhury46@gmail.com
+              xxxxxxxxxxx@gmail.com
             </a>
           </li>
           <li className="contact-info-flex">
