@@ -73,7 +73,7 @@ const Footer = () => {
               href="https://api.whatsapp.com/send?phone=994775116975"
               className="icon-flex phone-icon"
             >
-                +994775116975
+                +994705854432
             </a>
           </li>
           <li>
