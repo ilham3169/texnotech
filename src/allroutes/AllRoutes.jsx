@@ -17,7 +17,7 @@ const AllRoutes = ({
   deleteFromCart,
   checkOut,
   removeFromCart,
-  allProductsData,
+  allProductsData
 }) => {
   return (
     // setting up all the routes here with react-router dom and sending necessary props to each child element all the routing is being done here
@@ -64,7 +64,7 @@ const AllRoutes = ({
           }
         />
         <Route
-          path="/all-products/:id"
+          path="/products/:productId"
           element={
             <Singleproductpage
               cartItems={cartItems}

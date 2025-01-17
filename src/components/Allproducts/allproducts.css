@@ -75,20 +75,25 @@
 
 .custom-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive column width */
-    gap: 15px; /* Adjust spacing between items */
-    padding: 1rem; /* Add some padding around the grid */
-    margin: 0 auto; /* Center the grid on the page */
-    max-width: 100%; /* Ensure grid doesn't exceed container width */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    padding: 1rem;
+    margin: auto auto; 
+    max-width: 100%; 
 }
 
 .custom-grid .custom-box {
-    background: #fff; /* Optional: Set a background color */
-    border-radius: 5px; /* Optional: Add rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for style */
-    overflow: hidden; /* Prevent content overflow */
-    padding: 10px; /* Add internal spacing */
-    text-align: center; /* Center-align content inside the box */
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px; /* Adjust internal spacing */
+    text-align: center;
+    height: 100%; /* Ensure the box height fills the container */
 }
 
 .price-range-container {
@@ -130,4 +135,8 @@
     margin-left: 5px; 
     height: 15px;
     width: 15px;
+}
+
+.price h4{
+    padding-left: 100px;
 }
