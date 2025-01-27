@@ -3,8 +3,12 @@ import toast from "react-hot-toast";
 import {React, useState, useEffect} from "react";
 
 import { CgProfile } from 'react-icons/cg';
-import { RiLockPasswordLine } from "react-icons/ri";
-import { MdOutlineDriveFileRenameOutline, MdOutlineLocalPhone } from "react-icons/md";
+import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
+import { MdOutlineDriveFileRenameOutline, MdOutlineLocalPhone, MdDriveFileRenameOutline } from "react-icons/md";
+import { Fa500Px } from "react-icons/fa";
+import { CiMail } from "react-icons/ci";
+
+
 
 import axios from "axios";
 
@@ -13,8 +17,8 @@ import "./registerform.css"
 const Registrationform = () => {
   
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("str");
-  const [fin, setFin] = useState("str");
+  const [lastName, setLastName] = useState("");
+  const [fin, setFin] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -80,26 +84,42 @@ const Registrationform = () => {
   }
 
   return (
-    <section className="loginform" style={{height:"60vh"}}>
+    <section className="loginform" style={{height:"75vh", marginTop:"10vh"}}>
       <div className="container-login">
         <div className="wrapper">
           <div className="heading-login">
             <h1>Qeydiyyat</h1>
           </div>
-          <form onSubmit={handleRegister} className="form" action="">
+          <form onSubmit={handleRegister} className="form" action="" style={{marginTop: "6vh"}}>
             <div>
               <div className="credentials-container" style={{marginTop:"3vh"}}>
-                {/* Name, Surname */}
+                {/* FIN */}
                 <div>
-                    <div className="name-input-icon" style={{bottom: "5vh", left:"1.5vh"}}><MdOutlineDriveFileRenameOutline /></div>
+                    <div className="name-input-icon" style={{top: "2.6vh", left:"0.5vh"}}><Fa500Px/></div>
+                    <input type="text" name="fin" 
+                    placeholder="FIN" className="name-input-field" value={fin}
+                    onChange={(e) => setFin(e.target.value)}
+                    />
+                </div>
+                {/* Name */}
+                <div>
+                    <div className="name-input-icon" style={{top: "8.1vh", left:".5vh"}}><MdOutlineDriveFileRenameOutline /></div>
                     <input type="text" name="first_name" 
-                    placeholder="Ad, soyad" className="name-input-field" value={firstName}
+                    placeholder="Ad" className="name-input-field" value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </div>
+                {/* Surname */}
+                <div>
+                    <div className="name-input-icon" style={{top: "13.6vh", left:".5vh"}}><MdDriveFileRenameOutline /></div>
+                    <input type="text" name="last_name" 
+                    placeholder="Soyad" className="name-input-field" value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     />
                 </div>
                 {/* Email */}
                 <div>
-                  <div className="email-input-icon" style={{top: "8.2vh", left:"1.5vh"}}><CgProfile/></div>
+                  <div className="email-input-icon" style={{top: "19.2vh", left:".5vh"}}><CiMail/></div>
                   <input type="email" name="email" 
                   placeholder="Email" className="email-input-field" value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -107,15 +127,16 @@ const Registrationform = () => {
                 </div>
                 {/* Phone */}
                 <div>
-                  <div className="phone-input-icon" style={{top: "13.7vh", left:"1.5vh"}}><MdOutlineLocalPhone /></div>
+                  <div className="phone-input-icon" style={{top: "24.7vh", left:".5vh"}}><MdOutlineLocalPhone /></div>
                   <input type="phone" name="phone" 
                   placeholder="Telefon" className="phone-input-field" value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
+
                 {/* Password */}
                 <div>
-                  <div className="password-input-icon" style={{top: "19.2vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
+                  <div className="password-input-icon" style={{top: "30.3vh", left:".5vh"}}><RiLockPasswordLine/></div>
                   <input type="password" name="password"
                   placeholder="Şifrə" className="password-input-field" value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -123,7 +144,7 @@ const Registrationform = () => {
                 </div>
                 {/* Repeat Password */}
                 <div>
-                  <div className="password-input-icon" style={{top: "24.8vh", left:"1.5vh"}}><RiLockPasswordLine/></div>
+                  <div className="password-input-icon" style={{top: "35.8vh", left:".5vh"}}><RiLockPasswordFill/></div>
                   <input type="password" name="confirm_password"
                     placeholder="Şifrəni Təsdiqlə" className="repeat-password-input-field" value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -132,7 +153,7 @@ const Registrationform = () => {
 
               </div>
 
-              <div className="submit-btn-container" style={{marginTop:"9vh"}}>
+              <div className="submit-btn-container" style={{marginTop:"10vh"}}>
                 <button className="signin-btn">Qeydiyyatdan Keç</button>
                 <button className="signup-btn">Daxil ol</button>
               </div>

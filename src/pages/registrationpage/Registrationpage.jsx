@@ -8,7 +8,7 @@ const Registrationpage = ({ cartItems }) => {
   return (
     <>
       <Header cartItems={cartItems} />
-      <div style={{background : "#f2f2f2", height: "80vh", 
+      <div style={{background : "#f2f2f2", height: "95vh", 
           display: "flex"}}>
         <Registrationform />
       </div>
