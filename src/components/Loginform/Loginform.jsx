@@ -1,20 +1,61 @@
-import {React, useState} from "react";
-import { Link } from "react-router-dom";
+import {React, useState, useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "./loginform.css";
 
 import { CgProfile } from 'react-icons/cg';
 import { RiLockPasswordLine } from "react-icons/ri";
+import axios from "axios";
 
 
 const Loginform = () => {
 
-  const [isEmailEmpty, setIsEmailEmpty] = useState(true);
-  const [isPasswordEmpty, setIsPasswordEmpty] = useState(true);
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  function handleLogin(event) {
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      navigate("/"); 
+    }
+  }, [navigate]);
+  
+  async function handleLogin(event) {
     event.preventDefault();
-    return toast.error("Login functionality is not live yet");
+
+    if (!phone || !password) {
+      return toast.error("Email və şifrəni doldurun.");
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      const formData = new URLSearchParams();
+      formData.append("username", phone);
+      formData.append("password", password);
+
+      const response = await axios.post("http://127.0.0.1:8000/auth/token", formData, config);
+      
+      if (response.statusText != "OK") {
+        return toast.error("Giriş uğursuz oldu.");
+      }
+
+      const data = await response.data;
+      const { access_token, refresh_token } = data;
+
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
+
+      toast.success("Giriş uğurludur!");
+      navigate("/"); 
+    } catch (error) {
+      console.log(error)
+      toast.error("Xəta baş verdi. Zəhmət olmasa, bir daha yoxlayın.");
+    }
   }
 
   return (
@@ -31,9 +72,9 @@ const Loginform = () => {
                   
                   <div>
                     <div className="email-input-icon"><CgProfile/></div>
-                    <input type="email" name="email" 
-                    placeholder="Email" className="email-input-field" 
-                    onChange={(e) => setIsEmailEmpty(e.target.value === "")}
+                    <input type="tel" name="phone" 
+                    placeholder="Telefon nömrəsi" className="email-input-field" 
+                    onChange={(e) => setPhone(e.target.value)}
                     />
                   </div>
 
@@ -41,7 +82,7 @@ const Loginform = () => {
                     <div className="password-input-icon"><RiLockPasswordLine/></div>
                     <input type="password" name="password"
                     placeholder="Şifrə" className="password-input-field" 
-                    onChange={(e) => setIsPasswordEmpty(e.target.value === "")}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
 
@@ -56,8 +97,12 @@ const Loginform = () => {
 
                 <div className="submit-btn-container">
                   <button className="signin-btn">Daxil ol</button>
-                  <button className="signup-btn">Qeydiyyatdan Keç</button>
                 </div>
+                <Link to="/registration">
+                  <button type="button" className="signup-btn">
+                    Qeydiyyatdan Keç
+                  </button>
+                </Link>
 
               </div>
             </form>
