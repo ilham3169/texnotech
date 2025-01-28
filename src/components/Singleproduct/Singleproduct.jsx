@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; 
 import "./singleproduct.css";
 
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css'
+
 import { 
   MDBContainer, 
   MDBRow, 
@@ -31,9 +34,11 @@ const Singleproduct = ({ addToCart }) => {
   const [productImages, setProductImages] = useState([]);
   const [productSpecifications, setProductSpecifications] = useState(null); 
   const [showAll, setShowAll] = useState(false);
+  const [mainImage, setMainImage] = useState("");
 
-
-
+  const handleImageClick = (imageLink) => {
+    setMainImage(imageLink);
+  };
 
   useEffect(() => {
     fetch(`https://back-texnotech.onrender.com/products/${extractedId}`)
@@ -52,7 +57,8 @@ const Singleproduct = ({ addToCart }) => {
         fetch(`https://back-texnotech.onrender.com/images/${extractedId}`)
           .then((response) => response.json())
           .then((imageData) => {
-            setProductImages(imageData);  // Store images in state
+            setProductImages(imageData);
+            setMainImage(imageData[0].image_link);
           })
           .catch((error) => console.error("Error fetching images:", error));
 
@@ -77,10 +83,6 @@ const Singleproduct = ({ addToCart }) => {
 
   const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
 
-  
-
-
-
   return (
     <>
       <link
@@ -96,28 +98,28 @@ const Singleproduct = ({ addToCart }) => {
               <MDBCard className="text-black" style={{border: "0", borderRadius: "12px"}}>
                 <MDBRow>
                   <MDBCol md="2" className="d-flex align-items-center">
-
                     <MDBListGroup light style={{marginLeft: "13%"}}>
-                      <MDBListGroupItem>
                       {productImages.length > 0 && productImages.map((image, index) => (
-                        <MDBCardImage
-                          key={index}
-                          src={image.image_link}
-                          alt={`Product Image ${index + 1}`}
-                          className="mb-3"
-                          style={{ width: "100%", height: "auto" }}
-                        />
-                      ))}                        
+                        <MDBListGroupItem key={index}>
+                          <MDBCardImage
+                            src={image.image_link}
+                            alt={`Product Image ${index + 1}`}
+                            className="mb-3"
+                            style={{ width: "100%", height: "auto"}}
+                            onClick={() => handleImageClick(image.image_link)}
+                          />
                       </MDBListGroupItem>
+                      ))}                        
                     </MDBListGroup>
-                    
                     </MDBCol>
                       <MDBCol md="10">
-                        <MDBCardImage
-                          src={product.img} 
-                          position="top"
-                          alt="Product Image"
-                        />
+                        <Zoom>
+                          <MDBCardImage
+                            src={mainImage} 
+                            position="top"
+                            alt="Product Image"
+                          /> 
+                        </Zoom>
                     </MDBCol>
 
                 </MDBRow>
