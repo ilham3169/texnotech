@@ -63,7 +63,7 @@ const Singleproduct = ({ addToCart }) => {
           .catch((error) => console.error("Error fetching images:", error));
 
         // Fetch product specifications as well
-        fetch(`http://back-texnotech.onrender.com/p_specification/values/${extractedId}`)
+        fetch(`https://back-texnotech.onrender.com/p_specification/values/${extractedId}`)
           .then((response) => response.json())
           .then((specData) => {
             setProductSpecifications(specData); 
