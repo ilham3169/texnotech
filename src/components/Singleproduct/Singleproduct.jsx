@@ -29,6 +29,10 @@ const Singleproduct = ({ addToCart }) => {
 
   const [product, setProduct] = useState(null); 
   const [productImages, setProductImages] = useState([]);
+  const [productSpecifications, setProductSpecifications] = useState(null); 
+  const [showAll, setShowAll] = useState(false);
+
+
 
 
   useEffect(() => {
@@ -51,13 +55,31 @@ const Singleproduct = ({ addToCart }) => {
             setProductImages(imageData);  // Store images in state
           })
           .catch((error) => console.error("Error fetching images:", error));
+
+        // Fetch product specifications as well
+        fetch(`http://127.0.0.1:8000/p_specification/values/${extractedId}`)
+          .then((response) => response.json())
+          .then((specData) => {
+            setProductSpecifications(specData); 
+          })
+          .catch((error) => console.error("Error fetching specifications:", error));
       })
       .catch((error) => console.error("Error fetching product:", error));
-  }, [extractedId]); 
+  }, [extractedId]);
 
   if (!product) {
     return <div>Loading...</div>; 
   }
+
+  const toggleShowAll = () => {
+    setShowAll(prevState => !prevState);
+  };
+
+  const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
+
+  
+
+
 
   return (
     <>
@@ -464,12 +486,82 @@ const Singleproduct = ({ addToCart }) => {
                         </MDBRow>
                       </div>
                     </MDBRow>
-
-
-                  
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
+            
+            <MDBRow className="justify-content-center" style={{marginTop: "1%"}}>
+  <MDBCol md="12">
+    <MDBCard outline="true" className="text-black justify-content-center d-flex align-items-center" style={{border: "0", borderRadius: "12px"}}>
+      <MDBTable style={{borderRadius: "12px", width: "95%"}}>
+
+        <MDBTableHead>
+          <tr>
+            <th scope='col' colSpan={4} style={{fontWeight: "700", fontSize: "25px"}}>Xüsusiyyətlər</th>
+          </tr>
+        </MDBTableHead>
+
+        <MDBTableBody style={{fontWeight: "500", fontSize: "17px"}}>
+          {specsToShow.map((spec, index) => {
+            const pairIndex = Math.floor(index / 2); 
+            const isSecondInPair = index % 2 !== 0;
+
+            if (isSecondInPair) {
+              return (
+                <tr key={pairIndex}>
+                  {/* First specification */}
+                  <td style={{width: "23.75%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
+                  {productSpecifications[index-1]?.value.length > 50 ?
+                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
+                    :
+                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap"}} className="text-end">{productSpecifications[index-1]?.value}</td>
+                  }
+
+                  {/* Second specification */}
+                  <td style={{width: "23.75%", whiteSpace: "nowrap"}}>{spec.name}</td>
+                  {spec.value.length > 50 ? 
+                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis"}} className="text-end">{spec.value.slice(0,50)}</td>
+                    :
+                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap"}} className="text-end">{spec.value}</td>
+                  }
+                </tr>
+              );
+            }
+
+            return null;
+          })}
+        </MDBTableBody>
+
+      </MDBTable>
+
+      <div style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+  <button
+    onClick={toggleShowAll}
+    style={{
+      width: '95%', // Adjust this value as needed
+      padding: '12px', // Padding for better size
+      backgroundColor: '#d1cfcf', // Button background color
+      color: 'black', // Button text color
+      fontSize: '16px', // Font size
+      border: 'none', // Remove border
+      borderRadius: '8px', // Rounded corners
+      cursor: 'pointer', 
+      transition: 'background-color 0.3s ease',
+      marginTop: '0.3%',
+      marginBottom: "1.5%" 
+    }}
+  >
+    {showAll ? 'Daha az gör' : 'Daha çox gör'}
+  </button>
+</div>
+
+      
+
+    </MDBCard>
+  </MDBCol>
+</MDBRow>
+
+
           </MDBRow>
         </MDBContainer>
       </div>
