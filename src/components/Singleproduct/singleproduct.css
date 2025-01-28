@@ -75,3 +75,53 @@
   color: #ffcd4e;
   margin: 5px 5px 5px 0;
 }
+
+.btn-addToCart {
+  background: red;
+  color: white;
+  border: 1px solid transparent,
+}
+
+.btn-addToCart:hover {
+  background: transparent;
+  color: red;
+  border: 1px solid red;
+}
+
+.btn-buyOneClick {
+  background: transparent;
+  border: 1px solid blue;
+  color: blue;
+
+}
+
+.btn-buyOneClick:hover {
+  background: blue;
+  border: 1px solid transparent;
+  color: white;
+}
+
+.btn-likeProduct {
+  background: transparent;
+  border: 1px solid grey;
+  color: grey;
+}
+
+.btn-likeProduct:hover {
+  background: grey;
+  border: 1px solid transparent;
+  color: white;
+}
+
+.btn-addToCartB {
+  background: transparent;
+  border: 1px solid black;
+  color: black;
+
+}
+
+.btn-addToCartB:hover {
+  background: black;
+  border: 1px solid transparent;
+  color: white;
+}
