@@ -72,11 +72,9 @@ const Registrationform = () => {
         "confirm_password": confirmPassword,
       }
       
-      console.log(formData)
       const response = await axios.post("https://back-texnotech.onrender.com/auth", formData, config);
 
-      if (response.statusText != "Created") {
-        console.log(1)
+      if (response.status != 201) {
         return toast.error("Qeydiyyat uğursuz oldu.");
       }
 
