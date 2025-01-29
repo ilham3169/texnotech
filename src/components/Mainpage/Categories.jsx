@@ -18,9 +18,11 @@ const Categories = () => {
     navigate("/all-products");
   };
 
+  console.log(categories);
+
   return (
     <div className="category">
-      {reversedCategories.map((category, index) => {
+      {reversedCategories.filter((category) => category.parent_category_id == null).map((category, index) => {
         return (
           <div
             className="box-category box f_flex"
