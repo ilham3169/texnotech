@@ -100,13 +100,14 @@ const Singleproduct = ({ addToCart }) => {
                   <MDBCol md="2" className="d-flex align-items-center">
                     <MDBListGroup light style={{marginLeft: "13%"}}>
                       {productImages.length > 0 && productImages.map((image, index) => (
-                        <MDBListGroupItem key={index}>
+                        <MDBListGroupItem key={index}
+                          onClick={() => handleImageClick(image.image_link)}
+                          style={{padding: "0px"}}
+                          >
                           <MDBCardImage
                             src={image.image_link}
                             alt={`Product Image ${index + 1}`}
-                            className="mb-3"
-                            style={{ width: "100%", height: "auto"}}
-                            onClick={() => handleImageClick(image.image_link)}
+                            style={{ width: "100%", height: "auto", padding: "5%"}}
                           />
                       </MDBListGroupItem>
                       ))}                        
@@ -495,7 +496,7 @@ const Singleproduct = ({ addToCart }) => {
             <MDBRow className="justify-content-center" style={{marginTop: "1%"}}>
   <MDBCol md="12">
     <MDBCard outline="true" className="text-black justify-content-center d-flex align-items-center" style={{border: "0", borderRadius: "12px"}}>
-      <MDBTable style={{borderRadius: "12px", width: "95%"}}>
+      <MDBTable style={{borderRadius: "12px", width: "95%", tableLayout: "fixed"}}>
 
         <MDBTableHead>
           <tr>
@@ -512,19 +513,19 @@ const Singleproduct = ({ addToCart }) => {
               return (
                 <tr key={pairIndex}>
                   {/* First specification */}
-                  <td style={{width: "23.75%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
+                  <td style={{width: "25%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
                   {productSpecifications[index-1]?.value.length > 50 ?
-                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
+                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
                     :
-                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap"}} className="text-end">{productSpecifications[index-1]?.value}</td>
+                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
                   }
 
                   {/* Second specification */}
-                  <td style={{width: "23.75%", whiteSpace: "nowrap"}}>{spec.name}</td>
+                  <td style={{width: "25%", whiteSpace: "nowrap"}}>{spec.name}</td>
                   {spec.value.length > 50 ? 
-                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis"}} className="text-end">{spec.value.slice(0,50)}</td>
+                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
                     :
-                    <td style={{width: "23.75%", textAlign: "end", whiteSpace: "nowrap"}} className="text-end">{spec.value}</td>
+                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
                   }
                 </tr>
               );
@@ -537,27 +538,25 @@ const Singleproduct = ({ addToCart }) => {
       </MDBTable>
 
       <div style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-  <button
-    onClick={toggleShowAll}
-    style={{
-      width: '95%', // Adjust this value as needed
-      padding: '12px', // Padding for better size
-      backgroundColor: '#d1cfcf', // Button background color
-      color: 'black', // Button text color
-      fontSize: '16px', // Font size
-      border: 'none', // Remove border
-      borderRadius: '8px', // Rounded corners
-      cursor: 'pointer', 
-      transition: 'background-color 0.3s ease',
-      marginTop: '0.3%',
-      marginBottom: "1.5%" 
-    }}
-  >
-    {showAll ? 'Daha az gör' : 'Daha çox gör'}
-  </button>
-</div>
-
-      
+        <button
+          onClick={toggleShowAll}
+          style={{
+            width: '95%', // Adjust this value as needed
+            padding: '12px', // Padding for better size
+            backgroundColor: '#d1cfcf', // Button background color
+            color: 'black', // Button text color
+            fontSize: '20px', // Font size
+            border: 'none', // Remove border
+            borderRadius: '8px', // Rounded corners
+            cursor: 'pointer', 
+            transition: 'background-color 0.3s ease',
+            marginTop: '0.3%',
+            marginBottom: "1.5%" 
+          }}
+        >
+          {showAll ? 'Daha az gör' : 'Daha çox gör'}
+        </button>
+      </div>
 
     </MDBCard>
   </MDBCol>
