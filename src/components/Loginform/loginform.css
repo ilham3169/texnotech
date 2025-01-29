@@ -71,13 +71,6 @@
   background-color: #b4d0d4;
 }
 
-.submit-btn-container {
-  display: flex; 
-  justify-content: center;
-  margin-left: 2vh;
-  margin-top: 2vh;
-}
-
 .credentials-container {
   display: flex;
   flex-direction: column; 

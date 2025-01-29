@@ -95,7 +95,7 @@ const Loginform = () => {
                   </p>
                 </div>
 
-                <div className="submit-btn-container">
+                <div style={{marginTop: "3%"}}>
                   <button className="signin-btn">Daxil ol</button>
                 </div>
                 <Link to="/registration">
