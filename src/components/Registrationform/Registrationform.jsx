@@ -75,7 +75,7 @@ const Registrationform = () => {
       console.log(formData)
       const response = await axios.post("https://back-texnotech.onrender.com/auth", formData, config);
 
-      if (response.statusText != 201) {
+      if (response.status != 201) {
         return toast.error("Qeydiyyat uğursuz oldu.");
       }
 
