@@ -146,8 +146,7 @@ const Singleproduct = ({ addToCart }) => {
                     <hr/>
                   </MDBRow>
                   <MDBRow>
-                    <div className="text-start d-flex align-items-center" style={{background: "red", width: "11%", borderRadius: "5px", marginLeft: "1%"}}>
-                      {
+                    <div className="start d-flex align-items-center" style={{background: "red", width: "fit-content", borderRadius: "5px", marginLeft: "1.2%"}}>                      {
                         product.discount > 0 ? 
                         <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{Math.round(product.price * product.discount / 100)} ₼</MDBCardText>
                         : <></>
