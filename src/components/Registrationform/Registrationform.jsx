@@ -72,7 +72,6 @@ const Registrationform = () => {
         "confirm_password": confirmPassword,
       }
       
-      console.log(formData)
       const response = await axios.post("https://back-texnotech.onrender.com/auth", formData, config);
 
       if (response.status != 201) {

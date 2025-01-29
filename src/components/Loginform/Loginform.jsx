@@ -40,7 +40,8 @@ const Loginform = () => {
 
       const response = await axios.post("https://back-texnotech.onrender.com/auth/token", formData, config);
       
-      if (response.status  != 200) {
+
+      if (response.status != 200) {
         return toast.error("Giriş uğursuz oldu.");
       }
 
