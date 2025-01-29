@@ -68,7 +68,7 @@ const Registrationform = () => {
       }
       
       console.log(formData)
-      const response = await axios.post("http://127.0.0.1:8000/auth", formData, config);
+      const response = await axios.post("https://back-texnotech.onrender.com/auth", formData, config);
 
       if (response.statusText != "Created") {
         console.log(1)
