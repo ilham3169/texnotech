@@ -44,7 +44,6 @@ const Flashcard = ({ addToCart }) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Products Data:", data);  // Check what data is returned
         setProductItems(data);
         setLoading(false);
       } catch (error) {

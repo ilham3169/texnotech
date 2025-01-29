@@ -40,7 +40,7 @@ const Loginform = () => {
 
       const response = await axios.post("https://back-texnotech.onrender.com/auth/token", formData, config);
       
-      if (response.statusText != "OK") {
+      if (response.statusText != 200) {
         return toast.error("Giriş uğursuz oldu.");
       }
 
@@ -95,7 +95,7 @@ const Loginform = () => {
                   </p>
                 </div>
 
-                <div className="submit-btn-container">
+                <div style={{marginTop: "3%"}}>
                   <button className="signin-btn">Daxil ol</button>
                 </div>
                 <Link to="/registration">

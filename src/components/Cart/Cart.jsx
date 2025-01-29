@@ -32,7 +32,7 @@ const Cart = ({
                 >
                   <div className="img">
                     <img
-                      src={item.img}
+                      src={item.iamge_link}
                       alt="Picture of this item is unavailable"
                     />
                   </div>
