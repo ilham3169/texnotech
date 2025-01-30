@@ -3,20 +3,30 @@ import { Link } from "react-router-dom";
 import "./allproducts.css";
 
 const Allproducts = ({ addToCart }) => {
-  const domain = "https://back-texnotech.onrender.com/products";
 
+  // API domain
+  const domain = "https://back-texnotech.onrender.com/";
+
+  // Data fetched from API
+  const [allProducts, setAllProducts] = useState([]);
+  const [brandNames, setBrandNames] = useState([]);
+  const [categoryNames, setCategoryNames] = useState([]);
+
+  // Filter input fields
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100000});
-  const [allProducts, setAllProducts] = useState([]); // For storing products
-  const [brandNames, setBrandNames] = useState([]); // For storing brand names
-  const [categoryNames, setCategoryNames] = useState([]); // For storing category names
-
   const [availabilityFilter, setAvailabilityFilter] = useState(null);
   const [discountFilter, setDiscountFilter] = useState(null);
   const [brandFilter, setBrandFilter] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState(null);
   const [priceFilter, setPriceFilter] = useState(null);
-  
 
+  // Check first time page loading
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  // Category button selected
+  const [selectedCategory, setSelectedCategory] = useState(-1);
+  
+  // Handle filter fields' values
   const handleAvailabilityFilterChange = (e) => {
     setAvailabilityFilter(e.target.checked);
   };
@@ -30,7 +40,15 @@ const Allproducts = ({ addToCart }) => {
   };
 
   const handleCategoryFilterChange = (e) => {
-    setCategoryFilter(e)
+    if (e === categoryFilter) {
+      setCategoryFilter(null);
+      setSelectedCategory(null);
+    }
+    else{
+      setCategoryFilter(e);
+      setSelectedCategory(e);
+    }
+    
   };
 
   const handlePriceRangeChange = (e) => {
@@ -39,30 +57,40 @@ const Allproducts = ({ addToCart }) => {
     setPriceRange({ ...priceRange, max: newValue });
   };
 
+  // Send API request when filter is applied
   useEffect(() => {
-    let link = domain + "?"
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+      fetchProducts(); 
+    } else {
+      const timeoutId = setTimeout(() => {
+        fetchProducts();
+      }, 100);
+  
+      return () => clearTimeout(timeoutId);
+    }
+  }, [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter]);
+
+  // Get products API call
+  const fetchProducts = () => {
+    let link = domain + "products" + "?";
     
     if (categoryFilter) {
-      link = link + "&category_id=" + categoryFilter;
+      link += "&category_id=" + categoryFilter;
     }
-
-    if (brandFilter && brandFilter != "popular") {
-      link = link + "&brand_id=" + brandFilter;
+    if (brandFilter && brandFilter !== "popular") {
+      link += "&brand_id=" + brandFilter;
     }
-
     if (availabilityFilter) {
-      link = link + "&available=" + availabilityFilter;
+      link += "&available=" + availabilityFilter;
     }
-
     if (discountFilter) {
-      link = link + "&discount=" + discountFilter;
+      link += "&discount=" + discountFilter;
     }
-
     if (priceFilter) {
-      link = link + "&max_price=" + priceFilter;
+      link += "&max_price=" + priceFilter;
     }
-
-    // Fetch products
+  
     fetch(link)
       .then((response) => response.json())
       .then((data) => {
@@ -75,20 +103,21 @@ const Allproducts = ({ addToCart }) => {
         setAllProducts(products);
       })
       .catch((error) => console.error("Error fetching products:", error));
+  };
 
-    // Fetch brand names
+  // Get Brands and Categories
+  useEffect(() => {
     fetch("https://back-texnotech.onrender.com/brands")
       .then((response) => response.json())
       .then((data) => {
         const brandNames = data.map((brand) => ({
           id: brand.id,
-          name: brand.name
+          name: brand.name,
         }));
         setBrandNames(brandNames);
       })
       .catch((error) => console.error("Error fetching brands:", error));
-
-    // Fetch categories
+  
     fetch("https://back-texnotech.onrender.com/categories")
       .then((response) => response.json())
       .then((data) => {
@@ -96,12 +125,10 @@ const Allproducts = ({ addToCart }) => {
           id: category.id,
           name: category.name,
         }));
-
         setCategoryNames(categoryNames);
       })
       .catch((error) => console.error("Error fetching categories:", error));
-
-    }, [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter]);
+  }, []);
 
   return (
     <>
@@ -162,17 +189,13 @@ const Allproducts = ({ addToCart }) => {
 
       <div className="categories-container">
         {categoryNames.map((category, index) => (
-            <button className="category-button" key={index} value={category} 
-            onClick={() => handleCategoryFilterChange(category.id)}
+            <button className={`category-button ${selectedCategory === category.id ? "category-button-selected" : ""}`}
+              key={index} value={category} 
+              onClick={() => handleCategoryFilterChange(category.id)}
             >
               {category.name}
             </button>
           ))}
-          <button className="category-button" 
-            onClick={() => handleCategoryFilterChange(null)}
-            >
-              Hamisi
-            </button>
       </div>
 
       <h1 className="page-header">All Products</h1>
