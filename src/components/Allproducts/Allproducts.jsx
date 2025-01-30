@@ -124,6 +124,7 @@ const Allproducts = ({ addToCart }) => {
         const categoryNames = data.map((category) => ({
           id: category.id,
           name: category.name,
+          parent_category_id: category.parent_category_id
         }));
         setCategoryNames(categoryNames);
       })
@@ -188,7 +189,7 @@ const Allproducts = ({ addToCart }) => {
       </div>
 
       <div className="categories-container">
-        {categoryNames.map((category, index) => (
+        {categoryNames.filter((category) => category.parent_category_id == null).map((category, index) => (
             <button className={`category-button ${selectedCategory === category.id ? "category-button-selected" : ""}`}
               key={index} value={category} 
               onClick={() => handleCategoryFilterChange(category.id)}
@@ -198,7 +199,7 @@ const Allproducts = ({ addToCart }) => {
           ))}
       </div>
 
-      <h1 className="page-header">All Products</h1>
+      <h1 className="page-header">Bütün Məhsullar</h1>
       <div className="custom-grid">
         {allProducts.map((product, index) => {
           const productUrl = `/products/${product.name
