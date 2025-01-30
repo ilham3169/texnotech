@@ -27,11 +27,6 @@ export const Head = () => {
               </label>
             </a>
           </div>
-          <div className="right-row">
-            <span>
-              <label htmlFor="">Kömək Lazımdır ?</label>
-            </span>
-          </div>
         </div>
       </section>
     </>
