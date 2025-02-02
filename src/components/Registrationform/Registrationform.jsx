@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import {React, useState, useEffect} from "react";
 
@@ -157,8 +157,12 @@ const Registrationform = () => {
               </div>
 
               <div className="submit-btn-container" style={{marginTop:"30%"}}>
-                <button className="signin-btn" style={{width: "100%"}} >Qeydiyyatdan Keç</button>
-                <button className="signup-btn">Daxil ol</button>
+                <button className="signin-btn" style={{minWidth: "60%"}} >Qeydiyyatdan Keç</button>
+                <Link to="/login">
+                  <button className="signup-btn">
+                    Daxil ol
+                    </button>
+                </Link>
               </div>
 
             </div>

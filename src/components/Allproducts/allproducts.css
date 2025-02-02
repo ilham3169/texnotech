@@ -140,3 +140,8 @@
 .price h4{
     padding-left: 100px;
 }
+
+.category-button-selected {
+    background-color: grey; 
+    color: black;
+}

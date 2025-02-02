@@ -10,8 +10,14 @@ import axios from "axios";
 
 const Loginform = () => {
 
+  // Credentials
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+
+  // Expiration time of tokens
+  const accessTokenExpiry = Date.now() + 20 * 60 * 1000; // 20 minutes from now
+  const refreshTokenExpiry = Date.now() + 7 * 24 * 60 * 60 * 1000; // 1 week from now
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,8 +54,11 @@ const Loginform = () => {
       const data = await response.data;
       const { access_token, refresh_token } = data;
 
+      // Put tokens and expiration time to localStorage
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
+      localStorage.setItem("accessTokenExpiry", accessTokenExpiry);
+      localStorage.setItem("refreshTokenExpiry", refreshTokenExpiry);
 
       toast.success("Giriş uğurludur!");
       navigate("/"); 

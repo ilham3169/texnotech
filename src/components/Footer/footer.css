@@ -1,67 +1,44 @@
-footer {
-  background-color: #0f3460;
-  padding: 50px 70px;
-  color: #fff;
+.my-footer {
+  background-color: #0f3460!important;
+  padding: 50px 70px!important;
+  color: #fff!important;
 }
 
-footer h1 {
-  margin-bottom: 30px;
-  color: #e94560;
-  font-weight: 500;
-  font-style: italic;
+.my-footer-img {
+  background-color: #0c2a4d!important;
+  padding: 15px 20px!important;
+  border-radius: 5px!important;
 }
 
-footer .img {
-  background-color: #0c2a4d;
-  padding: 15px 20px;
-  border-radius: 5px;
+.my-footer-h2 {
+  margin-bottom: 20px!important;
 }
 
-footer .img i {
-  font-size: 24px;
-  margin: 5px;
+.my-footer-li {
+  margin-bottom: 10px!important;
+  opacity: 0.5!important;
+  cursor: pointer!important;
 }
 
-footer p {
-  font-size: 14px;
-  font-weight: 300;
-  opacity: 0.5;
-  margin-bottom: 20px;
+.my-logo-container {
+  list-style: none!important;
+  padding: 0!important;
+  margin: 0!important;
 }
 
-footer h2 {
-  margin-bottom: 20px;
+.my-logo-item {
+  display: flex!important;
+  align-items: center!important;
+  margin-bottom: 16px!important; 
 }
 
-footer li {
-  margin-bottom: 10px;
-  opacity: 0.5;
-  cursor: pointer;
+.my-logo-item-img {
+  width: 24px!important;
+  height: 24px!important;
+  margin-right: 8px!important;
 }
 
-.icon-footer {
-  cursor: pointer;
-}
-
-.logo-container {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.logo-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px; /* Adds spacing between each item */
-}
-
-.logo-item img {
-  width: 24px; /* Adjust as needed */
-  height: 24px; /* Adjust as needed */
-  margin-right: 8px; /* Space between logo and text */
-}
-
-.logo-item span {
-  font-size: 16px; /* Adjust font size as needed */
-  color: white; /* Customize text color */
+.my-logo-item-span {
+  font-size: 16px!important;
+  color: white!important;
 }

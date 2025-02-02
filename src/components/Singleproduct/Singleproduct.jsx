@@ -84,7 +84,7 @@ const Singleproduct = ({ addToCart }) => {
   const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
 
   return (
-    <>
+    <> 
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -146,8 +146,7 @@ const Singleproduct = ({ addToCart }) => {
                     <hr/>
                   </MDBRow>
                   <MDBRow>
-                    <div className="text-start d-flex align-items-center" style={{background: "red", width: "11%", borderRadius: "5px", marginLeft: "1%"}}>
-                      {
+                    <div className="start d-flex align-items-center" style={{background: "red", width: "fit-content", borderRadius: "5px", marginLeft: "1.2%"}}>                      {
                         product.discount > 0 ? 
                         <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{Math.round(product.price * product.discount / 100)} ₼</MDBCardText>
                         : <></>
@@ -497,75 +496,73 @@ const Singleproduct = ({ addToCart }) => {
             </MDBCol>
             
             <MDBRow className="justify-content-center" style={{marginTop: "1%"}}>
-  <MDBCol md="12">
-    <MDBCard outline="true" className="text-black justify-content-center d-flex align-items-center" style={{border: "0", borderRadius: "12px"}}>
-      <MDBTable style={{borderRadius: "12px", width: "95%", tableLayout: "fixed"}}>
+              <MDBCol md="12">
+                <MDBCard outline="true" className="text-black justify-content-center d-flex align-items-center" style={{border: "0", borderRadius: "12px"}}>
+                  <MDBTable style={{borderRadius: "12px", width: "95%", tableLayout: "fixed"}}>
 
-        <MDBTableHead>
-          <tr>
-            <th scope='col' colSpan={4} style={{fontWeight: "700", fontSize: "25px"}}>Xüsusiyyətlər</th>
-          </tr>
-        </MDBTableHead>
+                    <MDBTableHead>
+                      <tr>
+                        <th scope='col' colSpan={4} style={{fontWeight: "700", fontSize: "25px"}}>Xüsusiyyətlər</th>
+                      </tr>
+                    </MDBTableHead>
 
-        <MDBTableBody style={{fontWeight: "500", fontSize: "17px"}}>
-          {specsToShow.map((spec, index) => {
-            const pairIndex = Math.floor(index / 2); 
-            const isSecondInPair = index % 2 !== 0;
+                    <MDBTableBody style={{fontWeight: "500", fontSize: "17px"}}>
+                      {specsToShow.map((spec, index) => {
+                        const pairIndex = Math.floor(index / 2); 
+                        const isSecondInPair = index % 2 !== 0;
 
-            if (isSecondInPair) {
-              return (
-                <tr key={pairIndex}>
-                  {/* First specification */}
-                  <td style={{width: "25%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
-                  {productSpecifications[index-1]?.value.length > 50 ?
-                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
-                    :
-                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
-                  }
+                        if (isSecondInPair) {
+                          return (
+                            <tr key={pairIndex}>
+                              {/* First specification */}
+                              <td style={{width: "25%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
+                              {productSpecifications[index-1]?.value.length > 50 ?
+                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
+                                :
+                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
+                              }
 
-                  {/* Second specification */}
-                  <td style={{width: "25%", whiteSpace: "nowrap"}}>{spec.name}</td>
-                  {spec.value.length > 50 ? 
-                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
-                    :
-                    <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
-                  }
-                </tr>
-              );
-            }
+                              {/* Second specification */}
+                              <td style={{width: "25%", whiteSpace: "nowrap"}}>{spec.name}</td>
+                              {spec.value.length > 50 ? 
+                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
+                                :
+                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
+                              }
+                            </tr>
+                          );
+                        }
 
-            return null;
-          })}
-        </MDBTableBody>
+                        return null;
+                      })}
+                    </MDBTableBody>
 
-      </MDBTable>
+                  </MDBTable>
 
-      <div style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-        <button
-          onClick={toggleShowAll}
-          style={{
-            width: '95%', // Adjust this value as needed
-            padding: '12px', // Padding for better size
-            backgroundColor: '#d1cfcf', // Button background color
-            color: 'black', // Button text color
-            fontSize: '20px', // Font size
-            border: 'none', // Remove border
-            borderRadius: '8px', // Rounded corners
-            cursor: 'pointer', 
-            transition: 'background-color 0.3s ease',
-            marginTop: '0.3%',
-            marginBottom: "1.5%" 
-          }}
-        >
-          {showAll ? 'Daha az gör' : 'Daha çox gör'}
-        </button>
-      </div>
+                  <div style={{ width: '100%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+                    <button
+                      onClick={toggleShowAll}
+                      style={{
+                        width: '95%', // Adjust this value as needed
+                        padding: '12px', // Padding for better size
+                        backgroundColor: '#d1cfcf', // Button background color
+                        color: 'black', // Button text color
+                        fontSize: '20px', // Font size
+                        border: 'none', // Remove border
+                        borderRadius: '8px', // Rounded corners
+                        cursor: 'pointer', 
+                        transition: 'background-color 0.3s ease',
+                        marginTop: '0.3%',
+                        marginBottom: "1.5%" 
+                      }}
+                    >
+                      {showAll ? 'Daha az gör' : 'Daha çox gör'}
+                    </button>
+                  </div>
 
-    </MDBCard>
-  </MDBCol>
-</MDBRow>
-
-
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
           </MDBRow>
         </MDBContainer>
       </div>

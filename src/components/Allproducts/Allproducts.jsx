@@ -3,19 +3,95 @@ import { Link } from "react-router-dom";
 import "./allproducts.css";
 
 const Allproducts = ({ addToCart }) => {
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
-  const [allProducts, setAllProducts] = useState([]); // For storing products
-  const [brandNames, setBrandNames] = useState([]); // For storing brand names
-  const [categoryNames, setCategoryNames] = useState([]); // For storing category names
+
+  // API domain
+  const domain = "https://back-texnotech.onrender.com/";
+
+  // Data fetched from API
+  const [allProducts, setAllProducts] = useState([]);
+  const [brandNames, setBrandNames] = useState([]);
+  const [categoryNames, setCategoryNames] = useState([]);
+
+  // Filter input fields
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 100000});
+  const [availabilityFilter, setAvailabilityFilter] = useState(null);
+  const [discountFilter, setDiscountFilter] = useState(null);
+  const [brandFilter, setBrandFilter] = useState(null);
+  const [categoryFilter, setCategoryFilter] = useState(null);
+  const [priceFilter, setPriceFilter] = useState(null);
+
+  // Check first time page loading
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  // Category button selected
+  const [selectedCategory, setSelectedCategory] = useState(-1);
   
+  // Handle filter fields' values
+  const handleAvailabilityFilterChange = (e) => {
+    setAvailabilityFilter(e.target.checked);
+  };
+
+  const handleDiscountFilterChange = (e) => {
+    setDiscountFilter(e.target.checked);
+  };
+
+  const handleBrandFilterChange = (e) => {
+    setBrandFilter(e.target.value);
+  };
+
+  const handleCategoryFilterChange = (e) => {
+    if (e === categoryFilter) {
+      setCategoryFilter(null);
+      setSelectedCategory(null);
+    }
+    else{
+      setCategoryFilter(e);
+      setSelectedCategory(e);
+    }
+    
+  };
+
   const handlePriceRangeChange = (e) => {
     const newValue = e.target.value;
+    setPriceFilter(newValue);
     setPriceRange({ ...priceRange, max: newValue });
   };
 
+  // Send API request when filter is applied
   useEffect(() => {
-    // Fetch products
-    fetch("https://back-texnotech.onrender.com/products")
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+      fetchProducts(); 
+    } else {
+      const timeoutId = setTimeout(() => {
+        fetchProducts();
+      }, 100);
+  
+      return () => clearTimeout(timeoutId);
+    }
+  }, [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter]);
+
+  // Get products API call
+  const fetchProducts = () => {
+    let link = domain + "products" + "?";
+    
+    if (categoryFilter) {
+      link += "&category_id=" + categoryFilter;
+    }
+    if (brandFilter && brandFilter !== "popular") {
+      link += "&brand_id=" + brandFilter;
+    }
+    if (availabilityFilter) {
+      link += "&available=" + availabilityFilter;
+    }
+    if (discountFilter) {
+      link += "&discount=" + discountFilter;
+    }
+    if (priceFilter) {
+      link += "&max_price=" + priceFilter;
+    }
+  
+    fetch(link)
       .then((response) => response.json())
       .then((data) => {
         const products = data.map((product) => ({
@@ -27,35 +103,44 @@ const Allproducts = ({ addToCart }) => {
         setAllProducts(products);
       })
       .catch((error) => console.error("Error fetching products:", error));
+  };
 
-    // Fetch brand names
+  // Get Brands and Categories
+  useEffect(() => {
     fetch("https://back-texnotech.onrender.com/brands")
       .then((response) => response.json())
       .then((data) => {
-        const brandNames = data.map((brand) => brand.name);
+        const brandNames = data.map((brand) => ({
+          id: brand.id,
+          name: brand.name,
+        }));
         setBrandNames(brandNames);
       })
       .catch((error) => console.error("Error fetching brands:", error));
-
-    // Fetch categories
+  
     fetch("https://back-texnotech.onrender.com/categories")
       .then((response) => response.json())
       .then((data) => {
-        const categoryNames = data.map((category) => category.name);
+        const categoryNames = data.map((category) => ({
+          id: category.id,
+          name: category.name,
+          parent_category_id: category.parent_category_id
+        }));
         setCategoryNames(categoryNames);
       })
       .catch((error) => console.error("Error fetching categories:", error));
-
-    }, []);
+  }, []);
 
   return (
     <>
       <div className="filter-box">
-        <select className="filter-select">
+        <select className="filter-select"
+          onChange={handleBrandFilterChange}
+        >
           <option value="popular">Brend Seçin</option>
-          {brandNames.map((brand, index) => (
-            <option key={index} value={brand}>
-              {brand}
+          {brandNames.map((brand) => (
+            <option key={brand.id} value={brand.id}>
+              {brand.name}
             </option>
           ))}
         </select>
@@ -69,7 +154,7 @@ const Allproducts = ({ addToCart }) => {
             id="price-range"
             name="price-range"
             min="0"
-            max="1000"
+            max="100000"
             step="10"
             value={priceRange.max}
             onChange={handlePriceRangeChange}
@@ -86,6 +171,7 @@ const Allproducts = ({ addToCart }) => {
             id="checkboxNoLabel"
             value=""
             aria-label="..."
+            onChange={handleAvailabilityFilterChange}
           />
         </div>
 
@@ -97,19 +183,23 @@ const Allproducts = ({ addToCart }) => {
             id="checkboxNoLabel"
             value=""
             aria-label="..."
+            onChange={handleDiscountFilterChange}
           />
         </div>
       </div>
 
       <div className="categories-container">
-        {categoryNames.map((category, index) => (
-            <button className="category-button" key={index} value={category}>
-              {category}
+        {categoryNames.filter((category) => category.parent_category_id == null).map((category, index) => (
+            <button className={`category-button ${selectedCategory === category.id ? "category-button-selected" : ""}`}
+              key={index} value={category} 
+              onClick={() => handleCategoryFilterChange(category.id)}
+            >
+              {category.name}
             </button>
           ))}
       </div>
 
-      <h1 className="page-header">All Products</h1>
+      <h1 className="page-header">Bütün Məhsullar</h1>
       <div className="custom-grid">
         {allProducts.map((product, index) => {
           const productUrl = `/products/${product.name
@@ -134,18 +224,11 @@ const Allproducts = ({ addToCart }) => {
                 <div className="product-details">
                   <h3>{product.name}</h3>
                   <h5>Click here for more Info</h5>
-                  <div className="price">
-                    <h4>{product.price}.00 </h4>
-                    <button
-                      aria-label="Add to cart"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevents triggering Link click
-                        addToCart(product);
-                      }}
-                    >
-                      <i className="fa fa-plus"></i>
-                    </button>
-                  </div>
+                </div>
+                <div className="product-details" style={{color: "red", fontSize: "21px"}} >
+                  <h4 style={{whiteSpace: "nowrap"}}>
+                    {product.price}.00 ₼
+                  </h4>
                 </div>
               </div>
             </Link>
@@ -158,43 +241,3 @@ const Allproducts = ({ addToCart }) => {
 };
 
 export default Allproducts;
-
-
-
-
-// return (
-//   <div className="custom-box" key={index}>
-//     <div className="product mtop" style={{ width: '250px' }}>
-//       <div className="img">
-//         <span className="discount">{product.discount}% Off</span>
-//         <img src={product.img} alt="product-image" />
-//       </div>
-//       <div className="product-details">
-//         <h3>{product.name}</h3>
-//         <Link to={`/all-products/${product.id}`}>
-//           <h5>Click here for more Info</h5>
-//         </Link>
-//         <div className="rate">
-//           <i className="fa fa-star"></i>
-//           <i className="fa fa-star"></i>
-//           <i className="fa fa-star"></i>
-//           <i className="fa fa-star"></i>
-//           <i className="fa fa-star"></i>
-//         </div>
-//         <div className="price">
-//           <h4>{product.price}.00</h4>
-//           <button
-//             aria-label="Add to cart"
-//             onClick={() => addToCart(product)}
-//           >
-//             <i className="fa fa-plus"></i>
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// );
-// })}
-// </div>
-// </>
-// );
