@@ -270,6 +270,25 @@ const Singleproduct = ({ addToCart }) => {
                               }}
                               type="button" // Ensures it doesn't submit a form by default
                             >
+                              3 ay
+                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
+                            </button>
+                          </MDBListGroupItem>
+                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
+                            <button
+                              style={{
+                                width: "100%",
+                                minHeight: "100%",
+                                borderRadius: "5px",
+                                background: "transparent",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "grey", // Ensures the text color is visible
+                                cursor: "pointer",
+                              }}
+                              type="button" // Ensures it doesn't submit a form by default
+                            >
                               6 ay
                               <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
@@ -290,6 +309,7 @@ const Singleproduct = ({ addToCart }) => {
                               type="button" // Ensures it doesn't submit a form by default
                             >
                               9 ay
+                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
@@ -308,24 +328,7 @@ const Singleproduct = ({ addToCart }) => {
                               type="button" // Ensures it doesn't submit a form by default
                             >
                               12 ay
-                            </button>
-                          </MDBListGroupItem>
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
-                            <button
-                              style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "grey", // Ensures the text color is visible
-                                cursor: "pointer",
-                              }}
-                              type="button" // Ensures it doesn't submit a form by default
-                            >
-                              15 ay
+                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
