@@ -26,6 +26,7 @@ import {
   MDBTable, 
 } from "mdb-react-ui-kit";
 
+
 const Singleproduct = ({ addToCart }) => {
   const { productId } = useParams(); 
   const extractedId = productId.split('-').pop();
@@ -35,6 +36,10 @@ const Singleproduct = ({ addToCart }) => {
   const [productSpecifications, setProductSpecifications] = useState(null); 
   const [showAll, setShowAll] = useState(false);
   const [mainImage, setMainImage] = useState("");
+  const [productPrice, setPrice] = useState(null); // State to store monthly payment
+  const [monthPrice, setMonthPrice] = useState(null);
+
+
 
   const handleImageClick = (imageLink) => {
     setMainImage(imageLink);
@@ -53,6 +58,8 @@ const Singleproduct = ({ addToCart }) => {
           id: data.id,
         };
         setProduct(productDetails);
+        setPrice(productDetails.price)
+        console.log("settings")
 
         fetch(`https://back-texnotech.onrender.com/images/${extractedId}`)
           .then((response) => response.json())
@@ -82,6 +89,16 @@ const Singleproduct = ({ addToCart }) => {
   };
 
   const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
+
+  const handleButtonClick = (months) => {
+    if (productPrice) {
+      const calculatedPrice = productPrice / months;
+      setMonthPrice(calculatedPrice); // Set the calculated monthly price
+      console.log(`Price for ${months} months:`, calculatedPrice);
+    }
+  };
+
+
 
   return (
     <> 
@@ -148,7 +165,7 @@ const Singleproduct = ({ addToCart }) => {
                   <MDBRow>
                     <div className="start d-flex align-items-center" style={{background: "red", width: "fit-content", borderRadius: "5px", marginLeft: "1.2%"}}>                      {
                         product.discount > 0 ? 
-                        <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{Math.round(product.price * product.discount / 100)} ₼</MDBCardText>
+                        <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{Math.round(product.price - product.discount)} ₼</MDBCardText>
                         : <></>
                       }
                     </div>
@@ -156,7 +173,7 @@ const Singleproduct = ({ addToCart }) => {
 
                   <MDBRow>
                     <div className="text-start" style={{display: "flex", gap: "10px"}}>
-                      <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{product.price - Math.round(product.price * product.discount / 100)} ₼</MDBCardTitle>
+                      <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{product.discount} ₼</MDBCardTitle>
                       {
                         product.discount > 0 ? 
                         <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
@@ -268,9 +285,10 @@ const Singleproduct = ({ addToCart }) => {
                                 cursor: "pointer",
                               }}
                               type="button" // Ensures it doesn't submit a form by default
+                              onClick={() => handleButtonClick(3)} // 3 months
                             >
                               3 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
+                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
@@ -286,10 +304,11 @@ const Singleproduct = ({ addToCart }) => {
                                 color: "grey", // Ensures the text color is visible
                                 cursor: "pointer",
                               }}
-                              type="button" // Ensures it doesn't submit a form by default
+                              type="button"
+                              onClick={() => handleButtonClick(6)} 
                             >
-                              6 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
+                              6 ay  
+                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
@@ -305,10 +324,12 @@ const Singleproduct = ({ addToCart }) => {
                                 color: "grey", // Ensures the text color is visible
                                 cursor: "pointer",
                               }}
-                              type="button" // Ensures it doesn't submit a form by default
+                              type="button" // Ensures it doesn't submit a form by default\
+                              onClick={() => handleButtonClick(9)} // 3 months
+
                             >
                               9 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
+                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
@@ -325,9 +346,11 @@ const Singleproduct = ({ addToCart }) => {
                                 cursor: "pointer",
                               }}
                               type="button" // Ensures it doesn't submit a form by default
+                              onClick={() => handleButtonClick(12)} 
+
                             >
                               12 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center"}} color='danger' notification pill>0%</MDBBadge>
+                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
                             </button>
                           </MDBListGroupItem>
                           <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
@@ -344,6 +367,7 @@ const Singleproduct = ({ addToCart }) => {
                                 cursor: "pointer",
                               }}
                               type="button" // Ensures it doesn't submit a form by default
+                              onClick={() => handleButtonClick(18)} // 3 months
                             >
                               18 ay
                             </button>
@@ -359,7 +383,7 @@ const Singleproduct = ({ addToCart }) => {
                           </MDBRow>
                           <MDBRow>
                             <div style={{display: "flex", justifyContent: "center", marginTop: "2%", fontWeight: "600"}}>
-                              <MDBCardTitle>523.33 ₼</MDBCardTitle>
+                              <MDBCardTitle>${handleButtonClick(3)}</MDBCardTitle>
                             </div>
                           </MDBRow>
                         </div>
