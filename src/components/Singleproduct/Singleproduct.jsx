@@ -40,7 +40,6 @@ const Singleproduct = ({ addToCart }) => {
   const [monthPrice, setMonthPrice] = useState(null);
 
 
-
   const handleImageClick = (imageLink) => {
     setMainImage(imageLink);
   };
@@ -59,7 +58,6 @@ const Singleproduct = ({ addToCart }) => {
         };
         setProduct(productDetails);
         setPrice(productDetails.price)
-        console.log("settings")
 
         fetch(`https://back-texnotech.onrender.com/images/${extractedId}`)
           .then((response) => response.json())
@@ -90,14 +88,18 @@ const Singleproduct = ({ addToCart }) => {
 
   const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
 
+
   const handleButtonClick = (months) => {
     if (productPrice) {
-      const calculatedPrice = productPrice / months;
-      setMonthPrice(calculatedPrice); // Set the calculated monthly price
+      const calculatedPrice = Math.round(productPrice / months);
+
+      if (calculatedPrice !== monthPrice) {
+        setMonthPrice(calculatedPrice);
+      }
+
       console.log(`Price for ${months} months:`, calculatedPrice);
     }
   };
-
 
 
   return (
@@ -383,7 +385,7 @@ const Singleproduct = ({ addToCart }) => {
                           </MDBRow>
                           <MDBRow>
                             <div style={{display: "flex", justifyContent: "center", marginTop: "2%", fontWeight: "600"}}>
-                              <MDBCardTitle>${handleButtonClick(3)}</MDBCardTitle>
+                              <MDBCardTitle>{monthPrice} ₼</MDBCardTitle>
                             </div>
                           </MDBRow>
                         </div>
