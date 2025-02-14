@@ -45,20 +45,92 @@ const Footer = () => {
       <div className="">
         <h2 className="my-footer-h2">Müştərilər üçün</h2>
         <ul>
-          <li className="my-footer-li">Çatdırılma və istifadə şərtləri</li>
-          <li className="my-footer-li">Məhsulun geri qaytarılması şərtləri </li>
-          <li className="my-footer-li">Geri qaytarma siyasəti</li>
-          <li className="my-footer-li">Zəmanət şərtləri</li>
-          <li className="my-footer-li">Kredit şərtləri</li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EUa4DJi7aQFAoDecLMaXlecB2z3dbQtduZGWK5zezULtZQ?e=ewDKY8"
+              target="blank"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+            Çatdırılma və istifadə şərtləri
+            </a> 
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EWpNMf1d77NFpiyoIlXsnGsBtdF--F5obgBmmuT8Eq9jIQ?e=y0g0eH"
+              target="blank"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Məhsulun geri qaytarılması şərtləri
+            </a>
+            </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EQuY6fcQIxdJrdGJSWBpBuEBMVpx4XxykJQ8gTDhZruTgw?e=8ydipd"
+              target="blank"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Geri qaytarma siyasəti
+            </a>
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EZWfIsSeGdVBowStGQvcD4wB58tkdthziMSA_d2UdkVEYg?e=ASE0dB"
+              target="blank"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Zəmanət şərtləri
+            </a>
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/Ef4b_f5r4C9IsP0Ajql_DPUB849voDD_Vdceq60clU4V7Q?e=6b1D4V"
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="blank"
+            >
+              Kredit şərtləri
+            </a>
+          </li>
         </ul>
 
         <br />
         <h2 className="my-footer-h2">Məlumat</h2>
         <ul>
-          <li className="my-footer-li">Konfidensiallıq siyasəti</li>
-          <li className="my-footer-li">Qiymət siyasəti</li>
-          <li className="my-footer-li">Saytın istifadə şərtləri</li>
-          <li className="my-footer-li">Korporativ satışlar</li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EcDhr_QjFFFBta1htsuvKeYB921MiI7-4G9ZZ7V-fIyJCg?e=iw2LN8"
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="blank"
+            >
+              Konfidensiallıq siyasəti
+            </a>
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EQvXAWnEB3ZGkzIoTNtY38IBc6mtRB0puiGFVO2t2N7KiQ?e=8v8smO"
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="blank"
+            >
+              Qiymət siyasəti
+            </a>
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href=""
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="blank"
+            >
+              Saytın istifadə şərtləri
+            </a>
+          </li>
+          <li className="my-footer-li">
+            <a 
+              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/ES7Ymuyk2QlFsrvWWFK3AQ4BfEZmCR59ESWwBCuLNmI11A?e=lZgz9a"
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="blank"
+            >
+              Korporativ satışlar
+            </a>
+          </li>
         </ul>
 
       </div>
