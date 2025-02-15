@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./newArrivals.css";
 
-const Flashcard = () => {
+const Flashcard = ({ addToCart }) => {
   const [productItems, setProductItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,32 +54,42 @@ const Flashcard = () => {
 
         <div className="content product-new-arrival">
           {productItems.filter((product) => product.is_new).map((product, index)=> (
-            <Link
-              to={{
-                pathname: productUrl(product),
-                state: { productId: product.id },
-              }}
-              key={index}
-            >
-              <div className="box">
-                <div className="img">
-                  <img src={product.image_link} alt={product.name} />
+            <div key={index}>
+              <Link
+                to={{
+                  pathname: productUrl(product),
+                  state: { productId: product.id },
+                }}
+              >
+                <div className="box">
+                  <div className="img">
+                    <img src={product.image_link} alt={product.name} />
+                  </div>
+                  {product.name.length > 25 ?  
+                    <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+                      {product.name.slice(0, 22)}...
+                    </h4>
+                    :
+                    <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+                      {product.name}
+                    </h4>
+                  }
                 </div>
-                {product.name.length > 25 ?  
-                  <h4 style={{ textAlign: "center", marginTop: "10px" }}>
-                    {product.name.slice(0, 22)}...
-                  </h4>
-                  :
-                  <h4 style={{ textAlign: "center", marginTop: "10px" }}>
-                    {product.name}
-                  </h4>
-                }
+              </Link>
+              <div className="price" style={{height: "150%", gap: "5%", cursor: "default"}}>
                 <span style={{ display: "block", textAlign: "center" }}>
                   {product.price} AZN
                 </span>
-                <i className="fa fa-plus"></i>
+                <button
+                  aria-label="Add to cart"
+                  onClick={() => addToCart(product)}
+                  style={{display: "flex", alignItems: "center", justifyContent: "center",
+                    transform: "scale(1.2)", background: "transparent", cursor: "pointer"}}
+                >
+                  <i className="fa fa-plus" style={{color: "red"}}></i>
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
