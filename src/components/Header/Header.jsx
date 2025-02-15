@@ -8,7 +8,7 @@ const Header = ({ cartItems }) => {
   return (
     <>
       <Head />
-      <Search cartItems={cartItems} />
+        <Search cartItems={cartItems} />
       <Navbar />
     </>
   );

@@ -32,7 +32,7 @@ const Navbar = () => {
                 Bütün Məhsullar
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link aria-label="Login" className="link-hover" to="/login" 
               style={{textDecoration: "none", color: "black"}}>
                 Giriş
@@ -47,12 +47,6 @@ const Navbar = () => {
               >
                 Qeydiyyat
               </Link>
-            </li>
-            {/* <li>
-              <Link to="/admin-dashboard">Admin Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
             </li> */}
           </ul>
         </div>

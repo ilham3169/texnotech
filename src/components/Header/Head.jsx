@@ -13,7 +13,7 @@ export const Head = () => {
             >
               <i className="fa fa-phone"></i>
               <label className="phone-icon" htmlFor="">
-                +994775116975
+                +994705854432
               </label>
             </a>
             <a
