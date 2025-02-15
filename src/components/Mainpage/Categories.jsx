@@ -18,7 +18,6 @@ const Categories = () => {
     navigate("/all-products");
   };
 
-  console.log(categories);
 
   return (
     <div className="category">

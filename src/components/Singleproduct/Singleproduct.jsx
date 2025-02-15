@@ -97,7 +97,6 @@ const Singleproduct = ({ addToCart }) => {
         setMonthPrice(calculatedPrice);
       }
 
-      console.log(`Price for ${months} months:`, calculatedPrice);
     }
   };
 
