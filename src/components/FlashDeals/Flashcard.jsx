@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"; // Added useEffect import
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
+
 // setting up arrows to display next and previous arrows and make them work
 const NextArrow = (props) => {
   const { onClick } = props;
@@ -26,15 +27,9 @@ const PrevArrow = (props) => {
 
 const Flashcard = ({ addToCart }) => {
   const [productItems, setProductItems] = useState([]);
-  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productImages, setProductImages] = useState([]);
-  
-
-  const increment = () => {
-    setCount(count + 1);
-  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -137,29 +132,31 @@ const Flashcard = ({ addToCart }) => {
           return (
             <div className="box" key={index}>
               <div className="product">
+                
                 <div className="img">
-                  <span className="discount">{product.discount}% Off</span>
-                  <img src={product.image_link} alt={product.name} />
-                  <div className="product-like">
-                    <label>{count}</label> <br />
-                    <i className="fa-regular fa-heart" onClick={increment}></i>
-                  </div>
-                </div>
-                <div className="product-details">
                   <Link
                     to={{
                       pathname: productUrl,
                       state: { productId: product.id }, // Pass productId as state
                     }}
                   >
+                    {product.discount > 0 ?
+                      <span className="discount">{product.discount}% Off</span>
+                      :
+                      <></>
+                    }
+                    <img src={product.image_link} alt={product.name} />
                     <h3 className="truncate">{product.name}</h3>
                   </Link>
+                </div>
 
-                  <div className="price">
+                <div className="product-details">
+                  <div className="price" style={{height: "60%"}}>
                     <h4>{product.price}.00 AZN</h4>
                     <button
                       aria-label="Add to cart"
                       onClick={() => addToCart(product)}
+                      style={{display: "flex", alignItems: "center", justifyContent: "center", height: "70%", width: "30%"}}
                     >
                       <i className="fa fa-plus"></i>
                     </button>
