@@ -45,7 +45,7 @@ const Singleproduct = ({ addToCart }) => {
   };
 
   useEffect(() => {
-    fetch(`https://back-texnotech.onrender.com/products/${extractedId}`)
+    fetch(`http://13.61.194.219/products/${extractedId}`)
       .then((response) => response.json())
       .then((data) => {
         const productDetails = {
@@ -59,7 +59,7 @@ const Singleproduct = ({ addToCart }) => {
         setProduct(productDetails);
         setPrice(productDetails.price)
 
-        fetch(`https://back-texnotech.onrender.com/images/${extractedId}`)
+        fetch(`http://13.61.194.219/images/${extractedId}`)
           .then((response) => response.json())
           .then((imageData) => {
             setProductImages(imageData);
@@ -68,7 +68,7 @@ const Singleproduct = ({ addToCart }) => {
           .catch((error) => console.error("Error fetching images:", error));
 
         // Fetch product specifications as well
-        fetch(`https://back-texnotech.onrender.com/p_specification/values/${extractedId}`)
+        fetch(`http://13.61.194.219/p_specification/values/${extractedId}`)
           .then((response) => response.json())
           .then((specData) => {
             setProductSpecifications(specData); 

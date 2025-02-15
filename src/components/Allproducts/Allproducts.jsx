@@ -5,7 +5,7 @@ import "./allproducts.css";
 const Allproducts = ({ addToCart }) => {
 
   // API domain
-  const domain = "https://back-texnotech.onrender.com/";
+  const domain = "http://13.61.194.219/";
 
   // Data fetched from API
   const [allProducts, setAllProducts] = useState([]);
@@ -74,7 +74,6 @@ const Allproducts = ({ addToCart }) => {
   // Get products API call
   const fetchProducts = () => {
     let link = domain + "products" + "?";
-    
     if (categoryFilter) {
       link += "&category_id=" + categoryFilter;
     }
@@ -107,7 +106,7 @@ const Allproducts = ({ addToCart }) => {
 
   // Get Brands and Categories
   useEffect(() => {
-    fetch("https://back-texnotech.onrender.com/brands")
+    fetch("http://13.61.194.219/brands")
       .then((response) => response.json())
       .then((data) => {
         const brandNames = data.map((brand) => ({
@@ -118,7 +117,7 @@ const Allproducts = ({ addToCart }) => {
       })
       .catch((error) => console.error("Error fetching brands:", error));
   
-    fetch("https://back-texnotech.onrender.com/categories")
+    fetch("http://13.61.194.219/categories")
       .then((response) => response.json())
       .then((data) => {
         const categoryNames = data.map((category) => ({

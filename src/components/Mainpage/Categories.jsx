@@ -6,7 +6,7 @@ const Categories = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://back-texnotech.onrender.com/categories")
+    fetch("http://13.61.194.219/categories")
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching categories:", error));

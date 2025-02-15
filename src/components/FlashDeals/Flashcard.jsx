@@ -34,7 +34,7 @@ const Flashcard = ({ addToCart }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://back-texnotech.onrender.com/products");
+        const response = await fetch("http://13.61.194.219/products");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -49,7 +49,7 @@ const Flashcard = ({ addToCart }) => {
 
     const fetchImages = async () => {
       try {
-        const response = await fetch("https://back-texnotech.onrender.com/images");
+        const response = await fetch("http://13.61.194.219/images");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

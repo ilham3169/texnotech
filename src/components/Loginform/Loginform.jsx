@@ -44,7 +44,7 @@ const Loginform = () => {
       formData.append("username", phone);
       formData.append("password", password);
 
-      const response = await axios.post("https://back-texnotech.onrender.com/auth/token", formData, config);
+      const response = await axios.post("http://13.61.194.219/auth/token", formData, config);
       
 
       if (response.status != 200) {
