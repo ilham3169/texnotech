@@ -18,7 +18,7 @@ const Homepage = ({ productItems, addToCart, cartItems, shopItems }) => {
       <Mainpage />
       <ExtraSlideData />
       <Flashdeals productItems={productItems} addToCart={addToCart} />
-      <Newarrivals />
+      <Newarrivals addToCart={addToCart}/>
       <Features />
       <Footer />
     </>
