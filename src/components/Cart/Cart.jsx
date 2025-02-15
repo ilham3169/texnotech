@@ -32,14 +32,14 @@ const Cart = ({
                 >
                   <div className="img">
                     <img
-                      src={item.iamge_link}
+                      src={item.image_link}
                       alt="Picture of this item is unavailable"
                     />
                   </div>
                   <div className="cart-details">
                     <h3>{item.name}</h3>
                     <h4>
-                      {item.price}.00 * {item.qty}
+                      {item.price}.00 x {item.qty}
                     </h4>
                     <span>${productQty}.00</span>
                   </div>
@@ -75,9 +75,9 @@ const Cart = ({
               <h4>Total Price :</h4>
               <h3>${totalPrice}.00</h3>
             </div>
-            <button className="checkout" onClick={() => checkOut(cartItems)}>
+            {/* <button className="checkout" onClick={() => checkOut(cartItems)}>
               Checkout Now!
-            </button>
+            </button> */}
           </div>
         </div>
       </section>
