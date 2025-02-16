@@ -183,6 +183,28 @@ button {
   padding: 0 3%;
 }
 
+.search-dropdown {
+  width: 78%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin-left: 12.6%;
+}
+
+.search-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+
 @media only screen and (max-width: 768px) {
   .left-row,
   .right-row {
