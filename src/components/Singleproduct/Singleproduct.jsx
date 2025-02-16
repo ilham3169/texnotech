@@ -38,6 +38,10 @@ const Singleproduct = ({ addToCart }) => {
   const [mainImage, setMainImage] = useState("");
   const [productPrice, setPrice] = useState(null); // State to store monthly payment
   const [monthPrice, setMonthPrice] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+
+
+
 
 
   const handleImageClick = (imageLink) => {
@@ -45,7 +49,7 @@ const Singleproduct = ({ addToCart }) => {
   };
 
   useEffect(() => {
-    fetch(`https://texnotech.store/products/${extractedId}`)
+    fetch(`https://back-texnotech.onrender.com/products/${extractedId}`)
       .then((response) => response.json())
       .then((data) => {
         const productDetails = {
@@ -57,18 +61,19 @@ const Singleproduct = ({ addToCart }) => {
           id: data.id,
         };
         setProduct(productDetails);
-        setPrice(productDetails.price)
-
-        fetch(`https://texnotech.store/images/${extractedId}`)
+        setPrice(productDetails.price);
+  
+        fetch(`https://back-texnotech.onrender.com/images/${extractedId}`)
           .then((response) => response.json())
           .then((imageData) => {
             setProductImages(imageData);
-            setMainImage(imageData[0].image_link);
+            if (imageData.length > 0 && mainImage === "") {
+              setMainImage(imageData[0].image_link);
+            }
           })
           .catch((error) => console.error("Error fetching images:", error));
-
-        // Fetch product specifications as well
-        fetch(`https://texnotech.store/p_specification/values/${extractedId}`)
+  
+        fetch(`https://back-texnotech.onrender.com/p_specification/values/${extractedId}`)
           .then((response) => response.json())
           .then((specData) => {
             setProductSpecifications(specData); 
@@ -76,7 +81,7 @@ const Singleproduct = ({ addToCart }) => {
           .catch((error) => console.error("Error fetching specifications:", error));
       })
       .catch((error) => console.error("Error fetching product:", error));
-  }, [extractedId]);
+  }, [extractedId]); 
 
   if (!product) {
     return <div>Loading...</div>; 
@@ -88,17 +93,15 @@ const Singleproduct = ({ addToCart }) => {
 
   const specsToShow = showAll ? productSpecifications : (productSpecifications || []).slice(0, 10);
 
-
   const handleButtonClick = (months) => {
+    setSelectedPeriod(months)
     if (productPrice) {
-      const calculatedPrice = Math.round(productPrice / months);
-
-      if (calculatedPrice !== monthPrice) {
-        setMonthPrice(calculatedPrice);
-      }
-
+      const calculatedPrice = productPrice / months;
+      setMonthPrice(calculatedPrice); 
+      console.log(`Price for ${months} months:`, calculatedPrice);
     }
   };
+
 
 
   return (
@@ -166,7 +169,7 @@ const Singleproduct = ({ addToCart }) => {
                   <MDBRow>
                     <div className="start d-flex align-items-center" style={{background: "red", width: "fit-content", borderRadius: "5px", marginLeft: "1.2%"}}>                      {
                         product.discount > 0 ? 
-                        <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{Math.round(product.price - product.discount)} ₼</MDBCardText>
+                        <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{product.discount} ₼</MDBCardText>
                         : <></>
                       }
                     </div>
@@ -174,7 +177,7 @@ const Singleproduct = ({ addToCart }) => {
 
                   <MDBRow>
                     <div className="text-start" style={{display: "flex", gap: "10px"}}>
-                      <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{product.discount} ₼</MDBCardTitle>
+                      <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{Math.round(product.price - product.discount)} ₼</MDBCardTitle>
                       {
                         product.discount > 0 ? 
                         <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
@@ -198,7 +201,8 @@ const Singleproduct = ({ addToCart }) => {
                             cursor: "pointer", 
                           }}
                           type="button" 
-                        >
+                          onClick={() => addToCart(product)}
+                          >
                           Səbətə at
                         </button>
 
@@ -270,126 +274,49 @@ const Singleproduct = ({ addToCart }) => {
                   </MDBRow>
 
                   <MDBRow style={{display: "flex", justifyContent: "center"}}>
-                      <MDBCol md='8' style={{ borderRadius: "8px 0 0 8px"}}>
-                        <MDBListGroup horizontal style={{margin: "5vh auto", height: "35%"}} className="justify-content-center">
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
+                    <MDBCol md='8' style={{ borderRadius: "8px 0 0 8px"}}>
+                      <MDBListGroup horizontal style={{ margin: '5vh auto', height: '35%' }} className="justify-content-center">
+                        {[3, 6, 9, 12, 18].map((period) => (
+                          <MDBListGroupItem key={period} style={{ padding: '0px', width: '20%' }}>
                             <button
                               style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "#575555",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "white", // Ensures the text color is visible
-                                cursor: "pointer",
-                              }}
-                              type="button" // Ensures it doesn't submit a form by default
-                              onClick={() => handleButtonClick(3)} // 3 months
-                            >
-                              3 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
-                            </button>
-                          </MDBListGroupItem>
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
-                            <button
-                              style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "grey", // Ensures the text color is visible
-                                cursor: "pointer",
+                                width: '100%',
+                                minHeight: '100%',
+                                borderRadius: '5px',
+                                background: selectedPeriod === period ? '#575555' : 'transparent',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: selectedPeriod === period ? 'white' : 'grey',
+                                cursor: 'pointer',
                               }}
                               type="button"
-                              onClick={() => handleButtonClick(6)} 
+                              onClick={() => handleButtonClick(period)}
                             >
-                              6 ay  
-                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
+                              {period} ay
+                              <MDBBadge style={{ display: 'flex', justifyContent: 'center', marginLeft: '7px' }} color='danger' notification pill>
+                                0%
+                              </MDBBadge>
                             </button>
                           </MDBListGroupItem>
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
-                            <button
-                              style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "grey", // Ensures the text color is visible
-                                cursor: "pointer",
-                              }}
-                              type="button" // Ensures it doesn't submit a form by default\
-                              onClick={() => handleButtonClick(9)} // 3 months
-
-                            >
-                              9 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
-                            </button>
-                          </MDBListGroupItem>
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
-                            <button
-                              style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "grey", // Ensures the text color is visible
-                                cursor: "pointer",
-                              }}
-                              type="button" // Ensures it doesn't submit a form by default
-                              onClick={() => handleButtonClick(12)} 
-
-                            >
-                              12 ay
-                              <MDBBadge style={{display: "flex", justifyContent: "center", marginLeft: "7px"}} color='danger' notification pill>0%</MDBBadge>
-                            </button>
-                          </MDBListGroupItem>
-                          <MDBListGroupItem style={{padding: "0px", width: "20%"}}>
-                            <button
-                              style={{
-                                width: "100%",
-                                minHeight: "100%",
-                                borderRadius: "5px",
-                                background: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "grey", // Ensures the text color is visible
-                                cursor: "pointer",
-                              }}
-                              type="button" // Ensures it doesn't submit a form by default
-                              onClick={() => handleButtonClick(18)} // 3 months
-                            >
-                              18 ay
-                            </button>
-                          </MDBListGroupItem>
-                        </MDBListGroup>
-                      </MDBCol>
-                      <MDBCol md='3' style={{border: "1px solid rgb(206, 204, 204)", borderRadius: "15px", textAlign: "center"}}>
-                        <div style={{position: "relative", margin: "4vh auto"}}>
-                          <MDBRow>
-                            <div style={{display: "flex", justifyContent: "center"}}>
-                              <MDBCardSubTitle>Aylıq ödəniş</MDBCardSubTitle>
-                            </div>
-                          </MDBRow>
-                          <MDBRow>
-                            <div style={{display: "flex", justifyContent: "center", marginTop: "2%", fontWeight: "600"}}>
-                              <MDBCardTitle>{monthPrice} ₼</MDBCardTitle>
-                            </div>
-                          </MDBRow>
-                        </div>
-                      </MDBCol>
-                    </MDBRow>
+                        ))}
+                      </MDBListGroup>
+                    </MDBCol>
+                    <MDBCol md='3' style={{border: "1px solid rgb(206, 204, 204)", borderRadius: "15px", textAlign: "center"}}>
+                      <div style={{position: "relative", margin: "4vh auto"}}>
+                        <MDBRow>
+                          <div style={{display: "flex", justifyContent: "center"}}>
+                            <MDBCardSubTitle>Aylıq ödəniş</MDBCardSubTitle>
+                          </div>
+                        </MDBRow>
+                        <MDBRow>
+                          <div style={{display: "flex", justifyContent: "center", marginTop: "2%", fontWeight: "600"}}>
+                            <MDBCardTitle>{monthPrice !== null ? monthPrice.toFixed(2) : "0.00"}</MDBCardTitle>
+                          </div>
+                        </MDBRow>
+                      </div>
+                    </MDBCol>
+                  </MDBRow>
 
                     <MDBRow>
                       <div className="text-start mt-2">
@@ -408,6 +335,7 @@ const Singleproduct = ({ addToCart }) => {
                       <div className="text-start">
                         <MDBRow>
                           <MDBCardSubTitle style={{fontWeight: "500"}}>Əlavə xidmətlər:</MDBCardSubTitle>
+
                         </MDBRow>
                         <MDBRow style={{marginLeft: "0", width: "100%"}}>
                           <button
@@ -420,8 +348,9 @@ const Singleproduct = ({ addToCart }) => {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              color: "grey", // Ensures the text color is visible
-                              cursor: "pointer", // Makes the button more interactive
+                              color: "grey", 
+                              cursor: "pointer",
+                              gap: "8px"
                             }}
                             type="button" // Ensures it doesn't submit a form by default
                           >
@@ -431,9 +360,9 @@ const Singleproduct = ({ addToCart }) => {
                       </div>
                     </MDBRow> 
 
-                    <MDBRow>
+                    {/* <MDBRow>
                       <hr style={{margin: "1.5% 0"}}/>
-                    </MDBRow>
+                    </MDBRow> */}
                 
                     {/* <MDBRow>
                       <div className="text-start">

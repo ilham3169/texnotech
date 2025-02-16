@@ -151,8 +151,10 @@ const Flashcard = ({ addToCart }) => {
                 </div>
 
                 <div className="product-details">
-                  <div className="price" style={{height: "60%"}}>
+                  <div className="price" style={{height: "60%", gap:"5%"}}>
+
                     <h4>{product.price}.00 AZN</h4>
+
                     <button
                       aria-label="Add to cart"
                       onClick={() => addToCart(product)}
@@ -160,6 +162,7 @@ const Flashcard = ({ addToCart }) => {
                     >
                       <i className="fa fa-plus"></i>
                     </button>
+
                   </div>
                 </div>
               </div>

@@ -11,6 +11,8 @@ const Cart = ({
     (price, item) => price + item.qty * item.price,
     0
   );
+
+  console.log(cartItems)
   return (
     <>
       <section className="cart-items">
@@ -32,11 +34,11 @@ const Cart = ({
                 >
                   <div className="img">
                     <img
-                      src={item.image_link}
+                      src={item.image_link || item.img}
                       alt="Picture of this item is unavailable"
                     />
                   </div>
-                  <div className="cart-details">
+                  <div className="cart-details" style={{marginLeft: "2%"}}>
                     <h3>{item.name}</h3>
                     <h4>
                       {item.price}.00 x {item.qty}
