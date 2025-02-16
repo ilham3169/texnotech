@@ -18,12 +18,12 @@ export const Head = () => {
             </a>
             <a
               target="_blank"
-              href="mailto:xxxxxxxx@gmail.com"
+              href="mailto:info@texnotech.store"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-envelope"></i>
               <label className="phone-icon" htmlFor="">
-                xxxxxxxx@gmail.com
+                info@texnotech.store
               </label>
             </a>
           </div>

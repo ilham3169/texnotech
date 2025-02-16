@@ -141,10 +141,10 @@ const Footer = () => {
           <li className="contact-info-flex my-footer-li">
             <a
               target="_blank"
-              href="mailto:xxxxxxxx@gmail.com"
+              href="mailto:info@texnotech.store"
               className="icon-flex phone-icon"
             >
-              xxxxxxxxxxx@gmail.com
+              info@texnotech.store
             </a>
           </li>
           <li className="contact-info-flex my-footer-li">
