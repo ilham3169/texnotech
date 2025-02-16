@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -14,23 +14,25 @@ const Categories = () => {
 
   const reversedCategories = [...categories].reverse();
 
-  const handleCategoryClick = () => {
-    navigate("/all-products");
-  };
-
 
   return (
     <div className="category">
       {reversedCategories.filter((category) => category.parent_category_id == null).map((category, index) => {
         return (
-          <div
-            className="box-category box f_flex"
+          <Link
+            to={{
+              pathname: `/all-products/${category.id}`,
+              state: { categoryId: category.id }, // Pass productId as state
+            }}
             key={index}
-            onClick={handleCategoryClick} 
           >
-            <img src={category.icon_image_link} alt="Category" />
-            <span>{category.name}</span>
-          </div>
+            <div
+              className="box-category box f_flex"
+            >
+              <img src={category.icon_image_link} alt="Category" />
+              <span>{category.name}</span>
+            </div>
+          </Link>
         );
       })}
     </div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./allproducts.css";
 
 const Allproducts = ({ addToCart }) => {
+  const { categoryId } = useParams();
 
   // API domain
   const domain = "http://13.61.194.219/";
@@ -106,6 +107,11 @@ const Allproducts = ({ addToCart }) => {
 
   // Get Brands and Categories
   useEffect(() => {
+
+    if (categoryId && categoryId >= 0) {
+      handleCategoryFilterChange(categoryId)
+    }
+
     fetch("http://13.61.194.219/brands")
       .then((response) => response.json())
       .then((data) => {

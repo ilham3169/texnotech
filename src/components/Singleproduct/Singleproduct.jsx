@@ -435,7 +435,7 @@ const Singleproduct = ({ addToCart }) => {
                       <hr style={{margin: "1.5% 0"}}/>
                     </MDBRow>
                 
-                    <MDBRow>
+                    {/* <MDBRow>
                       <div className="text-start">
                         <MDBRow>
                           <MDBCardSubTitle style={{fontWeight: "500"}}>Birgə satılanlar:</MDBCardSubTitle>
@@ -515,7 +515,7 @@ const Singleproduct = ({ addToCart }) => {
                           </MDBCol>
                         </MDBRow>
                       </div>
-                    </MDBRow>
+                    </MDBRow> */}
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>

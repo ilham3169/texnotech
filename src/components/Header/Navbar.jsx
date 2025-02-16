@@ -26,7 +26,10 @@ const Navbar = () => {
               <Link
                 aria-label="All Products"
                 className="link-hover"
-                to="/all-products"
+                to={{
+                  pathname: `/all-products/-1`,
+                  state: { categoryId: -1 }, // Pass productId as state
+                }}
                 style={{textDecoration: "none", color: "black"}}
               >
                 Bütün Məhsullar

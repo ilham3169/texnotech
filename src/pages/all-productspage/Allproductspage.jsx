@@ -7,7 +7,7 @@ const Allproductspage = ({ cartItems, allProductsData, addToCart }) => {
   return (
     <>
       <Header cartItems={cartItems} />
-      <Allproducts allProductsData={allProductsData} addToCart={addToCart} />
+        <Allproducts allProductsData={allProductsData} addToCart={addToCart} />
       <Footer />
     </>
   );
