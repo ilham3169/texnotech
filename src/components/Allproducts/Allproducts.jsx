@@ -6,7 +6,7 @@ const Allproducts = ({ addToCart }) => {
   const { categoryId } = useParams();
 
   // API domain
-  const domain = "http://13.61.194.219/";
+  const domain = "https://texnotech.store/";
 
   // Data fetched from API
   const [allProducts, setAllProducts] = useState([]);
@@ -112,7 +112,7 @@ const Allproducts = ({ addToCart }) => {
       handleCategoryFilterChange(categoryId)
     }
 
-    fetch("http://13.61.194.219/brands")
+    fetch("https://texnotech.store/brands")
       .then((response) => response.json())
       .then((data) => {
         const brandNames = data.map((brand) => ({
@@ -123,7 +123,7 @@ const Allproducts = ({ addToCart }) => {
       })
       .catch((error) => console.error("Error fetching brands:", error));
   
-    fetch("http://13.61.194.219/categories")
+    fetch("https://texnotech.store/categories")
       .then((response) => response.json())
       .then((data) => {
         const categoryNames = data.map((category) => ({

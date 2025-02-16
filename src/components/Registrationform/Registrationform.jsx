@@ -72,7 +72,7 @@ const Registrationform = () => {
         "confirm_password": confirmPassword,
       }
       
-      const response = await axios.post("http://13.61.194.219/auth", formData, config);
+      const response = await axios.post("https://texnotech.store/auth", formData, config);
 
       if (response.status != 201) {
         return toast.error("Qeydiyyat uğursuz oldu.");
