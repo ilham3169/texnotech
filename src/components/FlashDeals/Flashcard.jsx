@@ -141,7 +141,7 @@ const Flashcard = ({ addToCart }) => {
                     }}
                   >
                     {product.discount > 0 ?
-                      <span className="discount">{product.discount}% Off</span>
+                      <span className="discount">{Math.round(product.discount * 100 / product.price,2) }% Off</span>
                       :
                       <></>
                     }
