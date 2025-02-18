@@ -35,7 +35,8 @@ const Cart = ({
       setIsCheckoutButtonClicked(false)
       setIsCheckoutModalOpen(false)
     }
-    else {
+    else if (cartItems.length > 0) {
+
       setIsCheckoutButtonClicked(true)
       setIsCheckoutModalOpen(true)
     }
