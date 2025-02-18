@@ -29,10 +29,10 @@ function App() {
             : item
         )
       );
-      toast.success("Item quantity increased");
+      toast.success("Məhsulun sayı artırıldı");
     } else {
       setCartItems([...cartItems, { ...product, qty: 1 }]);
-      toast.success("Item added to cart");
+      toast.success("Məhsul səbətə əlavə edildi");
     }
   };
   // This is a function to delete items from the cart, it takes the product and checks within the cart to see if it is already in cart
@@ -45,12 +45,12 @@ function App() {
     // }
     if (productExists.qty === 1) {
       const shouldRemove = window.confirm(
-        "Are you sure you want to remove this item from the cart?"
+        "Bu məhsulu səbətdən silmək istədiyinizə əminsiniz?"
       );
 
       if (shouldRemove) {
         setCartItems(cartItems.filter((item) => item.id !== product.id));
-        toast.success("Item removed from cart");
+        toast.success("Məhsul səbətdən silindi");
       }
     } else {
       setCartItems(
@@ -60,7 +60,7 @@ function App() {
             : item
         )
       );
-      toast.success("Item quantity decreased");
+      toast.success("Məhsulun sayı azadıldı");
     }
   };
   // This function is used for the checkout button it takes cartItems as input and if the length of items in it is 0 it alerts add something to cart first
@@ -109,7 +109,7 @@ function App() {
   // This function removes an item from the cart entirely, filtering out the values which doesn't have the same id as those clicked
   const removeFromCart = (product) => {
     const shouldRemove = window.confirm(
-      "Are you sure you want to remove this item from the cart?"
+      "Bu məhsulu səbətdən silmək istədiyinizə əminsiniz?"
     );
 
     if (shouldRemove) {

@@ -143,12 +143,17 @@ const Cart = ({
     <>
       <section className="cart-items">
         <div className="container cart-flex">
-          <div className="cart-details">
+          <div className="cart-details"
+          >
             {/* Checking cartlength if it's 0 thn displaying No items are added in the cart */}
             {cartItems.length === 0 && (
-              <h1 className="no-items product">
-                There are no items in the cart.
-              </h1>
+              <>
+                <h1 className="no-items product" style={{textAlign: "center"}}>
+                  Səbətində məhsul yoxdur
+                  <p style={{fontWeight: "500", fontSize: "17px", color: "grey"}}>İstədiyin məhsulu səbətinə əlavə et</p>
+                </h1>
+              </>
+              
             )}
             {cartItems.map((item) => {
               // mapping through the array of data and using objects in the array to use in the page
@@ -169,7 +174,7 @@ const Cart = ({
                     <h4>
                       {item.price}.00 x {item.qty}
                     </h4>
-                    <span>${productQty}.00</span>
+                    <span>{productQty}.00 AZN</span>
                   </div>
                   <div className="cart-items-function">
                     <div className="removeCart">
@@ -198,13 +203,13 @@ const Cart = ({
             })}
           </div>
           <div className="cart-total product-cart">
-            <h2>Cart Summary</h2>
+            <h2>Səbət</h2>
             <div className="d_flex">
-              <h4>Total Price :</h4>
-              <h3>${totalPrice}.00</h3>
+              <h4>Toplam qiymət :</h4>
+              <h3>{totalPrice}.00 AZN</h3>
             </div>
-            <button className="checkout" style={{background: "#ffebeb",}} onClick={() => handleOrder(cartItems)}>
-              Checkout Now!
+            <button className="checkout" style={{background: "#ffebeb", fontSize: "15px"}} onClick={() => handleOrder(cartItems)}>
+              Sifarişi rəsmləşdir!
             </button>
           </div>
         </div>
