@@ -14,7 +14,7 @@ const Allproducts = ({ addToCart }) => {
   const [categoryNames, setCategoryNames] = useState([]);
 
   // Filter input fields
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 100000});
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 20000});
   const [availabilityFilter, setAvailabilityFilter] = useState(null);
   const [discountFilter, setDiscountFilter] = useState(null);
   const [brandFilter, setBrandFilter] = useState(null);
@@ -159,7 +159,7 @@ const Allproducts = ({ addToCart }) => {
             id="price-range"
             name="price-range"
             min="0"
-            max="100000"
+            max="20000"
             step="10"
             value={priceRange.max}
             onChange={handlePriceRangeChange}
