@@ -41,9 +41,6 @@ const Singleproduct = ({ addToCart }) => {
   const [selectedPeriod, setSelectedPeriod] = useState(null);
 
 
-
-
-
   const handleImageClick = (imageLink) => {
     setMainImage(imageLink);
   };

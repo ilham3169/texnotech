@@ -9,7 +9,7 @@ const Slidecard = () => {
 
   const handleButtonClick = () => {
     // Redirect the user to the desired page
-    navigate("/all-products"); // Replace '/collections' with the actual path
+    navigate("/all-products/-1"); // Replace '/collections' with the actual path
   };
 
   const settings = {
@@ -39,7 +39,7 @@ const Slidecard = () => {
                   className="btn-primary"
                   aria-hidden="false"
                 >
-                  Visit Collections
+                  Ziyarət et
                 </button>
               </div>
               <div className="right">
