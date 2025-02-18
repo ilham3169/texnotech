@@ -1,5 +1,5 @@
 import "./Cart.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import { FaTruckArrowRight } from "react-icons/fa6";
@@ -25,9 +25,23 @@ const Cart = ({
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null)
 
-  const [clientName, setClientName] = useState(null)
-  const [clientSurname, setClientSurname] = useState(null)
+  const [clientName, setClientName] = useState("")
+  const [clientSurname, setClientSurname] = useState("")
   const [clientPhone, setClientPhone] = useState("+994")
+
+   useEffect(() => {
+      if (cartItems.length < 1) {
+        setIsCheckoutButtonClicked(false)
+        setIsCheckoutModalOpen(false)
+
+        setClientName("")
+        setClientSurname("")
+        setClientPhone("")
+
+        setSelectedDeliveryOption(null)
+        setSelectedPaymentMethod(null)
+      }
+    }, [cartItems]);
 
   const handleOrder = () => {
     
@@ -82,17 +96,48 @@ const Cart = ({
     setClientPhone(value);
   };
 
-  const handleKeyDown = (event) => {
-    // Prevent backspace/delete from removing "+994"
-    if ((event.key === "Backspace" || event.key === "Delete") && clientPhone.length <= 4) {
-      event.preventDefault();
-    }
-  };
-
-
   const handleTextInput = (event) => {
     event.target.value = event.target.value.replace(/[^a-zA-ZəüöğışçƏÜÖĞİŞÇ ]/g, ""); 
   };
+
+  const handleConfirmOrder = () => {
+    if(
+      clientName.length > 0 &&
+      clientSurname.length > 0 &&
+      clientPhone.length === 13
+    ) {
+      if (selectedPaymentMethod === 2) {
+        // Redirect to Kapital Bank for payment
+        console.log("Redirect to Kapital Bank")
+
+        // If payment successful
+        if (selectedDeliveryOption === 1) {
+          // Create order in database (Courier, Credit Card)
+          console.log("Create Order with credit card and Courier delivery")
+        }
+        else if (selectedDeliveryOption === 2) {
+          // Create order in database (Self pickup, Credit Card)
+          console.log("Create Order with credit card and Self pickup")
+        } 
+
+      }
+      else if (selectedPaymentMethod === 1) {
+
+        if (selectedDeliveryOption === 1) {
+          // Create order in database (Courier, Cash)
+          console.log("Create Order with Cash and Courier delivery")
+        }
+        else if (selectedDeliveryOption === 2) {
+          // Create order in database (Self pickup, Cash)
+          console.log("Create Order with Cash and Self pickup")
+        } 
+
+      }
+    } else {
+      console.log("User information is not completed")
+    }
+  }
+
 
   return (
     <>
@@ -158,7 +203,7 @@ const Cart = ({
               <h4>Total Price :</h4>
               <h3>${totalPrice}.00</h3>
             </div>
-            <button className="checkout" onClick={() => handleOrder(cartItems)}>
+            <button className="checkout" style={{background: "#ffebeb",}} onClick={() => handleOrder(cartItems)}>
               Checkout Now!
             </button>
           </div>
@@ -251,7 +296,7 @@ const Cart = ({
                 </div>
               </div>
 
-              {selectedDeliveryOption === 1 ?
+              {selectedDeliveryOption != null ?
                 <>
                   <div style={{display: "flex", justifyContent: "center"}}>
                     <h2>Ödəniş üsulu</h2>
@@ -295,7 +340,7 @@ const Cart = ({
                         </div>
                         <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
                           <h3 style={{marginTop: "0", fontWeight: "350"}}>
-                            Təhvil alarkən bank kartı vasitəsi ilə
+                            Bank kartı vasitəsi ilə
                           </h3>
                         </div>
                         <div className="" style={{display: "flex", alignItems: "center"}}>
@@ -313,7 +358,7 @@ const Cart = ({
               <></>
               }
 
-              {selectedPaymentMethod !== null && selectedDeliveryOption == 1 ? 
+              {selectedPaymentMethod !== null ? 
                 <>
                   <div style={{display: "flex", justifyContent: "center"}}>
                     <h2>Alıcı kontaktları</h2>
@@ -323,6 +368,7 @@ const Cart = ({
                     <div style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 5%"}}>
                       <div
                         className="cart-list product d_flex cart-responsive"
+                        style={{background: "transparent"}}
                       >
                         <div className="cart-details" style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "1%"}}>
                           <input id="checkoutInfoName" placeholder="Ad" type="text"
@@ -364,6 +410,31 @@ const Cart = ({
                   </div> 
                 </>
                 :
+                <></>
+              }
+
+              {selectedPaymentMethod != null ? 
+                <>
+                   <div className="cart-total"
+                    style={{
+                      padding: "0 5% 3% 5%"
+                    }}
+                   >
+                      <button 
+                        className="checkout"
+                        style={{
+                          width: "50%",
+                          fontSize: "17px",
+                          fontWeight: "500",
+                          background: "#ffebeb",
+                        }}
+                        onClick={handleConfirmOrder}
+                      >
+                        Təsdiqlə və davam et
+                      </button>
+                    </div>
+                </>
+                : 
                 <></>
               }
               
