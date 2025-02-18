@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"; // Added useEffect import
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
+import { ClipLoader } from "react-spinners";
 
 
 // setting up arrows to display next and previous arrows and make them work
@@ -70,7 +71,16 @@ const Flashcard = ({ addToCart }) => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;  // Show loading text while fetching
+    return (
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "10vh"
+      }}>
+        <ClipLoader color="#3498db" size={50} />
+      </div>
+    ) 
   }
 
   if (error) {

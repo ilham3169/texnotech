@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./newArrivals.css";
+import { ClipLoader } from "react-spinners";
+
 
 const Flashcard = ({ addToCart }) => {
   const [productItems, setProductItems] = useState([]);
@@ -27,7 +29,16 @@ const Flashcard = ({ addToCart }) => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "10vh"
+      }}>
+        <ClipLoader color="#3498db" size={50} />
+      </div>
+    ) 
   }
 
   if (error) {
