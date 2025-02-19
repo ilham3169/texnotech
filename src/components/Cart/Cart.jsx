@@ -140,7 +140,7 @@ const Cart = ({
             payment_method: "cash"
           };
 
-          fetch('http://127.0.0.1:8000/orders/add', {  // Replace with your actual endpoint
+          fetch('https://texnotech.store/orders/add', {  // Replace with your actual endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
