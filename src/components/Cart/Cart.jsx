@@ -78,15 +78,13 @@ const Cart = ({
   const handlePhoneInput = (event) => {
     let value = event.target.value;
 
-    // Ensure the input always starts with "+994"
     if (!value.startsWith("+994")) {
       value = "+994";
     }
 
-    // Allow only digits after "+994"
-    value = value.replace(/[^+\d]/g, ""); // Removes invalid characters
+    value = value.replace(/[^+\d]/g, ""); 
     if (value.length < 4) {
-      value = "+994"; // Prevents full deletion
+      value = "+994"; 
     }
 
     if (value.length > 13) {
@@ -107,16 +105,12 @@ const Cart = ({
       clientPhone.length === 13
     ) {
       if (selectedPaymentMethod === 2) {
-        // Redirect to Kapital Bank for payment
         console.log("Redirect to Kapital Bank")
 
-        // If payment successful
         if (selectedDeliveryOption === 1) {
-          // Create order in database (Courier, Credit Card)
           console.log("Create Order with credit card and Courier delivery")
         }
         else if (selectedDeliveryOption === 2) {
-          // Create order in database (Self pickup, Credit Card)
           console.log("Create Order with credit card and Self pickup")
         } 
 
@@ -124,11 +118,45 @@ const Cart = ({
       else if (selectedPaymentMethod === 1) {
 
         if (selectedDeliveryOption === 1) {
-          // Create order in database (Courier, Cash)
           console.log("Create Order with Cash and Courier delivery")
+          console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`)
+
+          let totalPrice = 0; 
+          cartItems.forEach(item => {
+            console.log(`Product: ${item.name}`);
+            console.log(`Quantity: ${item.qty}`);
+            console.log(`Price: ${item.price} AZN`);
+            console.log(`Product id: ${item.id}`);
+            totalPrice += item.price * item.qty;
+          });
+
+          const orderData = {
+            name: clientName,
+            surname: clientSurname,
+            phone_number: clientPhone,
+            total_price: totalPrice,
+            status: "pending",
+            payment_status: "unpaid",
+            payment_method: "cash"
+          };
+
+          fetch('http://127.0.0.1:8000/orders/add', {  // Replace with your actual endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log("Order created successfully:", data);
+          })
+          .catch(error => {
+              console.error("Error creating order:", error);
+          });
+          
         }
         else if (selectedDeliveryOption === 2) {
-          // Create order in database (Self pickup, Cash)
           console.log("Create Order with Cash and Self pickup")
         } 
 
@@ -145,7 +173,6 @@ const Cart = ({
         <div className="container cart-flex">
           <div className="cart-details"
           >
-            {/* Checking cartlength if it's 0 thn displaying No items are added in the cart */}
             {cartItems.length === 0 && (
               <>
                 <h1 className="no-items product" style={{textAlign: "center"}}>
@@ -156,7 +183,6 @@ const Cart = ({
               
             )}
             {cartItems.map((item) => {
-              // mapping through the array of data and using objects in the array to use in the page
               const productQty = item.price * item.qty;
               return (
                 <div
@@ -209,7 +235,7 @@ const Cart = ({
               <h3>{totalPrice}.00 AZN</h3>
             </div>
             <button className="checkout" style={{background: "#ffebeb", fontSize: "15px"}} onClick={() => handleOrder(cartItems)}>
-              Sifarişi rəsmləşdir!
+              Sifarişi rəsmiləşdir!
             </button>
           </div>
         </div>
@@ -253,7 +279,7 @@ const Cart = ({
                         Kuryer ilə ünvana çatdırılma xidməti
                       </h3>
                       <h4 style={{marginTop: "0%"}}>
-                        Muddet: 1 gun
+                        Müddət: 1 gun
                       </h4>
                       <span style={{marginTop: "1%"}}>
                         AZN 3.00
@@ -284,7 +310,7 @@ const Cart = ({
                         Təhvil məntəqələrindən təslim alma
                       </h3>
                       <h4 style={{marginTop: "0%"}}>
-                        Muddet: 0 gun
+                        Müddət: 0 gün
                       </h4>
                       <span style={{marginTop: "1%"}}>
                         Pulsuz
