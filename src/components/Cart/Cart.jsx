@@ -162,7 +162,7 @@ const Cart = ({
                   price_at_purchase: item.price
                 };
 
-                fetch('http://127.0.0.1:8000/order_items/add', {  // Replace with your actual endpoint
+                fetch('https://texnotech.store/order_items/add', {  // Replace with your actual endpoint
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
