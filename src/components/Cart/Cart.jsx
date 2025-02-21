@@ -140,7 +140,7 @@ const Cart = ({
             payment_method: "cash"
           };
 
-          fetch('https://texnotech.store/orders/add', {  // Replace with your actual endpoint
+          fetch('https://texnotech.store/orders/add', {  
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,6 +150,37 @@ const Cart = ({
           .then(response => response.json())
           .then(data => {
               console.log("Order created successfully:", data);
+
+              const orderId = data.id;
+              console.log(data.id); 
+              
+              cartItems.forEach(item => {
+                const orderItemsData = {
+                  order_id: orderId,  // Use the order ID from the created order
+                  product_id: item.id,
+                  quantity: item.qty,
+                  price_at_purchase: item.price
+                };
+
+                fetch('http://127.0.0.1:8000/order_items/add', {  // Replace with your actual endpoint
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(orderItemsData)
+                })
+                .then(response => response.json())
+                .then(itemData => {
+                  console.log(`Item added successfully:`, itemData);
+                })
+                .catch(error => {
+                  console.error(`Error adding item to order:`, error);
+                });
+              });
+
+              
+
+
           })
           .catch(error => {
               console.error("Error creating order:", error);
