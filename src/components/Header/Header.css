@@ -40,13 +40,21 @@
   width: 8rem;
 }
 
+.logo {
+  flex-shrink: 0; /* Prevent logo from shrinking too much */
+}
+
 .search-box {
-  width: 100%;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   background: white;
+  flex-grow: 1; /* Allow search box to take available space */
+  flex-shrink: 1; /* Allow it to shrink if needed */
+  width: auto; /* Remove fixed width to adapt */
+  margin: 0 10px; /* Add spacing between logo and cart */
+  display: flex; /* Keep search icon and input inline */
+  align-items: center;
 }
-
 .search-box i {
   width: 5%;
   text-align: center;
@@ -181,6 +189,11 @@ button {
 
 .header-container {
   padding: 0 3%;
+  flex-direction: row; /* Force row layout */
+  flex-wrap: nowrap; /* Prevent wrapping to a new line */
+  align-items: center; /* Vertically center items */
+  justify-content: space-between; /* Distribute space evenly */
+  width: 100%;
 }
 
 .search-dropdown {
@@ -204,12 +217,11 @@ button {
   background-color: #f0f0f0;
 }
 
+.icon {
+  flex-shrink: 0; /* Prevent icon from shrinking too much */
+}
 
 @media only screen and (max-width: 768px) {
-  .left-row,
-  .right-row {
-    display: none;
-  }
 
   .menu-items {
     flex-direction: column;
@@ -239,16 +251,41 @@ button {
     gap: 3rem;
   }
 
-  .close,
-  .open {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.8rem;
-    color: #ff014f;
-    display: block;
-    font-size: 25px;
-    z-index: 999;
+  .header-container {
+    flex-wrap: nowrap; /* Ensure no wrapping on mobile */
+    padding: 0 2%; /* Slightly reduce padding */
   }
+
+  .logo img {
+    width: 6rem; /* Keep logo manageable on mobile */
+  }
+
+  .search-box {
+    width: auto; /* Let it adapt to available space */
+    margin: 0 5px; /* Reduce margins for tighter fit */
+  }
+
+  .search-box input {
+    width: 100%; /* Ensure input fills the search-box */
+    padding: 8px; /* Slightly reduce padding */
+  }
+
+  .icon-circle {
+    width: 40px; /* Smaller cart icon for mobile */
+    height: 40px;
+    line-height: 40px;
+    margin-left: 0; /* Remove extra margin */
+  }
+
+  .search .cart span {
+    top: -8px; /* Adjust badge position */
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  
   .search .logo img {
     width: 6rem;
   }
