@@ -16,7 +16,7 @@ const Homepage = ({ productItems, addToCart, cartItems, shopItems }) => {
     <>
       <Header cartItems={cartItems} />
       <Mainpage />
-      <ExtraSlideData />
+      {/* <ExtraSlideData /> */}
       <Flashdeals productItems={productItems} addToCart={addToCart} />
       <Newarrivals addToCart={addToCart}/>
       <Features />

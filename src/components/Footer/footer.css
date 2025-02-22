@@ -1,44 +1,115 @@
 .my-footer {
-  background-color: #0f3460!important;
-  padding: 50px 70px!important;
-  color: #fff!important;
+  background-color: #0f3460 !important;
+  padding: 50px 70px !important;
+  color: #fff !important;
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 30px; /* Space between sections */
+  justify-content: space-between; /* Distribute sections evenly */
 }
 
 .my-footer-img {
-  background-color: #0c2a4d!important;
-  padding: 15px 20px!important;
-  border-radius: 5px!important;
+  background-color: #0c2a4d !important;
+  padding: 15px 20px !important;
+  border-radius: 5px !important;
 }
 
 .my-footer-h2 {
-  margin-bottom: 20px!important;
+  margin-bottom: 20px !important;
 }
 
 .my-footer-li {
-  margin-bottom: 10px!important;
-  opacity: 0.5!important;
-  cursor: pointer!important;
+  margin-bottom: 10px !important;
+  opacity: 0.5 !important;
+  cursor: pointer !important;
+}
+
+.my-footer-li:hover {
+  opacity: 1 !important; /* Improve hover effect */
 }
 
 .my-logo-container {
-  list-style: none!important;
-  padding: 0!important;
-  margin: 0!important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .my-logo-item {
-  display: flex!important;
-  align-items: center!important;
-  margin-bottom: 16px!important; 
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 16px !important;
 }
 
 .my-logo-item-img {
-  width: 24px!important;
-  height: 24px!important;
-  margin-right: 8px!important;
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 8px !important;
 }
 
 .my-logo-item-span {
-  font-size: 16px!important;
-  color: white!important;
+  font-size: 16px !important;
+  color: white !important;
+}
+
+/* Logo Container */
+.footer-container > div:last-child img {
+  max-width: 100%; /* Ensure logo doesn't exceed container width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove inline spacing */
+}
+
+/* Mobile Responsiveness with Media Queries */
+@media (max-width: 768px) {
+  .my-footer {
+    padding: 30px 20px !important; /* Reduced padding on mobile */
+    flex-direction: column; /* Stack sections vertically */
+    gap: 20px; /* Smaller gap */
+  }
+
+  .my-footer-h2 {
+    font-size: 1.5rem; /* Slightly smaller headings */
+  }
+
+  .my-footer-li {
+    font-size: 14px; /* Smaller text */
+  }
+
+  .my-logo-item-span {
+    font-size: 14px !important; /* Smaller text for social links */
+  }
+
+  .footer-container > div {
+    width: 100%; /* Full width for each section */
+  }
+
+  .footer-container > div:last-child img {
+    max-width: 150px; /* Smaller logo on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .my-footer {
+    padding: 20px 15px !important; /* Even smaller padding */
+  }
+
+  .my-footer-h2 {
+    font-size: 1.25rem; /* Further reduce heading size */
+  }
+
+  .my-footer-li {
+    font-size: 12px; /* Even smaller text */
+  }
+
+  .my-logo-item-img {
+    width: 20px !important; /* Smaller icons */
+    height: 20px !important;
+  }
+
+  .my-logo-item-span {
+    font-size: 12px !important; /* Smaller text */
+  }
+
+  .footer-container > div:last-child img {
+    max-width: 120px; /* Even smaller logo */
+  }
 }
