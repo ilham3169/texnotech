@@ -1,14 +1,15 @@
 .cart-items {
   background: #f6f9fc;
   min-height: 100vh;
+  padding: 0 10px; /* Add padding for smaller screens */
 }
 
-/* .cart-items .cart-details {
-  width: 70%;
-} */
+/* Default layout for larger screens */
+.cart-details {
+  flex: 1;
+}
 
 .cart-items .cart-total {
-  /* width: 30%; */
   height: fit-content;
   line-height: 50px;
   display: flex;
@@ -22,12 +23,8 @@
   padding: 2.5rem 3rem;
   line-height: 50px;
   border-radius: 10px;
-  box-shadow: rgb(3 0 71/ 9%) 0 1px 3px;
+  box-shadow: rgb(3 0 71 / 9%) 0 1px 3px;
   margin-top: 10px;
-}
-
-.cart-details {
-  flex: 1;
 }
 
 .cart-total .checkout {
@@ -93,7 +90,7 @@
 }
 
 .inCart {
-  background-color: none;
+  background-color: none; /* Note: 'none' is invalid, likely meant transparent or a color */
 }
 
 .delCart {
@@ -114,4 +111,159 @@
 .cart-total h4 {
   font-size: 15px;
   font-weight: 400;
+}
+
+/* Assuming a parent flex container for .cart-details and .cart-total */
+.cart-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.client-info-container .client-inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 1%; /* Space between inputs */
+  justify-content: center;
+  align-items: center;
+}
+
+.client-info-container .client-inputs input {
+  width: 60%;
+  margin: 0; /* Reset any default margins */
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .cart-container {
+    flex-direction: column; /* Stack cart-details and cart-total vertically */
+    padding: 0 10px;
+  }
+
+  .cart-details {
+    width: 100%; /* Full width on mobile */
+  }
+
+  .cart-items .cart-total {
+    width: 100%; /* Full width on mobile */
+    gap: 1.5rem; /* Reduce gap */
+  }
+
+  .product-cart {
+    padding: 1.5rem 2rem; /* Reduce padding */
+    line-height: 40px; /* Adjust line height */
+  }
+
+  .cart-items .img img {
+    width: 100px; /* Smaller images */
+    height: 100px;
+  }
+
+  .cart-items .cart-details h3 {
+    font-size: 18px; /* Slightly smaller font */
+    margin-top: 15px;
+  }
+
+  .cart-items .cart-details h4 {
+    font-size: 14px;
+    margin-top: 30px; /* Reduce spacing */
+  }
+
+  .cartControl {
+    margin-top: 30px; /* Reduce spacing */
+    display: flex;
+    justify-content: center; /* Center buttons */
+  }
+
+  .cartControl button {
+    width: 35px; /* Slightly smaller buttons */
+    height: 35px;
+    margin: 5px; /* Reduce margin */
+    font-size: 18px;
+  }
+
+  .removeCart {
+    font-size: 20px; /* Smaller icon */
+    margin-right: 5px;
+  }
+
+  .cart-total .checkout {
+    padding: 12px; /* Slightly smaller padding */
+    width: 100%; /* Full-width button */
+    text-align: center;
+  }
+
+  .cart-total h3 {
+    font-size: 18px;
+  }
+
+  .cart-total h2 {
+    font-size: 20px; /* Adjust heading size */
+  }
+
+  .cart-total h4 {
+    font-size: 14px;
+  }
+
+  .client-info-container .client-inputs {
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 10px; /* Increase gap for better spacing */
+  }
+
+  .client-info-container .client-inputs input {
+    width: 100%; /* Full width on mobile */
+    max-width: none; /* Remove any max-width restrictions */
+  }
+
+}
+
+/* Extra small screens (below 480px) */
+@media (max-width: 480px) {
+  .product-cart {
+    padding: 1rem 1.5rem; /* Even smaller padding */
+  }
+
+  .cart-items .img img {
+    width: 80px; /* Even smaller images */
+    height: 80px;
+  }
+
+  .cart-items .cart-details h3 {
+    font-size: 16px;
+  }
+
+  .cart-items .cart-details h4 {
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  .cartControl button {
+    width: 30px; /* Smaller buttons */
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .removeCart {
+    font-size: 18px;
+  }
+
+  .cart-total .checkout {
+    padding: 10px;
+  }
+
+  .cart-total h3 {
+    font-size: 16px;
+  }
+
+  .cart-total h2 {
+    font-size: 18px;
+  }
+
+  .client-info-container .client-inputs input {
+    font-size: 16px; /* Slightly smaller font for very small screens */
+    height: 45px; /* Slightly shorter height */
+  }
+  
 }

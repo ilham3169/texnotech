@@ -292,10 +292,10 @@ const Cart = ({
                     </div>
                     <div className="cart-details" style={{marginLeft: "2%"}}>
                       <h3 style={{fontWeight: "350"}}>
-                        Kuryer ilə ünvana çatdırılma xidməti
+                        Kuryer ilə ünvana çatdırılma
                       </h3>
                       <h4 style={{marginTop: "0%"}}>
-                        Müddət: 1 gun
+                        Müddət: 1 gün
                       </h4>
                       <span style={{marginTop: "1%"}}>
                         AZN 3.00
@@ -381,7 +381,7 @@ const Cart = ({
                         </div>
                         <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
                           <h3 style={{marginTop: "0", fontWeight: "350"}}>
-                            Bank kartı vasitəsi ilə
+                            Bank kartı
                           </h3>
                         </div>
                         <div style={{display: "flex", alignItems: "center"}}>
@@ -395,80 +395,77 @@ const Cart = ({
                 </>
               )}
 
-              {selectedPaymentMethod !== null && (
-                <>
-                  <div style={{display: "flex", justifyContent: "center"}}>
-                    <h2>Alıcı kontaktları</h2>
-                  </div>
-                  
-                  <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
-                    <div style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 5%"}}>
-                      <div
-                        className="cart-list product d_flex cart-responsive"
-                        style={{background: "transparent"}}
-                      >
-                        <div className="cart-details" style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "1%"}}>
-                          <input 
-                            id="checkoutInfoName" 
-                            placeholder="Ad" 
-                            type="text"
-                            style={{
-                              background: "#f6f9fc", 
-                              width: "25%", 
-                              height: "60%",
-                              border: "1px solid #e6e6e6", 
-                              borderRadius: "5px", 
-                              padding: "1%",
-                              fontSize: "17px", 
-                              fontWeight: "300"
-                            }}
-                            value={clientName}
-                            onInput={handleTextInput}
-                            onChange={(e) => setClientName(e.target.value)}
-                          />
-                          
-                          <input
-                            id="checkoutInfoSurname" 
-                            placeholder="Soyad" 
-                            type="text"
-                            style={{
-                              background: "#f6f9fc", 
-                              width: "25%", 
-                              height: "60%",
-                              border: "1px solid #e6e6e6", 
-                              borderRadius: "5px", 
-                              padding: "1%",
-                              fontSize: "17px", 
-                              fontWeight: "300"
-                            }}
-                            value={clientSurname}
-                            onInput={handleTextInput}
-                            onChange={(e) => setClientSurname(e.target.value)}
-                          />
-                          
-                          <input 
-                            id="checkoutInfoPhone" 
-                            placeholder="Telefon" 
-                            type="phone"
-                            style={{
-                              background: "#f6f9fc", 
-                              width: "25%", 
-                              height: "60%", 
-                              border: "1px solid #e6e6e6", 
-                              borderRadius: "5px", 
-                              padding: "1%", 
-                              fontSize: "17px", 
-                              fontWeight: "300"
-                            }}
-                            value={clientPhone}
-                            onChange={handlePhoneInput}
-                          />
-                        </div>
+            {selectedPaymentMethod !== null && (
+              <>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <h2>Alıcı kontaktları</h2>
+                </div>
+                
+                <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                  <div className="client-info-container" style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 5%" }}>
+                    <div className="cart-list product d_flex cart-responsive" style={{ background: "transparent" }}>
+                      <div className="cart-details client-inputs" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1%" }}>
+                        <input 
+                          id="checkoutInfoName" 
+                          placeholder="Ad" 
+                          type="text"
+                          style={{
+                            background: "#f6f9fc", 
+                            width: "60%", 
+                            height: "50px", 
+                            border: "1px solid #e6e6e6", 
+                            borderRadius: "8px", 
+                            padding: "12px 15px", 
+                            fontSize: "20px", 
+                            fontWeight: "300"
+                          }}
+                          value={clientName}
+                          onInput={handleTextInput}
+                          onChange={(e) => setClientName(e.target.value)}
+                        />
+                        
+                        <input
+                          id="checkoutInfoSurname" 
+                          placeholder="Soyad" 
+                          type="text"
+                          style={{
+                            background: "#f6f9fc", 
+                            width: "60%", 
+                            height: "50px", 
+                            border: "1px solid #e6e6e6", 
+                            borderRadius: "8px", 
+                            padding: "12px 15px", 
+                            fontSize: "20px", 
+                            fontWeight: "300"
+                          }}
+                          value={clientSurname}
+                          onInput={handleTextInput}
+                          onChange={(e) => setClientSurname(e.target.value)}
+                        />
+                        
+                        <input 
+                          id="checkoutInfoPhone" 
+                          placeholder="Telefon" 
+                          type="phone"
+                          style={{
+                            background: "#f6f9fc", 
+                            width: "60%", 
+                            height: "50px", 
+                            border: "1px solid #e6e6e6", 
+                            borderRadius: "8px", 
+                            padding: "12px 15px", 
+                            fontSize: "20px", 
+                            fontWeight: "300"
+                          }}
+                          value={clientPhone}
+                          onChange={handlePhoneInput}
+                        />
                       </div>
                     </div>
                   </div>
-                </>
-              )}
+                </div>
+              </>
+            )}
 
               {selectedPaymentMethod != null && (
                 <div className="cart-total" style={{padding: "0 5% 3% 5%"}}>

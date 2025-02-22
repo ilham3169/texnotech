@@ -1,8 +1,9 @@
-.allProductsSection{
+.allProductsSection {
     min-height: 100vh;
+    padding: 0 10px; /* Add some padding for smaller screens */
 }
 
-.allproductsheading{
+.allproductsheading {
     text-align: center;
     padding-top: 30px;
     font-size: 2rem;
@@ -10,22 +11,23 @@
 
 .filter-box {
     display: flex;
+    flex-direction: row; /* Default for larger screens */
     align-items: center;
     gap: 15px;
     margin: 20px auto;
-    width: 80%; 
+    width: 80%;
     max-width: 800px;
 }
 
 .filter-select {
-    width: 400px; /* Adjust width to your desired size */
-    height: 40px; /* Adjust height to make the dropdown taller */
-    font-size: 16px; /* Adjust font size */
-    padding: 5px 10px; /* Adjust padding to change the space inside the select box */
-    border-radius: 5px; /* Optional: Round the corners */
-    border: 1px solid #ccc; /* Optional: Change the border color */
-  }
-  
+    width: 100%; /* Change to 100% for flexibility */
+    max-width: 400px; /* Maintain a max-width for larger screens */
+    height: 40px;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
 
 .filter-button {
     background-color: #6c5ce7;
@@ -48,7 +50,7 @@
     gap: 10px;
     justify-content: center;
     margin: 20px auto;
-    max-width: 1000px; /* Adjust the width of the section */
+    max-width: 1000px;
 }
 
 .category-button {
@@ -63,57 +65,56 @@
 }
 
 .category-button.active {
-    background-color: #6c5ce7; /* Active button color */
+    background-color: #6c5ce7;
     color: #fff;
     border-color: #6c5ce7;
 }
 
 .category-button:hover {
-    background-color: #f3f3f3; /* Hover effect */
+    background-color: #f3f3f3;
 }
-
 
 .custom-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr); /* Default for larger screens */
     gap: 15px;
     padding: 1rem;
-    margin: auto auto; 
-    max-width: 100%; 
+    margin: auto;
+    max-width: 100%;
 }
 
 .custom-grid .custom-box {
     display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    padding: 20px; /* Adjust internal spacing */
+    padding: 20px;
     text-align: center;
-    height: 100%; /* Ensure the box height fills the container */
+    height: 100%;
 }
 
 .price-range-container {
-    flex-grow: 1; /* This allows the price range to take up available space */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .price-range-input {
-    width: 70%; /* Adjust the width of the slider as needed */
+    width: 70%;
 }
 
 .price-range-label-container {
-    margin-bottom: 10px; /* Add some space between the label and slider */
+    margin-bottom: 10px;
     text-align: center;
 }
 
 .price-range-label {
-    font-size: 14px; /* Adjust the font size as needed */
+    font-size: 14px;
 }
 
 .price-range-value {
@@ -128,20 +129,97 @@
 }
 
 .available-text {
-    margin-right: 10px; 
+    margin-right: 10px;
 }
 
 .available-checkbox {
-    margin-left: 5px; 
+    margin-left: 5px;
     height: 15px;
     width: 15px;
 }
 
-.price h4{
+.price h4 {
     padding-left: 100px;
 }
 
 .category-button-selected {
-    background-color: grey; 
+    background-color: grey;
     color: black;
+}
+
+/* Mobile responsiveness with media query */
+@media (max-width: 768px) {
+    .allproductsheading {
+        font-size: 1.5rem; /* Reduce heading size */
+        padding-top: 20px;
+    }
+
+    .filter-box {
+        flex-direction: column; /* Stack items vertically */
+        width: 90%; /* Wider on smaller screens */
+        gap: 10px; /* Reduce gap */
+    }
+
+    .filter-select {
+        width: 100%; /* Full width on mobile */
+        max-width: none; /* Remove max-width restriction */
+        font-size: 14px; /* Slightly smaller font */
+    }
+
+    .filter-button {
+        margin: 10px 0; /* Reduce margin */
+        padding: 8px 16px; /* Smaller padding */
+        font-size: 0.9rem; /* Smaller font */
+    }
+
+    .categories-container {
+        gap: 8px; /* Reduce gap */
+        max-width: 100%; /* Full width */
+        padding: 0 10px; /* Add padding */
+    }
+
+    .category-button {
+        padding: 8px 16px; /* Smaller padding */
+        font-size: 0.9rem; /* Smaller font */
+    }
+
+    .custom-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        gap: 10px; /* Reduce gap */
+        padding: 0.5rem; /* Reduce padding */
+    }
+
+    .custom-grid .custom-box {
+        padding: 15px; /* Reduce internal padding */
+    }
+
+    .price h4 {
+        padding-left: 0; /* Remove large padding on mobile */
+        text-align: center; /* Center-align */
+    }
+
+    .price-range-input {
+        width: 90%; /* Wider slider on mobile */
+    }
+}
+
+/* Extra small screens (below 480px, e.g., smaller phones) */
+@media (max-width: 480px) {
+    .allproductsheading {
+        font-size: 1.2rem; /* Even smaller heading */
+    }
+
+    .custom-grid {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
+
+    .filter-button {
+        width: 100%; /* Full-width button */
+        padding: 10px; /* Adjust padding */
+    }
+
+    .category-button {
+        padding: 6px 12px; /* Even smaller buttons */
+        font-size: 0.8rem;
+    }
 }
