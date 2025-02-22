@@ -116,7 +116,7 @@ const Singleproduct = ({ addToCart }) => {
               <MDBCard className="text-black" style={{border: "0", borderRadius: "12px"}}>
                 <MDBRow>
                   <MDBCol md="2" className="d-flex align-items-center">
-                    <MDBListGroup light style={{marginLeft: "13%"}}>
+                    <MDBListGroup light style={{}}>
                       {productImages.length > 0 && productImages.map((image, index) => (
                         <MDBListGroupItem key={index}
                           onClick={() => handleImageClick(image.image_link)}
@@ -163,25 +163,30 @@ const Singleproduct = ({ addToCart }) => {
                   <MDBRow>
                     <hr/>
                   </MDBRow>
-                  <MDBRow>
-                    <div className="start d-flex align-items-center" style={{background: "red", width: "fit-content", borderRadius: "5px", marginLeft: "1.2%"}}>                      {
-                        product.discount > 0 ? 
-                        <MDBCardText style={{color: "white", fontSize: "20px", fontWeight: "500"}}>-{product.discount} ₼</MDBCardText>
-                        : <></>
-                      }
-                    </div>
-                  </MDBRow>
 
                   <MDBRow>
-                    <div className="text-start" style={{display: "flex", gap: "10px"}}>
-                      <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{Math.round(product.price - product.discount)} ₼</MDBCardTitle>
-                      {
-                        product.discount > 0 ? 
-                        <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
-                        : <></>
-                      }
-                    </div>
+                    <MDBRow>
+                      <div className="text-start" style={{width: "fit-content", borderRadius: "5px", textDecoration:"underline"}}>                      
+                        {
+                          product.discount > 0 ? 
+                          <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{product.discount} ₼</MDBCardText>
+                          : <></>
+                        }
+                      </div>
+                    </MDBRow>
+
+                    <MDBRow>
+                      <div className="text-start" style={{display: "flex", gap: "10px"}}>
+                        <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{Math.round(product.price - product.discount)} ₼</MDBCardTitle>
+                        {
+                          product.discount > 0 ? 
+                          <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
+                          : <></>
+                        }
+                      </div>
+                    </MDBRow>
                   </MDBRow>
+                  
                   
                   <MDBRow style={{display: "flex", justifyContent: "end", alignItems: "end", }}>
                     <div className="d-flex align-items-center" style={{marginLeft: "-1.5%", width: "120%"}}>
@@ -272,9 +277,9 @@ const Singleproduct = ({ addToCart }) => {
 
                   <MDBRow style={{display: "flex", justifyContent: "center"}}>
                     <MDBCol md='8' style={{ borderRadius: "8px 0 0 8px"}}>
-                      <MDBListGroup horizontal style={{ margin: '5vh auto', height: '35%' }} className="justify-content-center">
+                      <MDBListGroup horizontal style={{ margin: '5vh auto', minHeight: '35%' }} className="justify-content-center">
                         {[3, 6, 9, 12, 18].map((period) => (
-                          <MDBListGroupItem key={period} style={{ padding: '0px', width: '20%' }}>
+                          <MDBListGroupItem key={period} style={{ padding: '0px', width: '20%'}}>
                             <button
                               style={{
                                 width: '100%',
@@ -466,19 +471,19 @@ const Singleproduct = ({ addToCart }) => {
                           return (
                             <tr key={pairIndex}>
                               {/* First specification */}
-                              <td style={{width: "25%", whiteSpace: "nowrap"}}>{productSpecifications[index-1]?.name}</td>
+                              <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>{productSpecifications[index-1]?.name}</td>
                               {productSpecifications[index-1]?.value.length > 50 ?
-                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
+                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
                                 :
-                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
+                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
                               }
 
                               {/* Second specification */}
-                              <td style={{width: "25%", whiteSpace: "nowrap"}}>{spec.name}</td>
+                              <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>{spec.name}</td>
                               {spec.value.length > 50 ? 
-                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
+                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
                                 :
-                                <td style={{width: "25%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
+                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
                               }
                             </tr>
                           );
