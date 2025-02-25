@@ -99,6 +99,7 @@ const Allproducts = ({ addToCart }) => {
           img: product.image_link,
           price: product.price,
           id: product.id,
+          discount: product.discount
         }));
         setAllProducts(products);
       })
@@ -224,16 +225,28 @@ const Allproducts = ({ addToCart }) => {
             >
               <div className="product mtop" style={{ width: '250px' }}>
                 <div className="img">
-                  <img src={product.img} alt={product.name} />
+                  <img style={{height: "200px", width: "200px"}} src={product.img} alt={product.name} />
                 </div>
-                <div className="product-details">
-                  <h3>{product.name}</h3>
-                  <h5>Click here for more Info</h5>
+                <div className="product-details" style={{height: "fit-content"}}>
+                  <div style={{display: "flex", alignItems: "center", justifyContent: "center", background: "red", width: "fit-content", margin: "0 auto 0 auto", borderRadius: "10%"}}>
+                    <span style={{fontWeight: "600", fontSize: "18px", color: "white", padding: "0 15%"}}>
+                      -{Math.round(((product.price - product.discount)/product.price) * 100)} %
+                    </span>
+                  </div>
+                  <h3 style={{fontSize: "17px"}}>
+                    {product.name}
+                  </h3>
+                  <h5 style={{fontWeight: "500", fontSize: "14px"}}>Ətraflı Məlumat üçün klikləyin</h5>
                 </div>
                 <div className="product-details" style={{color: "red", fontSize: "21px"}} >
-                  <h4 style={{whiteSpace: "nowrap"}}>
-                    {product.price}.00 ₼
+                  <h4 style={{whiteSpace: "nowrap", fontWeight: "600"}}>
+                    {product.discount}.00 ₼ <span style={{textDecoration: "line-through", color: "grey"}}>{product.price} ₼</span>
                   </h4>
+                </div>
+                <div style={{background: "#fcee26", width: "fit-content", padding: "5% 10%", display: "flex", justifyContent: "center", margin: "0 auto", borderRadius: "5%"}}>
+                  <span style={{color: "black", fontWeight: "500", fontSize: "17px"}}>
+                    {(product.discount / 3).toFixed(2)} ₼ x 3 ay
+                  </span>
                 </div>
               </div>
             </Link>
