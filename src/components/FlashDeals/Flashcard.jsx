@@ -158,7 +158,7 @@ const Flashcard = ({ addToCart }) => {
                     <div style={{height: "300px", with: "200px", display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden"}}>
                       <img style={{maxHeight: "100%", maxWidth: "100%", objectFit: "contain"}} src={product.image_link} alt={product.name} />
                     </div>
-                    <h3 title={product.name} lassName="truncate" style={{display: "flex", justifyContent: "center", overflow: "clip"}}>
+                    <h3 title={product.name} className="truncate" style={{display: "flex", justifyContent: "center", overflow: "clip"}}>
                       {product.name.slice(0, 28)}
                     </h3>
                   </Link>
