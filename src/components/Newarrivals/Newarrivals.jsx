@@ -82,11 +82,11 @@ const Flashcard = ({ addToCart }) => {
                     </span>
                   </div>
                   {product.name.length > 23 ?  
-                    <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+                    <h4 title={product.name} style={{ textAlign: "center", marginTop: "10px" }}>
                       {product.name.slice(0, 20)}...
                     </h4>
                     :
-                    <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+                    <h4 title={product.name} style={{ textAlign: "center", marginTop: "10px"}}>
                       {product.name}
                     </h4>
                   }

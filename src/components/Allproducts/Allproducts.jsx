@@ -233,7 +233,7 @@ const Allproducts = ({ addToCart }) => {
                       -{Math.round(((product.price - product.discount)/product.price) * 100)} %
                     </span>
                   </div>
-                  <h3 style={{fontSize: "17px"}}>
+                  <h3 title={product.name} style={{fontSize: "17px"}}>
                     {product.name}
                   </h3>
                   <h5 style={{fontWeight: "500", fontSize: "14px"}}>Ətraflı Məlumat üçün klikləyin</h5>
