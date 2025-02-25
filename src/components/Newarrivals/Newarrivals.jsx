@@ -71,14 +71,19 @@ const Flashcard = ({ addToCart }) => {
                   pathname: productUrl(product),
                   state: { productId: product.id },
                 }}
-              >
+              > 
                 <div className="box">
                   <div className="img">
                     <img src={product.image_link} alt={product.name} />
                   </div>
-                  {product.name.length > 25 ?  
+                  <div style={{marginTop: "5%", background: "red", borderRadius: "10%"}}>
+                    <span style={{fontWeight: "600", fontSize: "17px", color: "white", padding: "6%"}}>
+                      -{Math.round(((product.price - product.discount) / product.price) * 100)}%
+                    </span>
+                  </div>
+                  {product.name.length > 23 ?  
                     <h4 style={{ textAlign: "center", marginTop: "10px" }}>
-                      {product.name.slice(0, 22)}...
+                      {product.name.slice(0, 20)}...
                     </h4>
                     :
                     <h4 style={{ textAlign: "center", marginTop: "10px" }}>
@@ -86,9 +91,13 @@ const Flashcard = ({ addToCart }) => {
                     </h4>
                   }
                 </div>
+                
               </Link>
               <div className="price" style={{height: "150%", gap: "5%", cursor: "default"}}>
-                <span style={{ display: "block", textAlign: "center" }}>
+                <span style={{ display: "block", textAlign: "center", fontWeight: "600"}}>
+                  {product.discount} AZN
+                </span>
+                <span style={{ display: "block", textAlign: "center", textDecoration: "line-through", color: "grey"}}>
                   {product.price} AZN
                 </span>
                 <button
@@ -97,7 +106,7 @@ const Flashcard = ({ addToCart }) => {
                   style={{display: "flex", alignItems: "center", justifyContent: "center",
                     transform: "scale(1.2)", background: "transparent", cursor: "pointer"}}
                 >
-                  <i className="fa fa-plus" style={{color: "red"}}></i>
+                  <i className="fa fa-plus" style={{color: "red", padding: "50% 0 60% 0"}}></i>
                 </button>
               </div>
             </div>
