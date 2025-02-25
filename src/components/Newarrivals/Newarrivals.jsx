@@ -12,7 +12,7 @@ const Flashcard = ({ addToCart }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://texnotech.store/products");
+        const response = await fetch("https://texnotech.store/products/new-arrivals");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

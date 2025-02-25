@@ -63,10 +63,8 @@ const Flashcard = ({ addToCart }) => {
       }
     };
 
-
     fetchProducts();
     fetchImages();
-
 
   }, []);
 
@@ -132,7 +130,7 @@ const Flashcard = ({ addToCart }) => {
     <>
     <Slider {...settings}>
       {productItems
-        .filter((product) => product.is_super) // Filter products where is_super is true
+        .filter((product) => product.is_super) 
         .map((product, index) => {
           const productUrl = `/products/${product.name
             .toLowerCase()
@@ -151,27 +149,38 @@ const Flashcard = ({ addToCart }) => {
                     }}
                   >
                     {product.discount > 0 ?
-                      <span className="discount">{Math.round(product.discount * 100 / product.price,2) }% Off</span>
+                      <span className="discount" style={{fontSize: "15px"}}>
+                        -{Math.round((product.price - product.discount)  / product.price * 100)}%
+                      </span>
                       :
                       <></>
                     }
-                    <img src={product.image_link} alt={product.name} />
-                    <h3 className="truncate">{product.name}</h3>
+                    <div style={{height: "300px", with: "200px", display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden"}}>
+                      <img style={{maxHeight: "100%", maxWidth: "100%", objectFit: "contain"}} src={product.image_link} alt={product.name} />
+                    </div>
+                    <h3 className="truncate" style={{display: "flex", justifyContent: "center", overflow: "clip"}}>{product.name.slice(0, 28)}</h3>
                   </Link>
                 </div>
 
-                <div className="product-details">
-                  <div className="price" style={{height: "60%", gap:"5%"}}>
+                <div className="product-details" style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
+                  <div className="price" style={{height: "60%", display: 'flex', justifyContent: "center", alignItems: "center", gap: "5%"}}>
+                    
+                    <div style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
+                      <h4 style={{paddingLeft: "0px"}}>
+                        {product.discount} AZN &nbsp;
+                        <span style={{textDecoration: "line-through", color: "grey", fontWeight: "500"}}>{product.price} AZN
+                        </span>
+                      </h4>
+                    </div>
 
-                    <h4>{product.price}.00 AZN</h4>
-
-                    <button
-                      aria-label="Add to cart"
-                      onClick={() => addToCart(product)}
-                      style={{display: "flex", alignItems: "center", justifyContent: "center", height: "70%", width: "30%"}}
-                    >
-                      <i className="fa fa-plus"></i>
-                    </button>
+                    <div>
+                      <button
+                        aria-label="Add to cart"
+                        onClick={() => addToCart(product)}
+                      >
+                        <i className="fa fa-plus"></i>
+                      </button>
+                    </div>
 
                   </div>
                 </div>
