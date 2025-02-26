@@ -99,8 +99,10 @@ const Allproducts = ({ addToCart }) => {
           img: product.image_link,
           price: product.price,
           id: product.id,
-          discount: product.discount
+          discount: product.discount,
+          is_active: product.is_active
         }));
+        console.log(products)
         setAllProducts(products);
       })
       .catch((error) => console.error("Error fetching products:", error));
@@ -207,7 +209,7 @@ const Allproducts = ({ addToCart }) => {
 
       <h1 className="page-header">Bütün Məhsullar</h1>
       <div className="custom-grid">
-        {allProducts.map((product, index) => {
+        {allProducts.filter(product => product.is_active === true).map((product, index) => {
           const productUrl = `/products/${product.name
             .toLowerCase()
             .replace(/ /g, '-') 

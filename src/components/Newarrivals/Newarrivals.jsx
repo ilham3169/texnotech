@@ -64,7 +64,7 @@ const Flashcard = ({ addToCart }) => {
         </div>
 
         <div className="content product-new-arrival">
-          {productItems.filter((product) => product.is_new).map((product, index)=> (
+          {productItems.filter((product) => product.is_new).filter(product => product.is_active).map((product, index)=> (
             <div key={index}>
               <Link
                 to={{

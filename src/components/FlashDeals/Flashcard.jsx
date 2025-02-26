@@ -131,6 +131,7 @@ const Flashcard = ({ addToCart }) => {
     <Slider {...settings}>
       {productItems
         .filter((product) => product.is_super) 
+        .filter(product => product.is_active)
         .map((product, index) => {
           const productUrl = `/products/${product.name
             .toLowerCase()
