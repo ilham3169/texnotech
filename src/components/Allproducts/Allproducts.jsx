@@ -1,150 +1,274 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./allproducts.css";
 
 const Allproducts = ({ addToCart }) => {
   const { categoryId } = useParams();
-
-  // API domain
   const domain = "https://texnotech.store/";
 
-  // Data fetched from API
   const [allProducts, setAllProducts] = useState([]);
   const [brandNames, setBrandNames] = useState([]);
   const [categoryNames, setCategoryNames] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // Filter input fields
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 20000});
+  // Filter states
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 20000 });
   const [availabilityFilter, setAvailabilityFilter] = useState(null);
   const [discountFilter, setDiscountFilter] = useState(null);
   const [brandFilter, setBrandFilter] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState(null);
   const [priceFilter, setPriceFilter] = useState(null);
-
-  // Check first time page loading
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
-
-  // Category button selected
   const [selectedCategory, setSelectedCategory] = useState(-1);
-  
-  // Handle filter fields' values
+
+  const observer = useRef(); // For infinite scroll
+  const debounceTimeout = useRef(null); // For debouncing filter changes
+
+  // Fetch products with pagination
+  const fetchProducts = useCallback(
+    async (page) => {
+      if (!hasMore || loading) return;
+
+      setLoading(true);
+      let link = `${domain}products?page=${page}&page_size=5`;
+      if (categoryFilter) link += `&category_id=${categoryFilter}`;
+      if (brandFilter && brandFilter !== "popular") link += `&brand_id=${brandFilter}`;
+      if (availabilityFilter) link += `&available=${availabilityFilter}`;
+      if (discountFilter) link += `&discount=${discountFilter}`;
+      if (priceFilter) link += `&max_price=${priceFilter}`;
+
+      console.log("Fetching products from:", link);
+
+      try {
+        const response = await fetch(link);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("API Response:", data);
+
+        const products = Array.isArray(data)
+          ? data.map((product) => ({
+              name: product.name,
+              img: product.image_link,
+              price: product.price,
+              id: product.id,
+              discount: product.discount,
+              is_active: product.is_active,
+            }))
+          : [];
+
+        setAllProducts((prev) => {
+          const existingIds = new Set(prev.map((p) => p.id));
+          const newProducts = products.filter((p) => !existingIds.has(p.id));
+          console.log("New products added:", newProducts);
+          return [...prev, ...newProducts];
+        });
+
+        // Set hasMore to false only if no products are returned
+        if (products.length === 0) {
+          console.log("No products returned, setting hasMore to false");
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setHasMore(false); // Stop on error to prevent infinite retries
+      } finally {
+        setLoading(false);
+      }
+    },
+    [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter, hasMore]
+  );
+
+  // Debounced filter update
+  const debounceFetch = useCallback(
+    (page) => {
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      debounceTimeout.current = setTimeout(() => fetchProducts(page), 300);
+    },
+    [fetchProducts]
+  );
+
+  // Handle filter changes
   const handleAvailabilityFilterChange = (e) => {
     setAvailabilityFilter(e.target.checked);
+    setCurrentPage(1);
+    setHasMore(true);
+    setAllProducts([]);
+    debounceFetch(1);
   };
 
   const handleDiscountFilterChange = (e) => {
     setDiscountFilter(e.target.checked);
+    setCurrentPage(1);
+    setHasMore(true);
+    setAllProducts([]);
+    debounceFetch(1);
   };
 
   const handleBrandFilterChange = (e) => {
     setBrandFilter(e.target.value);
+    setCurrentPage(1);
+    setHasMore(true);
+    setAllProducts([]);
+    debounceFetch(1);
   };
 
   const handleCategoryFilterChange = (e) => {
     if (e === categoryFilter) {
       setCategoryFilter(null);
       setSelectedCategory(null);
-    }
-    else{
+    } else {
       setCategoryFilter(e);
       setSelectedCategory(e);
     }
-    
+    setCurrentPage(1);
+    setHasMore(true);
+    setAllProducts([]);
+    debounceFetch(1);
   };
 
   const handlePriceRangeChange = (e) => {
     const newValue = e.target.value;
     setPriceFilter(newValue);
-    setPriceRange({ ...priceRange, max: newValue });
+    setPriceRange((prev) => ({ ...prev, max: newValue }));
+    setCurrentPage(1);
+    setHasMore(true);
+    setAllProducts([]);
+    debounceFetch(1);
   };
 
-  // Send API request when filter is applied
+  // Infinite scroll observer
+  const lastProductRef = useCallback(
+    (node) => {
+      if (loading || !hasMore) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            console.log("Last product in view, incrementing page to", currentPage + 1);
+            setCurrentPage((prev) => prev + 1);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
+  // Initial fetch and filter updates
   useEffect(() => {
-    if (isFirstLoad) {
-      setIsFirstLoad(false);
-      fetchProducts(); 
-    } else {
-      const timeoutId = setTimeout(() => {
-        fetchProducts();
-      }, 100);
-  
-      return () => clearTimeout(timeoutId);
-    }
-  }, [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter]);
+    fetchProducts(currentPage);
+  }, [currentPage, fetchProducts]);
 
-  // Get products API call
-  const fetchProducts = () => {
-    let link = domain + "products" + "?";
-    if (categoryFilter) {
-      link += "&category_id=" + categoryFilter;
-    }
-    if (brandFilter && brandFilter !== "popular") {
-      link += "&brand_id=" + brandFilter;
-    }
-    if (availabilityFilter) {
-      link += "&available=" + availabilityFilter;
-    }
-    if (discountFilter) {
-      link += "&discount=" + discountFilter;
-    }
-    if (priceFilter) {
-      link += "&max_price=" + priceFilter;
-    }
-  
-    fetch(link)
-      .then((response) => response.json())
-      .then((data) => {
-        const products = data.map((product) => ({
-          name: product.name,
-          img: product.image_link,
-          price: product.price,
-          id: product.id,
-          discount: product.discount,
-          is_active: product.is_active
-        }));
-        console.log(products)
-        setAllProducts(products);
-      })
-      .catch((error) => console.error("Error fetching products:", error));
-  };
-
-  // Get Brands and Categories
+  // Fetch brands and categories on mount
   useEffect(() => {
-
     if (categoryId && categoryId >= 0) {
-      handleCategoryFilterChange(categoryId)
+      handleCategoryFilterChange(categoryId);
     }
 
-    fetch("https://texnotech.store/brands")
+    fetch(`${domain}brands`)
       .then((response) => response.json())
-      .then((data) => {
-        const brandNames = data.map((brand) => ({
-          id: brand.id,
-          name: brand.name,
-        }));
-        setBrandNames(brandNames);
-      })
+      .then((data) => setBrandNames(data.map((brand) => ({ id: brand.id, name: brand.name }))))
       .catch((error) => console.error("Error fetching brands:", error));
-  
-    fetch("https://texnotech.store/categories")
+
+    fetch(`${domain}categories`)
       .then((response) => response.json())
-      .then((data) => {
-        const categoryNames = data.map((category) => ({
-          id: category.id,
-          name: category.name,
-          parent_category_id: category.parent_category_id
-        }));
-        setCategoryNames(categoryNames);
-      })
+      .then((data) =>
+        setCategoryNames(
+          data.map((category) => ({
+            id: category.id,
+            name: category.name,
+            parent_category_id: category.parent_category_id,
+          }))
+        )
+      )
       .catch((error) => console.error("Error fetching categories:", error));
-  }, []);
+  }, [categoryId]);
+
+  // Memoized Product Item with ref forwarding
+  const ProductItem = React.memo(
+    React.forwardRef(({ product }, ref) => {
+      const productUrl = `/products/${product.name
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^a-z0-9-]/g, "")}-${product.id}`;
+
+      return (
+        <Link
+          to={{ pathname: productUrl, state: { productId: product.id } }}
+          className="custom-box"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div ref={ref} className="product mtop" style={{ width: "250px" }}>
+            <div className="img">
+              <img
+                style={{ height: "200px", width: "200px" }}
+                src={product.img}
+                alt={product.name}
+                loading="lazy"
+              />
+            </div>
+            <div className="product-details" style={{ height: "fit-content" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "red",
+                  width: "fit-content",
+                  margin: "0 auto",
+                  borderRadius: "10%",
+                }}
+              >
+                <span
+                  style={{ fontWeight: "600", fontSize: "18px", color: "white", padding: "0 15%" }}
+                >
+                  -{Math.round(((product.price - product.discount) / product.price) * 100)} %
+                </span>
+              </div>
+              <h3 title={product.name} style={{ fontSize: "17px" }}>
+                {product.name}
+              </h3>
+              <h5 style={{ fontWeight: "500", fontSize: "14px" }}>Ətraflı Məlumat üçün klikləyin</h5>
+            </div>
+            <div className="product-details" style={{ color: "red", fontSize: "21px" }}>
+              <h4 style={{ whiteSpace: "nowrap", fontWeight: "600" }}>
+                {product.discount}.00 ₼{" "}
+                <span style={{ textDecoration: "line-through", color: "grey" }}>
+                  {product.price} ₼
+                </span>
+              </h4>
+            </div>
+            <div
+              style={{
+                background: "#fcee26",
+                width: "fit-content",
+                padding: "5% 10%",
+                display: "flex",
+                justifyContent: "center",
+                margin: "0 auto",
+                borderRadius: "5%",
+              }}
+            >
+              <span style={{ color: "black", fontWeight: "500", fontSize: "17px" }}>
+                {(product.discount / 3).toFixed(2)} ₼ x 3 ay
+              </span>
+            </div>
+          </div>
+        </Link>
+      );
+    })
+  );
 
   return (
     <>
       <div className="filter-box">
-        <select className="filter-select"
-          onChange={handleBrandFilterChange}
-        >
+        <select className="filter-select" onChange={handleBrandFilterChange}>
           <option value="popular">Brend Seçin</option>
           {brandNames.map((brand) => (
             <option key={brand.id} value={brand.id}>
@@ -177,8 +301,6 @@ const Allproducts = ({ addToCart }) => {
             className="available-checkbox"
             type="checkbox"
             id="checkboxNoLabel"
-            value=""
-            aria-label="..."
             onChange={handleAvailabilityFilterChange}
           />
         </div>
@@ -189,17 +311,20 @@ const Allproducts = ({ addToCart }) => {
             className="available-checkbox"
             type="checkbox"
             id="checkboxNoLabel"
-            value=""
-            aria-label="..."
             onChange={handleDiscountFilterChange}
           />
         </div>
       </div>
 
       <div className="categories-container">
-        {categoryNames.filter((category) => category.parent_category_id == null).map((category, index) => (
-            <button className={`category-button ${selectedCategory === category.id ? "category-button-selected" : ""}`}
-              key={index} value={category} 
+        {categoryNames
+          .filter((category) => category.parent_category_id == null)
+          .map((category) => (
+            <button
+              className={`category-button ${
+                selectedCategory === category.id ? "category-button-selected" : ""
+              }`}
+              key={category.id}
               onClick={() => handleCategoryFilterChange(category.id)}
             >
               {category.name}
@@ -208,54 +333,29 @@ const Allproducts = ({ addToCart }) => {
       </div>
 
       <h1 className="page-header">Bütün Məhsullar</h1>
-      <div className="custom-grid">
-        {allProducts.filter(product => product.is_active === true).map((product, index) => {
-          const productUrl = `/products/${product.name
-            .toLowerCase()
-            .replace(/ /g, '-') 
-            .replace(/[^a-z0-9-]/g, '')}-${product.id}`; 
 
-          return (
-            <Link
-              to={{
-                pathname: productUrl,
-                state: { productId: product.id }, 
-              }}
-              key={index}
-              className="custom-box"
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <div className="product mtop" style={{ width: '250px' }}>
-                <div className="img">
-                  <img style={{height: "200px", width: "200px"}} src={product.img} alt={product.name} />
-                </div>
-                <div className="product-details" style={{height: "fit-content"}}>
-                  <div style={{display: "flex", alignItems: "center", justifyContent: "center", background: "red", width: "fit-content", margin: "0 auto 0 auto", borderRadius: "10%"}}>
-                    <span style={{fontWeight: "600", fontSize: "18px", color: "white", padding: "0 15%"}}>
-                      -{Math.round(((product.price - product.discount)/product.price) * 100)} %
-                    </span>
-                  </div>
-                  <h3 title={product.name} style={{fontSize: "17px"}}>
-                    {product.name}
-                  </h3>
-                  <h5 style={{fontWeight: "500", fontSize: "14px"}}>Ətraflı Məlumat üçün klikləyin</h5>
-                </div>
-                <div className="product-details" style={{color: "red", fontSize: "21px"}} >
-                  <h4 style={{whiteSpace: "nowrap", fontWeight: "600"}}>
-                    {product.discount}.00 ₼ <span style={{textDecoration: "line-through", color: "grey"}}>{product.price} ₼</span>
-                  </h4>
-                </div>
-                <div style={{background: "#fcee26", width: "fit-content", padding: "5% 10%", display: "flex", justifyContent: "center", margin: "0 auto", borderRadius: "5%"}}>
-                  <span style={{color: "black", fontWeight: "500", fontSize: "17px"}}>
-                    {(product.discount / 3).toFixed(2)} ₼ x 3 ay
-                  </span>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+      {loading && allProducts.length === 0 && (
+        <div style={{ textAlign: "center", margin: "20px 0" }}>Yüklənir...</div>
+      )}
+
+      <div className="custom-grid">
+        {allProducts
+          .filter((product) => product.is_active === true)
+          .map((product, index) => {
+            if (index === allProducts.length - 1) {
+              return <ProductItem key={product.id} product={product} ref={lastProductRef} />;
+            }
+            return <ProductItem key={product.id} product={product} />;
+          })}
       </div>
 
+      {loading && allProducts.length > 0 && (
+        <div style={{ textAlign: "center", margin: "20px 0" }}>Digər məhsullar yüklənir...</div>
+      )}
+
+      {!hasMore && allProducts.length > 0 && (
+        <div style={{ textAlign: "center", margin: "20px 0" }}>Bütün məhsullar yükləndi</div>
+      )}
     </>
   );
 };
