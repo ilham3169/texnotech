@@ -35,7 +35,7 @@ const Flashcard = ({ addToCart }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://texnotech.store/products");
+        const response = await fetch("https://texnotech.store/products/is_super");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -130,7 +130,6 @@ const Flashcard = ({ addToCart }) => {
     <>
     <Slider {...settings}>
       {productItems
-        .filter((product) => product.is_super) 
         .filter(product => product.is_active)
         .map((product, index) => {
           const productUrl = `/products/${product.name
