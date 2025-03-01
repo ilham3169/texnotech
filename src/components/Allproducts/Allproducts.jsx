@@ -12,8 +12,9 @@ const Allproducts = ({ addToCart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [pageSize] = useState(5); // Load 5 products per page
 
-  // Filter states
+  // Filter states (unchanged)
   const [priceRange, setPriceRange] = useState({ min: 0, max: 20000 });
   const [availabilityFilter, setAvailabilityFilter] = useState(null);
   const [discountFilter, setDiscountFilter] = useState(null);
@@ -22,16 +23,14 @@ const Allproducts = ({ addToCart }) => {
   const [priceFilter, setPriceFilter] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(-1);
 
-  const observer = useRef(); // For infinite scroll
-  const debounceTimeout = useRef(null); // For debouncing filter changes
+  const observer = useRef();
+  const debounceTimeout = useRef(null);
 
-  // Fetch products with pagination
   const fetchProducts = useCallback(
     async (page) => {
       if (!hasMore || loading) return;
-
       setLoading(true);
-      let link = `${domain}products?page=${page}&page_size=5`;
+      let link = `${domain}products?page=${page}&page_size=${pageSize}`;
       if (categoryFilter) link += `&category_id=${categoryFilter}`;
       if (brandFilter && brandFilter !== "popular") link += `&brand_id=${brandFilter}`;
       if (availabilityFilter) link += `&available=${availabilityFilter}`;
@@ -39,12 +38,9 @@ const Allproducts = ({ addToCart }) => {
       if (priceFilter) link += `&max_price=${priceFilter}`;
 
       console.log("Fetching products from:", link);
-
       try {
         const response = await fetch(link);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         console.log("API Response:", data);
 
@@ -66,22 +62,21 @@ const Allproducts = ({ addToCart }) => {
           return [...prev, ...newProducts];
         });
 
-        // Set hasMore to false only if no products are returned
-        if (products.length === 0) {
-          console.log("No products returned, setting hasMore to false");
+        // Stop only if fewer than pageSize after page 1
+        if (products.length < pageSize && page > 1) {
+          console.log(`Fetched ${products.length} < ${pageSize} on page ${page}, stopping`);
           setHasMore(false);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
-        setHasMore(false); // Stop on error to prevent infinite retries
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
     },
-    [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter, hasMore]
+    [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter, hasMore, pageSize]
   );
 
-  // Debounced filter update
   const debounceFetch = useCallback(
     (page) => {
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
@@ -90,7 +85,7 @@ const Allproducts = ({ addToCart }) => {
     [fetchProducts]
   );
 
-  // Handle filter changes
+  // Filter handlers (unchanged)
   const handleAvailabilityFilterChange = (e) => {
     setAvailabilityFilter(e.target.checked);
     setCurrentPage(1);
@@ -139,43 +134,36 @@ const Allproducts = ({ addToCart }) => {
     debounceFetch(1);
   };
 
-  // Infinite scroll observer
   const lastProductRef = useCallback(
     (node) => {
       if (loading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
-
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
-            console.log("Last product in view, incrementing page to", currentPage + 1);
+            console.log("Last product in view, loading page", currentPage + 1);
             setCurrentPage((prev) => prev + 1);
           }
         },
-        { threshold: 0.1 }
+        { threshold: 1.0 } // Fully in view
       );
-
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore]
+    [loading, hasMore, currentPage]
   );
 
-  // Initial fetch and filter updates
   useEffect(() => {
     fetchProducts(currentPage);
   }, [currentPage, fetchProducts]);
 
-  // Fetch brands and categories on mount
   useEffect(() => {
     if (categoryId && categoryId >= 0) {
       handleCategoryFilterChange(categoryId);
     }
-
     fetch(`${domain}brands`)
       .then((response) => response.json())
       .then((data) => setBrandNames(data.map((brand) => ({ id: brand.id, name: brand.name }))))
       .catch((error) => console.error("Error fetching brands:", error));
-
     fetch(`${domain}categories`)
       .then((response) => response.json())
       .then((data) =>
@@ -190,14 +178,12 @@ const Allproducts = ({ addToCart }) => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, [categoryId]);
 
-  // Memoized Product Item with ref forwarding
   const ProductItem = React.memo(
     React.forwardRef(({ product }, ref) => {
       const productUrl = `/products/${product.name
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[^a-z0-9-]/g, "")}-${product.id}`;
-
       return (
         <Link
           to={{ pathname: productUrl, state: { productId: product.id } }}
@@ -265,6 +251,8 @@ const Allproducts = ({ addToCart }) => {
     })
   );
 
+  const activeProducts = allProducts.filter((product) => product.is_active === true);
+
   return (
     <>
       <div className="filter-box">
@@ -276,7 +264,6 @@ const Allproducts = ({ addToCart }) => {
             </option>
           ))}
         </select>
-
         <div className="price-range-container">
           <div className="price-range-label-container">
             <span className="price-range-label">Qiymət aralığı</span>
@@ -294,7 +281,6 @@ const Allproducts = ({ addToCart }) => {
           />
           <span className="price-range-value">₼ {priceRange.min} - ₼ {priceRange.max}</span>
         </div>
-
         <div className="available-container">
           <span className="available-text">Mövcuddur</span>
           <input
@@ -304,7 +290,6 @@ const Allproducts = ({ addToCart }) => {
             onChange={handleAvailabilityFilterChange}
           />
         </div>
-
         <div className="available-container">
           <span className="available-text">Endirimli</span>
           <input
@@ -339,14 +324,12 @@ const Allproducts = ({ addToCart }) => {
       )}
 
       <div className="custom-grid">
-        {allProducts
-          .filter((product) => product.is_active === true)
-          .map((product, index) => {
-            if (index === allProducts.length - 1) {
-              return <ProductItem key={product.id} product={product} ref={lastProductRef} />;
-            }
-            return <ProductItem key={product.id} product={product} />;
-          })}
+        {activeProducts.map((product, index) => {
+          if (index === activeProducts.length - 1) {
+            return <ProductItem key={product.id} product={product} ref={lastProductRef} />;
+          }
+          return <ProductItem key={product.id} product={product} />;
+        })}
       </div>
 
       {loading && allProducts.length > 0 && (
