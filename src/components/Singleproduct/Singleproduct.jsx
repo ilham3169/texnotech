@@ -169,7 +169,7 @@ const Singleproduct = ({ addToCart }) => {
                       <div className="text-start" style={{width: "fit-content", borderRadius: "5px", textDecoration:"underline"}}>                      
                         {
                           product.discount > 0 ? 
-                          <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{product.discount} ₼</MDBCardText>
+                          <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{product.price - product.discount} ₼</MDBCardText>
                           : <></>
                         }
                       </div>
@@ -177,7 +177,7 @@ const Singleproduct = ({ addToCart }) => {
 
                     <MDBRow>
                       <div className="text-start" style={{display: "flex", gap: "10px"}}>
-                        <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{Math.round(product.price - product.discount)} ₼</MDBCardTitle>
+                        <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{Math.round(product.discount )} ₼</MDBCardTitle>
                         {
                           product.discount > 0 ? 
                           <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
