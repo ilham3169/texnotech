@@ -74,6 +74,7 @@ const Flashcard = ({ addToCart }) => {
                 textAlign: "center",
                 textDecoration: "line-through",
                 color: "grey",
+                paddingLeft: "7%"
               }}
             >
               {product.price} AZN
@@ -88,6 +89,7 @@ const Flashcard = ({ addToCart }) => {
                 transform: "scale(1.2)",
                 background: "transparent",
                 cursor: "pointer",
+                paddingLeft: "5%"
               }}
             >
               <i className="fa fa-plus" style={{ color: "red", padding: "50% 0 60% 0" }}></i>
