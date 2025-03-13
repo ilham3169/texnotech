@@ -463,34 +463,64 @@ const Singleproduct = ({ addToCart }) => {
                     </MDBTableHead>
 
                     <MDBTableBody style={{fontWeight: "500", fontSize: "17px"}}>
-                      {specsToShow.map((spec, index) => {
-                        const pairIndex = Math.floor(index / 2); 
-                        const isSecondInPair = index % 2 !== 0;
+                      {(() => {
+                        // First, filter specs with meaningful values
+                        const validSpecs = specsToShow.filter(spec => 
+                          spec.value && 
+                          spec.value.trim() !== "" && 
+                          spec.value !== null && 
+                          spec.value !== undefined &&
+                          spec.value !== "-"
+                        );
 
-                        if (isSecondInPair) {
-                          return (
-                            <tr key={pairIndex}>
-                              {/* First specification */}
-                              <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>{productSpecifications[index-1]?.name}</td>
-                              {productSpecifications[index-1]?.value.length > 50 ?
-                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value.slice(0,47)}...</td>
-                                :
-                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{productSpecifications[index-1]?.value}</td>
-                              }
+                        return validSpecs.map((spec, index) => {
+                          if (index % 2 === 0) {
+                            const nextSpec = validSpecs[index + 1];
+                            return (
+                              <tr key={index}>
+                                {/* First specification */}
+                                <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>
+                                  {spec.name}
+                                </td>
+                                {spec.value.length > 50 ? 
+                                  <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">
+                                    {spec.value.slice(0,47)}...
+                                  </td>
+                                  :
+                                  <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">
+                                    {spec.value}
+                                  </td>
+                                }
 
-                              {/* Second specification */}
-                              <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>{spec.name}</td>
-                              {spec.value.length > 50 ? 
-                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value.slice(0,50)}</td>
-                                :
-                                <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">{spec.value}</td>
-                              }
-                            </tr>
-                          );
-                        }
-
-                        return null;
-                      })}
+                                {/* Second specification (if exists) */}
+                                {nextSpec ? (
+                                  <>
+                                    <td style={{width: "35%", whiteSpace: "normal", wordWrap: "break-word"}}>
+                                      {nextSpec.name}
+                                    </td>
+                                    {nextSpec.value.length > 50 ? 
+                                      <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">
+                                        {nextSpec.value.slice(0,50)}
+                                      </td>
+                                      :
+                                      <td style={{width: "15%", textAlign: "end", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}} className="text-end">
+                                        {nextSpec.value}
+                                      </td>
+                                    }
+                                  </>
+                                ) : (
+                                  // Empty cells if no second spec in pair
+                                  <>
+                                    <td style={{width: "35%"}}></td>
+                                    <td style={{width: "15%"}}></td>
+                                  </>
+                                )}
+                              </tr>
+                            );
+                          }
+                          return null;
+                        });
+                      })()}
                     </MDBTableBody>
 
                   </MDBTable>
