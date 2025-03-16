@@ -24,7 +24,6 @@ const Allproducts = ({ addToCart }) => {
   const [selectedCategory, setSelectedCategory] = useState(-1);
 
   const observer = useRef();
-  const debounceTimeout = useRef(null);
 
   const fetchProducts = useCallback(
     async (page) => {
@@ -37,12 +36,10 @@ const Allproducts = ({ addToCart }) => {
       if (discountFilter) link += `&discount=${discountFilter}`;
       if (priceFilter) link += `&max_price=${priceFilter}`;
 
-      console.log("Fetching products from:", link);
       try {
         const response = await fetch(link);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        console.log("API Response:", data);
 
         const products = Array.isArray(data)
           ? data.map((product) => ({
@@ -58,13 +55,10 @@ const Allproducts = ({ addToCart }) => {
         setAllProducts((prev) => {
           const existingIds = new Set(prev.map((p) => p.id));
           const newProducts = products.filter((p) => !existingIds.has(p.id));
-          console.log("New products added:", newProducts);
           return [...prev, ...newProducts];
         });
-
         // Stop only if fewer than pageSize after page 1
         if (products.length < pageSize && page > 1) {
-          console.log(`Fetched ${products.length} < ${pageSize} on page ${page}, stopping`);
           setHasMore(false);
         }
       } catch (error) {
@@ -77,13 +71,6 @@ const Allproducts = ({ addToCart }) => {
     [categoryFilter, brandFilter, priceFilter, availabilityFilter, discountFilter, hasMore, pageSize]
   );
 
-  const debounceFetch = useCallback(
-    (page) => {
-      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
-      debounceTimeout.current = setTimeout(() => fetchProducts(page), 300);
-    },
-    [fetchProducts]
-  );
 
   // Filter handlers (unchanged)
   const handleAvailabilityFilterChange = (e) => {
@@ -91,7 +78,6 @@ const Allproducts = ({ addToCart }) => {
     setCurrentPage(1);
     setHasMore(true);
     setAllProducts([]);
-    debounceFetch(1);
   };
 
   const handleDiscountFilterChange = (e) => {
@@ -99,7 +85,6 @@ const Allproducts = ({ addToCart }) => {
     setCurrentPage(1);
     setHasMore(true);
     setAllProducts([]);
-    debounceFetch(1);
   };
 
   const handleBrandFilterChange = (e) => {
@@ -107,7 +92,6 @@ const Allproducts = ({ addToCart }) => {
     setCurrentPage(1);
     setHasMore(true);
     setAllProducts([]);
-    debounceFetch(1);
   };
 
   const handleCategoryFilterChange = (e) => {
@@ -121,7 +105,6 @@ const Allproducts = ({ addToCart }) => {
     setCurrentPage(1);
     setHasMore(true);
     setAllProducts([]);
-    debounceFetch(1);
   };
 
   const handlePriceRangeChange = (e) => {
@@ -131,7 +114,6 @@ const Allproducts = ({ addToCart }) => {
     setCurrentPage(1);
     setHasMore(true);
     setAllProducts([]);
-    debounceFetch(1);
   };
 
   const lastProductRef = useCallback(
@@ -141,7 +123,6 @@ const Allproducts = ({ addToCart }) => {
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
-            console.log("Last product in view, loading page", currentPage + 1);
             setCurrentPage((prev) => prev + 1);
           }
         },
@@ -157,9 +138,6 @@ const Allproducts = ({ addToCart }) => {
   }, [currentPage, fetchProducts]);
 
   useEffect(() => {
-    if (categoryId && categoryId >= 0) {
-      handleCategoryFilterChange(categoryId);
-    }
     fetch(`${domain}brands`)
       .then((response) => response.json())
       .then((data) => setBrandNames(data.map((brand) => ({ id: brand.id, name: brand.name }))))
@@ -176,7 +154,7 @@ const Allproducts = ({ addToCart }) => {
         )
       )
       .catch((error) => console.error("Error fetching categories:", error));
-  }, [categoryId]);
+  }, []);
 
   const ProductItem = React.memo(
     React.forwardRef(({ product }, ref) => {
