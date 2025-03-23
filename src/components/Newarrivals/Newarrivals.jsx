@@ -24,7 +24,7 @@ const Flashcard = ({ addToCart }) => {
           return;
         }
 
-        const response = await fetch("https://texnotech.store/products/new-arrivals");
+        const response = await fetch("https://back-texnotech.onrender.com/products/new-arrivals");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

@@ -28,7 +28,7 @@ const Search = ({ cartItems }) => {
 
 
   const handleSearch = () => {
-    fetch("https://texnotech.store/products?search_query=" + searchText)
+    fetch("https://back-texnotech.onrender.com/products?search_query=" + searchText)
       .then((response) => response.json())
       .then((data) => {
         const products = data.map((product) => ({

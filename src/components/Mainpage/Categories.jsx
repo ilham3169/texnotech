@@ -6,7 +6,7 @@ const Categories = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://texnotech.store/categories")
+    fetch("https://back-texnotech.onrender.com/categories")
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching categories:", error));

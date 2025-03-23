@@ -4,7 +4,7 @@ import "./allproducts.css";
 
 const Allproducts = ({ addToCart }) => {
   const { categoryId } = useParams();
-  const domain = "https://texnotech.store/";
+  const domain = "https://back-texnotech.onrender.com/";
 
   const [allProducts, setAllProducts] = useState([]);
   const [brandNames, setBrandNames] = useState([]);

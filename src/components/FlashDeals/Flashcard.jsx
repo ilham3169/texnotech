@@ -35,7 +35,7 @@ const Flashcard = ({ addToCart }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://texnotech.store/products/is_super");
+        const response = await fetch("https://back-texnotech.onrender.com/products/is_super");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -50,7 +50,7 @@ const Flashcard = ({ addToCart }) => {
 
     const fetchImages = async () => {
       try {
-        const response = await fetch("https://texnotech.store/images");
+        const response = await fetch("https://back-texnotech.onrender.com/images");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

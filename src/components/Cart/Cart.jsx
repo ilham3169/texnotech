@@ -125,7 +125,7 @@ const Cart = ({
             payment_method: "cash"
           };
 
-          fetch('https://texnotech.store/orders/add', {
+          fetch('https://back-texnotech.onrender.com/orders/add', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const Cart = ({
                 price_at_purchase: item.price
               };
 
-              fetch('https://texnotech.store/order_items/add', {
+              fetch('https://back-texnotech.onrender.com/order_items/add', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
