@@ -202,7 +202,7 @@ const Allproducts = ({ addToCart }) => {
             </div>
             <div className="product-details" style={{ color: "red", fontSize: "21px" }}>
               <h4 style={{ whiteSpace: "nowrap", fontWeight: "600" }}>
-                {product.discount}.00 ₼{" "}
+                {product.discount} ₼{" "}
                 <span style={{ textDecoration: "line-through", color: "grey" }}>
                   {product.price} ₼
                 </span>
