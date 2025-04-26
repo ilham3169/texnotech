@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import { FaBoxOpen, FaWallet, FaCreditCard, FaCheck } from "react-icons/fa";
 import { GrRadialSelected } from "react-icons/gr";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'; // Optional, for navigation
+
 
 const Cart = ({
   cartItems,
@@ -96,6 +99,98 @@ const Cart = ({
         console.log("Redirect to Kapital Bank");
         if (selectedDeliveryOption === 1) {
           console.log("Create Order with credit card and Courier delivery");
+
+          let totalPrice = 0;
+          cartItems.forEach(item => {
+            console.log(`Product: ${item.name}`);
+            console.log(`Quantity: ${item.qty}`);
+            console.log(`Price: ${item.price} AZN`);
+            console.log(`Product id: ${item.id}`);
+            totalPrice += item.price * item.qty;
+          });
+
+          const baseUrl = "https://txpgtst.kapitalbank.az/api";
+          let bodyRequest = `{
+              "order": {
+                  "typeRid": "Order_SMS",
+                  "amount": "${totalPrice}",
+                  "currency": "AZN",
+                  "language": "az",
+                  "description": "Purchase from texnotech.com with courier delivery",
+                  "hppRedirectUrl": "https://texnotech.com",
+                  "hppCofCapturePurposes": ["Cit"]
+              }
+          }`;
+
+          const orderData = JSON.parse(bodyRequest);
+
+          const username = "TerminalSys/kapital";
+          const password = "kapital123";
+          const authString = `${username}:${password}`;
+          const base64Auth = btoa(authString); 
+
+          fetch(`${baseUrl}/order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${base64Auth}` 
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Kapital Bank API error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const { id, password, hppUrl } = data.order;
+      
+          const extractedData = {
+              orderId: id,
+              orderPassword: password,
+              orderHppUrl: hppUrl
+          };
+      
+          console.log('Extracted Data:', extractedData);
+          
+          const orderDatax = {
+            name: clientName,
+            surname: clientSurname,
+            phone_number: clientPhone,
+            total_price: totalPrice,
+            status: "pending",
+            payment_status: "unpaid",
+            payment_method: "card",
+            id: extractedData.orderId
+          };
+      
+          // Save the order to your backend first
+          return fetch('https://back-texnotech.onrender.com/orders/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderDatax)
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Backend API error: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(() => {
+            let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
+            console.log(paymentUrl);
+            window.location.href = paymentUrl;
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
+
         } else if (selectedDeliveryOption === 2) {
           console.log("Create Order with credit card and Self pickup");
         }
@@ -523,23 +618,23 @@ const Cart = ({
             <button
               className="text-gray-900 px-5 py-2 rounded-lg transition-colors"
               style={{
-                background: "#ffebeb", // Light pink background consistent with your theme
+                background: "#ffebeb",
                 fontSize: "16px",
                 fontWeight: "500",
-                border: "1px solid #e6e6e6", // Subtle border
-                borderRadius: "8px", // Slightly rounded corners
-                padding: "10px 20px", // Comfortable padding
+                border: "1px solid #e6e6e6", 
+                borderRadius: "8px",
+                padding: "10px 20px",
                 cursor: "pointer",
-                transition: "all 0.3s ease", // Smooth transition for hover effects
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Soft shadow for depth
+                transition: "all 0.3s ease",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = "#ffd4d4"; // Slightly darker pink on hover
-                e.target.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.15)"; // Enhanced shadow on hover
+                e.target.style.background = "#ffd4d4";
+                e.target.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.15)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = "#ffebeb"; // Revert to original background
-                e.target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)"; // Revert shadow
+                e.target.style.background = "#ffebeb"; 
+                e.target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)"; 
               }}
               onClick={handleCloseSuccessModal}
             >
