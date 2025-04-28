@@ -135,7 +135,7 @@ const Footer = () => {
 
       </div>
       <div className="">
-        <h2 className="my-footer-h2">Kontakt</h2>
+        <h2 className="my-footer-h2">Əlaqə</h2>
         <ul>
           <li className="my-footer-li">Sumqayıt şəhər 9 mk Ü.HACIBƏYOV küçəsi</li>
           <li className="contact-info-flex my-footer-li">
