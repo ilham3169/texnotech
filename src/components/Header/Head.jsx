@@ -26,6 +26,9 @@ export const Head = () => {
                 info@texnotech.store
               </label>
             </a>
+            <a href="https://texnotech.com" class="custom-button">
+              <label>TexnoTech'də Satın</label>
+            </a>
           </div>
         </div>
       </section>

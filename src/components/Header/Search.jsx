@@ -49,7 +49,7 @@ const Search = ({ cartItems }) => {
       <section className="search" style={{width: "100%"}}>
         <div className="header-container c_flex">
           <div className="logo width">
-            <Link aria-label="Daraz Home" to="/">
+            <Link aria-label="Texnotech" to="/">
               <img src="/assets/main-logo/logo.jpg" alt="" />
             </Link>
           </div>

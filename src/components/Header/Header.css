@@ -221,6 +221,32 @@ button {
   flex-shrink: 0; /* Prevent icon from shrinking too much */
 }
 
+.custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #6B48FF, #FF4D91); /* Gradient from purple to pink */
+  transition: background 0.3s ease;
+}
+
+.custom-button:hover {
+  background: linear-gradient(to right, #5A3DE6, #E64382); /* Slightly darker gradient on hover */
+}
+
+.custom-button label {
+  cursor: pointer;
+}
+
+.logo img {
+  width: 190px !important;
+  height: 55px; /* Set your desired height */
+}
+
+
 @media only screen and (max-width: 768px) {
 
   .menu-items {
@@ -287,6 +313,8 @@ button {
 
   
   .search .logo img {
-    width: 6rem;
+    width: 10rem;
   }
 }
+
+
