@@ -5,7 +5,7 @@ import { FaTruckArrowRight } from "react-icons/fa6";
 import { FaBoxOpen, FaWallet, FaCreditCard, FaCheck } from "react-icons/fa";
 import { GrRadialSelected } from "react-icons/gr";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'; // Optional, for navigation
+import { useNavigate } from 'react-router-dom'; 
 
 
 const Cart = ({
@@ -95,8 +95,11 @@ const Cart = ({
       clientSurname.length > 0 &&
       clientPhone.length === 13
     ) {
+
       if (selectedPaymentMethod === 2) {
+
         console.log("Redirect to Kapital Bank");
+
         if (selectedDeliveryOption === 1) {
           console.log("Create Order with credit card and Courier delivery");
 
@@ -162,7 +165,8 @@ const Cart = ({
             status: "pending",
             payment_status: "unpaid",
             payment_method: "card",
-            id: extractedData.orderId
+            id: extractedData.orderId,
+            delivery_method: "courier"
           };
       
           return fetch('https://back-texnotech.onrender.com/orders/add', {
@@ -179,9 +183,40 @@ const Cart = ({
             return response.json();
           })
           .then(() => {
+
+          const orderId = extractedData.orderId; 
+
+          cartItems.forEach(item => {
+            const orderItemsData = {
+              order_id: orderId,
+              product_id: item.id,
+              quantity: item.qty,
+              price_at_purchase: item.discount
+            };
+
+            fetch('https://back-texnotech.onrender.com/order_items/add', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderItemsData)
+            })
+
+            .then(response => response.json())
+            
+            .then(itemData => {
+              console.log(`Item added successfully:`, itemData);
+            })
+            
+            .catch(error => {
+              console.error(`Error adding item to order:`, error);
+            });
+          });
+
             let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
             console.log(paymentUrl);
             window.location.href = paymentUrl;
+            
           });
         })
         .catch(error => {
@@ -196,7 +231,9 @@ const Cart = ({
         setIsCheckoutModalOpen(false);
         setIsSuccessModalOpen(true);
       } else if (selectedPaymentMethod === 1) {
+
         if (selectedDeliveryOption === 1) {
+        
           console.log("Create Order with Cash and Courier delivery");
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
           
@@ -216,7 +253,8 @@ const Cart = ({
             total_price: totalPrice,
             status: "pending",
             payment_status: "unpaid",
-            payment_method: "cash"
+            payment_method: "cash",
+            delivery_method: "courier"
           };
 
           fetch('https://back-texnotech.onrender.com/orders/add', {
@@ -257,7 +295,6 @@ const Cart = ({
 
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
-            checkOut();
           })
           .catch(error => {
             console.error("Error creating order:", error);
@@ -266,6 +303,8 @@ const Cart = ({
           console.log("Create Order with Cash and Self pickup");
           setIsCheckoutModalOpen(false);
           setIsSuccessModalOpen(true);
+
+          
         }
       }
     } else {
