@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.css";
+import { Link } from 'react-router-dom'; // Import Link
 
 const Footer = () => {
   return (
@@ -46,13 +47,12 @@ const Footer = () => {
         <h2 className="my-footer-h2">Müştərilər üçün</h2>
         <ul>
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EUa4DJi7aQFAoDecLMaXlecB2z3dbQtduZGWK5zezULtZQ?e=ewDKY8"
-              target="blank"
-              style={{ textDecoration: "none", color: "inherit" }}
+            <Link
+              to="/delivery" // Route to the Delivery page
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
-            Çatdırılma və istifadə şərtləri
-            </a> 
+              Çatdırılma və istifadə şərtləri
+            </Link>
           </li>
           <li className="my-footer-li">
             <a 

@@ -300,11 +300,78 @@ const Cart = ({
             console.error("Error creating order:", error);
           });
         } else if (selectedDeliveryOption === 2) {
+
           console.log("Create Order with Cash and Self pickup");
+
+          console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
+          
+          let totalPrice = 0;
+          cartItems.forEach(item => {
+            console.log(`Product: ${item.name}`);
+            console.log(`Quantity: ${item.qty}`);
+            console.log(`Price: ${item.discount} AZN`);
+            console.log(`Product id: ${item.id}`);
+            totalPrice += item.discount * item.qty;
+          });
+
+          const orderData = {
+            name: clientName,
+            surname: clientSurname,
+            phone_number: clientPhone,
+            total_price: totalPrice,
+            status: "pending",
+            payment_status: "unpaid",
+            payment_method: "cash",
+            delivery_method: "point"
+          };
+
+          fetch('https://back-texnotech.onrender.com/orders/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Order created successfully:", data);
+            const orderId = data.id;
+
+            cartItems.forEach(item => {
+              const orderItemsData = {
+                order_id: orderId,
+                product_id: item.id,
+                quantity: item.qty,
+                price_at_purchase: item.discount
+              };
+
+              fetch('https://back-texnotech.onrender.com/order_items/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderItemsData)
+              })
+              .then(response => response.json())
+              .then(itemData => {
+                console.log(`Item added successfully:`, itemData);
+              })
+              .catch(error => {
+                console.error(`Error adding item to order:`, error);
+              });
+            });
+
+            setIsCheckoutModalOpen(false);
+            setIsSuccessModalOpen(true);
+          })
+          .catch(error => {
+            console.error("Error creating order:", error);
+          });
+
+
+
           setIsCheckoutModalOpen(false);
           setIsSuccessModalOpen(true);
-
-          
         }
       }
     } else {
@@ -378,8 +445,8 @@ const Cart = ({
           <div className="cart-total product-cart">
             <h2>Səbət</h2>
             <div className="d_flex">
-              <h4>Toplam qiymət : </h4>
-              <h3> { totalPrice} AZN</h3>
+              <h4>Toplam qiymət :</h4>
+              <h3> {totalPrice} AZN</h3>
             </div>
             <button 
               className="checkout" 

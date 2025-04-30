@@ -101,6 +101,7 @@
   font-size: 20px;
   font-weight: 500;
   color: #e94560;
+  margin-left: 5px;
 }
 
 .cart-total h2 {
@@ -122,17 +123,18 @@
 }
 
 
+
 .client-info-container .client-inputs {
   display: flex;
   flex-direction: row;
-  gap: 1%; /* Space between inputs */
+  gap: 1%; 
   justify-content: center;
   align-items: center;
 }
 
 .client-info-container .client-inputs input {
   width: 60%;
-  margin: 0; /* Reset any default margins */
+  margin: 0; 
 }
 
 /* Media query for mobile responsiveness */
