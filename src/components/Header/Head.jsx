@@ -27,7 +27,7 @@ export const Head = () => {
               </label>
             </a>
             <a href="https://texnotech.com" class="custom-button">
-              <label>TexnoTech'də Satın</label>
+              <label>TexnoTech</label>
             </a>
           </div>
         </div>
