@@ -16,7 +16,7 @@ const Cart = ({
   removeFromCart,
 }) => {
   const totalPrice = cartItems.reduce(
-    (price, item) => price + item.qty * item.price,
+    (price, item) => price + item.qty * item.discount,
     0
   );
 
@@ -104,9 +104,9 @@ const Cart = ({
           cartItems.forEach(item => {
             console.log(`Product: ${item.name}`);
             console.log(`Quantity: ${item.qty}`);
-            console.log(`Price: ${item.price} AZN`);
+            console.log(`Price: ${item.discount} AZN`);
             console.log(`Product id: ${item.id}`);
-            totalPrice += item.price * item.qty;
+            totalPrice += item.discount * item.qty;
           });
 
           const baseUrl = "https://txpgtst.kapitalbank.az/api";
@@ -165,7 +165,6 @@ const Cart = ({
             id: extractedData.orderId
           };
       
-          // Save the order to your backend first
           return fetch('https://back-texnotech.onrender.com/orders/add', {
             method: 'POST',
             headers: {
@@ -205,9 +204,9 @@ const Cart = ({
           cartItems.forEach(item => {
             console.log(`Product: ${item.name}`);
             console.log(`Quantity: ${item.qty}`);
-            console.log(`Price: ${item.price} AZN`);
+            console.log(`Price: ${item.discount} AZN`);
             console.log(`Product id: ${item.id}`);
-            totalPrice += item.price * item.qty;
+            totalPrice += item.discount * item.qty;
           });
 
           const orderData = {
@@ -237,7 +236,7 @@ const Cart = ({
                 order_id: orderId,
                 product_id: item.id,
                 quantity: item.qty,
-                price_at_purchase: item.price
+                price_at_purchase: item.discount
               };
 
               fetch('https://back-texnotech.onrender.com/order_items/add', {
@@ -307,9 +306,9 @@ const Cart = ({
                   <div className="cart-details" style={{marginLeft: "2%"}}>
                     <h3>{item.name}</h3>
                     <h4>
-                      {item.price}.00 x {item.qty}
+                      {item.discount} x {item.qty}
                     </h4>
-                    <span>{productQty}.00 AZN</span>
+                    <span>{item.discount * item.qty} AZN</span>
                   </div>
                   <div className="cart-items-function">
                     <div className="removeCart">
@@ -340,8 +339,8 @@ const Cart = ({
           <div className="cart-total product-cart">
             <h2>Səbət</h2>
             <div className="d_flex">
-              <h4>Toplam qiymət :</h4>
-              <h3>{totalPrice}.00 AZN</h3>
+              <h4>Toplam qiymət : </h4>
+              <h3> { totalPrice} AZN</h3>
             </div>
             <button 
               className="checkout" 

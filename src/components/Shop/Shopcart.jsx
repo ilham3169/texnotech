@@ -26,7 +26,7 @@ const Shopcart = ({ shopItems, addToCart }) => {
                   <h3 className="truncate">{product.name}</h3>
                 </Link>
                 <div className="price">
-                  <h4>{product.price}.00</h4>
+                  <h4>{product.discount}</h4>
                   <button
                     aria-label="Add to cart"
                     onClick={() => addToCart(product)}
