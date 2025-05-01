@@ -9,6 +9,7 @@ import Singleproductpage from "../pages/product-details/Singleproductpage";
 import ErrorNotFound from "../components/ErrorNotFoundPage/ErrorNotFound";
 import ScrollToTop from "../components/ScrollToTop";
 import Delivery from "../components/Delivery/Delivery"
+import SearchResult from "../components/SearchResult/SearchResult"
 
 const AllRoutes = ({
   productItems,
@@ -81,6 +82,17 @@ const AllRoutes = ({
             <Delivery/>
           }
         />  
+
+        <Route
+          path="/search-result"
+          element={
+            <SearchResult
+              cartItems={cartItems}
+              addToCart={addToCart}
+            />
+          }
+        />  
+
 
         {/* Catch-all route for 404 errors */}
         <Route path="*" element={<ErrorNotFound cartItems={cartItems} />} />

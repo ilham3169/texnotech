@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Search = ({ cartItems }) => {
+  const navigate = useNavigate();
+  
   window.addEventListener("scroll", function () {
     const search = document.querySelector(".search");
     search.classList.toggle("active", window.scrollY > 100);
@@ -9,9 +11,7 @@ const Search = ({ cartItems }) => {
 
   const [searchText, setSearchText] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-
-  const [allProducts, setAllProducts] = useState([])
-
+  const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -19,13 +19,12 @@ const Search = ({ cartItems }) => {
         setAllProducts([])
         setShowDropdown(false);
       }
-    }, 500); // Adjust delay (500ms)
+    }, 500); 
 
     return () => {
-      clearTimeout(handler); // Clear timeout if user keeps typing
+      clearTimeout(handler); 
     };
   }, [searchText]);
-
 
   const handleSearch = () => {
     fetch("https://back-texnotech.onrender.com/products?search_query=" + searchText)
@@ -44,6 +43,14 @@ const Search = ({ cartItems }) => {
       .catch((error) => console.error("Error fetching products:", error));
   }
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchText.trim()) {
+      navigate(`/search-result?query=${encodeURIComponent(searchText)}`);
+      setShowDropdown(false);
+    }
+  };
+
   return (
     <>
       <section className="search" style={{width: "100%"}}>
@@ -54,7 +61,7 @@ const Search = ({ cartItems }) => {
             </Link>
           </div>
 
-          <div className="search-box f_flex">
+          <form onSubmit={handleSearchSubmit} className="search-box f_flex">
             <i className="fa fa-search" onClick={handleSearch}/>
             <input 
               style={{fontSize: "15px"}}
@@ -64,7 +71,7 @@ const Search = ({ cartItems }) => {
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
               type="text" placeholder="Axtarış edin..."
             />
-          </div>
+          </form>
 
           <div className="icon f_flex width">
             <div className="cart">
@@ -95,7 +102,7 @@ const Search = ({ cartItems }) => {
                         state: { productId: product.id }, // Pass productId as state
                       }}
                     >
-                      <li  onClick={() => setSearchText(product.name)}>
+                      <li onClick={() => setSearchText(product.name)}>
                         {product.name}
                       </li>
                     </Link>
@@ -103,10 +110,8 @@ const Search = ({ cartItems }) => {
                 })}
               </ul>
             </div>
-            
           )}
         </div>
-
       </section>
     </>
   );
