@@ -168,7 +168,7 @@ const Allproducts = ({ addToCart }) => {
           className="custom-box"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <div ref={ref} className="product mtop" style={{ width: "250px" }}>
+          <div ref={ref} className="product mtop">
             <div className="img">
               <img
                 style={{ height: "200px", width: "200px" }}
@@ -177,7 +177,7 @@ const Allproducts = ({ addToCart }) => {
                 loading="lazy"
               />
             </div>
-            <div className="product-details" style={{ height: "fit-content" }}>
+            <div className="product-details">
               <div
                 style={{
                   display: "flex",
@@ -190,18 +190,19 @@ const Allproducts = ({ addToCart }) => {
                 }}
               >
                 <span
-                  style={{ fontWeight: "600", fontSize: "18px", color: "white", padding: "0 15%" }}
+                  style={{ fontWeight: "600", fontSize: "18px", color: "white"}}
                 >
                   -{Math.round(((product.price - product.discount) / product.price) * 100)} %
                 </span>
               </div>
-              <h3 title={product.name} style={{ fontSize: "17px" }}>
+              {/* Updated product name to allow wrapping */}
+              <h3 title={product.name}>
                 {product.name}
               </h3>
               <h5 style={{ fontWeight: "500", fontSize: "14px" }}>Ətraflı Məlumat üçün klikləyin</h5>
             </div>
             <div className="product-details" style={{ color: "red", fontSize: "21px" }}>
-              <h4 style={{ whiteSpace: "nowrap", fontWeight: "600" }}>
+              <h4>
                 {product.discount} ₼{" "}
                 <span style={{ textDecoration: "line-through", color: "grey" }}>
                   {product.price} ₼

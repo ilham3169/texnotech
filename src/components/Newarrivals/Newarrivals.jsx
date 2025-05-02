@@ -56,11 +56,9 @@ const Flashcard = ({ addToCart }) => {
                   -{Math.round(((product.price - product.discount) / product.price) * 100)}%
                 </span>
               </div>
-              <h4
-                title={product.name}
-                style={{ textAlign: "center", marginTop: "10px" }}
-              >
-                {product.name.length > 23 ? `${product.name.slice(0, 20)}...` : product.name}
+              {/* Remove the name truncation and allow it to wrap naturally */}
+              <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+                {product.name}
               </h4>
             </div>
           </Link>

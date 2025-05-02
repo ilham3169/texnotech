@@ -3,11 +3,7 @@
   position: relative;
   border-radius: 8px;
   box-shadow: rgb(3 0 71/ 9%) 0 1px 3px;
-  display: grid;
-  gap: 1rem;
   padding: 2rem 1rem;
-  place-items: center;
-  grid-template-columns: repeat(6, 1fr);
   max-height: 350px; /* Set a fixed height */
   overflow-x: auto; /* Enable horizontal scrolling */
   overflow-y: hidden; /* Hide vertical scrolling */
@@ -25,6 +21,17 @@
 
 .newarrivals h4 {
   font-weight: 400;
+  /* Remove white-space: nowrap */
+  white-space: normal;
+  /* Allow text to wrap */
+  overflow: visible;
+  text-overflow: unset;
+  /* Set a fixed height for product names */
+  min-height: 40px;
+  /* Add padding for better spacing */
+  padding: 0 5px;
+  /* Improve line height for readability */
+  line-height: 1.2;
 }
 
 .newarrivals span {
@@ -54,18 +61,22 @@
 
 .product-details {
   text-align: center;
-  height: 60px; /* Set a fixed height to prevent content from shifting */
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /* Increase height to accommodate wrapped text */
+  height: auto;
+  min-height: 60px;
+  /* Remove overflow constraints */
+  overflow: visible;
+  white-space: normal;
+  text-overflow: unset;
 }
 
+/* Remove truncate class constraints */
 .truncate {
   display: block;
   width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .newarrivals .box {
@@ -74,6 +85,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease; /* Smooth transition for hover effect */
+  width: 200px; /* Set a fixed width for consistency */
 }
 
 .newarrivals .product-details {
