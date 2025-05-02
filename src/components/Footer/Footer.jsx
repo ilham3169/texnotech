@@ -165,7 +165,7 @@ const Footer = () => {
           <li className="contact-info-flex my-footer-li">
             <a
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=994775116975"
+              href="https://api.whatsapp.com/send?phone=994705854432"
               className="icon-flex phone-icon"
             >
                 +994705854432

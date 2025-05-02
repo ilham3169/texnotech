@@ -8,7 +8,7 @@ export const Head = () => {
           <div className="left-row">
             <a
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=994775116975"
+              href="https://api.whatsapp.com/send?phone=994705854432"
               className="icon-flex phone-icon"
             >
               <i className="fa fa-phone"></i>
