@@ -36,9 +36,9 @@
   margin-top: 1rem;
 }
 
-.search .logo img {
+/* .search .logo img {
   width: 8rem;
-}
+} */
 
 .logo {
   flex-shrink: 0; /* Prevent logo from shrinking too much */

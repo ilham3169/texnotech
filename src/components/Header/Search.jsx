@@ -1,29 +1,33 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Search = ({ cartItems }) => {
   const navigate = useNavigate();
-  
-  window.addEventListener("scroll", function () {
-    const search = document.querySelector(".search");
-    search.classList.toggle("active", window.scrollY > 100);
-  });
+
+  const cities = [
+    "Bakı", "Ağcabədi", "Ağdam", "Ağdaş", "Ağdərə", "Ağstafa", "Ağsu", "Astara",
+    "Bərdə", "Beyləqan", "Biləsuvar", "Cəbrayıl", "Cəlilabad", "Daşkəsən", "Füzuli", "Gədəbəy", "Gəncə",
+    "Goranboy", "Göyçay", "Göygöl", "Hacıqabul", "İmişli", "İsmayıllı", "Kəlbəcər", "Kürdəmir", "Laçın",
+    "Lənkəran", "Lerik", "Masallı", "Mingəçevir", "Naftalan", "Naxçıvan", "Neftçala", "Oğuz", "Qax", "Qazax",
+    "Qəbələ", "Qobustan", "Quba", "Qubadlı", "Qusar", "Saatlı", "Sabirabad", "Şabran", "Salyan", "Şamaxı",
+    "Samux", "Şəki", "Şəmkir", "Şirvan", "Siyəzən", "Sumqayıt", "Şuşa", "Tərtər", "Tovuz", "Ucar", "Xaçmaz",
+    "Xankəndi", "Xırdalan", "Xızı", "Xocalı", "Xocavənd", "Yardımlı", "Yevlax", "Zaqatala", "Zəngilan", "Zərdab"
+  ];
 
   const [searchText, setSearchText] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
+  const [showCityModal, setShowCityModal] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("Bakı");
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      if(searchText.length == 0){
-        setAllProducts([])
+      if (searchText.length === 0) {
+        setAllProducts([]);
         setShowDropdown(false);
       }
-    }, 500); 
-
-    return () => {
-      clearTimeout(handler); 
-    };
+    }, 500);
+    return () => clearTimeout(handler);
   }, [searchText]);
 
   const handleSearch = () => {
@@ -34,14 +38,13 @@ const Search = ({ cartItems }) => {
           name: product.name,
           id: product.id,
         }));
-
-        if(products.length > 0) {
+        if (products.length > 0) {
           setAllProducts(products);
           setShowDropdown(true);
         }
       })
       .catch((error) => console.error("Error fetching products:", error));
-  }
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -53,30 +56,36 @@ const Search = ({ cartItems }) => {
 
   return (
     <>
-      <section className="search" style={{width: "100%"}}>
+      <section className="search" style={{ width: "100%" }}>
         <div className="header-container c_flex">
           <div className="logo width">
             <Link aria-label="Texnotech" to="/">
-              <img src="/assets/main-logo/logo.jpg" alt="" />
+              <img src="/assets/main-logo/logo.jpg" alt="logo" />
             </Link>
           </div>
 
+          <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => setShowCityModal(true)}>
+            <img style={{ width: "30px", paddingTop: "3px", marginRight: "5px" }} src="/assets/geo.png" alt="geo icon" />
+            <div>{selectedCity}</div>
+          </div>
+
           <form onSubmit={handleSearchSubmit} className="search-box f_flex">
-            <i className="fa fa-search" onClick={handleSearch}/>
-            <input 
-              style={{fontSize: "15px"}}
-              value={searchText} 
+            <i className="fa fa-search" onClick={handleSearch} />
+            <input
+              style={{ fontSize: "15px" }}
+              value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onFocus={() => setShowDropdown(allProducts.length > 0)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-              type="text" placeholder="Axtarış edin..."
+              type="text"
+              placeholder="Axtarış edin..."
             />
           </form>
 
           <div className="icon f_flex width">
             <div className="cart">
               <Link to="/cart">
-                <i className="fa fa-shopping-bag icon-circle" style={{color: "black"}}></i>
+                <i className="fa fa-shopping-bag icon-circle" style={{ color: "black" }}></i>
                 <span>{cartItems.length === 0 ? 0 : cartItems.length}</span>
               </Link>
             </div>
@@ -84,7 +93,6 @@ const Search = ({ cartItems }) => {
         </div>
 
         <div>
-          {/* Dropdown for search results */}
           {showDropdown && allProducts && (
             <div>
               <ul className="search-dropdown">
@@ -93,26 +101,83 @@ const Search = ({ cartItems }) => {
                     .toLowerCase()
                     .replace(/ /g, '-')
                     .replace(/[^a-z0-9-]/g, '')}-${product.id}`;
-                                    
                   return (
                     <Link
                       key={product.id}
                       to={{
                         pathname: productUrl,
-                        state: { productId: product.id }, // Pass productId as state
+                        state: { productId: product.id },
                       }}
                     >
                       <li onClick={() => setSearchText(product.name)}>
                         {product.name}
                       </li>
                     </Link>
-                    )
+                  );
                 })}
               </ul>
             </div>
           )}
         </div>
       </section>
+
+      {showCityModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+          onClick={() => setShowCityModal(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: "#fff",
+              padding: "30px",
+              borderRadius: "12px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              width: "700px",
+            }}
+          >
+            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Şəhərinizi seçin</h2>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "10px",
+              textAlign: "center"
+            }}>
+              {cities.map((city) => (
+                <div
+                  key={city}
+                  onClick={() => {
+                    setSelectedCity(city);
+                    setShowCityModal(false);
+                  }}
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    backgroundColor: city === selectedCity ? "#5f4dee" : "#f0f0f0",
+                    color: city === selectedCity ? "#fff" : "#000",
+                    fontWeight: city === selectedCity ? "bold" : "normal"
+                  }}
+                >
+                  {city}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
