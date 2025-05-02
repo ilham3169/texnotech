@@ -848,7 +848,7 @@ const Cart = ({
               Sifarişiniz Uğurla Qəbul Edildi!
             </h2>
             <p className="text-gray-700 mb-4 text-sm" style={{ textAlign: "center !important", marginBottom: "10px"}}>
-              Tezliklə sizə ətraflı məlumat üçün əlaqə saxlayacayıq.
+              Tezliklə sizinlə ətraflı məlumat üçün əlaqə saxlayacayıq.
             </p>
             <button
               className="text-gray-900 px-5 py-2 rounded-lg transition-colors"

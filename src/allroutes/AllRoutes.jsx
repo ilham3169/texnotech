@@ -17,6 +17,7 @@ import Kredit from "../components/Kredit/Kredit"
 import Confidential from "../components/Confidential/Confidential"
 import Price from "../components/Price/Price"
 import Korporativ from "../components/Korporativ/Korporativ"
+import PaymentStatusPage from "../components/PaymentStatusPage/PaymentStatusPage"
 
 
 const AllRoutes = ({
@@ -139,6 +140,14 @@ const AllRoutes = ({
             <Korporativ/>
           }
         />
+
+        <Route
+          path="/payment-status"
+          element={
+            <PaymentStatusPage/>
+          }
+        />
+
 
         <Route
           path="/search-result"
