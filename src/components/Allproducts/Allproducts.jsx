@@ -243,7 +243,7 @@ const Allproducts = ({ addToCart }) => {
             </option>
           ))}
         </select>
-        <div className="price-range-container">
+        {/* <div className="price-range-container">
           <div className="price-range-label-container">
             <span className="price-range-label">Qiymət aralığı</span>
           </div>
@@ -259,7 +259,7 @@ const Allproducts = ({ addToCart }) => {
             className="price-range-input"
           />
           <span className="price-range-value">₼ {priceRange.min} - ₼ {priceRange.max}</span>
-        </div>
+        </div> */}
         <div className="available-container">
           <span className="available-text">Mövcuddur</span>
           <input
