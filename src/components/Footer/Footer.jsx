@@ -142,7 +142,17 @@ const Footer = () => {
       <div className="">
         <h2 className="my-footer-h2">Əlaqə</h2>
         <ul>
-          <li className="my-footer-li">Sumqayıt şəhər 9 mk Ü.HACIBƏYOV küçəsi</li>
+          
+          <li className="contact-info-flex my-footer-li">
+            <a 
+              target="_blank"
+              href="https://maps.app.goo.gl/Tx2RvJUbGUKnNC2e7"
+              className="icon-flex phone-icon"
+            > 
+              Sumqayıt şəhər 9 mk Ü.HACIBƏYOV küçəsi
+            </a>
+          </li>
+          
           <li className="contact-info-flex my-footer-li">
             <a
               target="_blank"

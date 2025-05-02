@@ -140,9 +140,6 @@ const AllRoutes = ({
           }
         />
 
-
-
-
         <Route
           path="/search-result"
           element={
