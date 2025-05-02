@@ -77,6 +77,8 @@ const Flashcard = ({ addToCart }) => {
             >
               {product.price} AZN
             </span>
+
+            
             <button
               aria-label="Add to cart"
               onClick={() => addToCart(product)}
@@ -90,7 +92,7 @@ const Flashcard = ({ addToCart }) => {
                 paddingLeft: "5 %"
               }}
             >
-              <i className="fa fa-plus" style={{ color: "red", padding: "50% 0 60% 0" }}></i>
+              <i className="fa fa-cart-plus" style={{ color: "red", padding: "50% 20% 40% 100%" }}></i>
             </button>
           </div>
         </div>

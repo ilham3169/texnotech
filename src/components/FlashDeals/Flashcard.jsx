@@ -168,24 +168,37 @@ const Flashcard = ({ addToCart }) => {
                   <div className="price" style={{height: "60%", display: 'flex', justifyContent: "center", alignItems: "center", gap: "5%"}}>
                     
                     <div style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
-                      <h4 style={{paddingLeft: "0px"}}>
+                      <h4 style={{paddingLeft: "0px", fontSize: 20}}>
                         {product.discount} AZN &nbsp;
-                        <span style={{textDecoration: "line-through", color: "grey", fontWeight: "500"}}>{product.price} AZN
+                        <span style={{textDecoration: "line-through", color: "grey", fontWeight: "500", fontSize: 25}}>{product.price} AZN
                         </span>
                       </h4>
                     </div>
-
-                    <div>
-                      <button
-                        aria-label="Add to cart"
-                        onClick={() => addToCart(product)}
-                      >
-                        <i className="fa fa-plus"></i>
-                      </button>
-                    </div>
-
+                    
                   </div>
                 </div>
+
+                <div>
+                  <button
+                    onClick={() => addToCart(product)}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "#5f4eff",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      alignItems: "center",
+                      gap: "8px",
+                      width: "250px",
+                      height: "43px",
+                      fontSize: 25
+                    }}>
+                      <i className="fa fa-cart-plus"></i>
+                      <i> Səbətə əlavə et</i>
+                  </button>
+                </div>
+                
               </div>
             </div>
           );
