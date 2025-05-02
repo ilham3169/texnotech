@@ -224,6 +224,35 @@ const Allproducts = ({ addToCart }) => {
                 {(product.discount / 3).toFixed(2)} ₼ x 3 ay
               </span>
             </div>
+
+            <div>
+              
+            <button
+              onClick={(e) => {
+                e.preventDefault();    // Prevents default link behavior
+                addToCart(product);   // Add the product to the cart
+              }}
+              style={{
+                padding: "8px 12px",
+                backgroundColor: "#5f4eff",
+                color: "#fff",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                alignItems: "center",
+                gap: "8px",
+                width: "250px",
+                height: "43px",
+                fontSize: 25,
+                marginTop: "15px"
+              }}
+            >
+              <i className="fa fa-cart-plus"></i>
+              <i> Səbətə əlavə et</i>
+            </button>
+              
+            </div>
+
           </div>
         </Link>
       );

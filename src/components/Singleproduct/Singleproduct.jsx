@@ -207,7 +207,7 @@ const Singleproduct = ({ addToCart }) => {
                           Səbətə at
                         </button>
 
-                        <button
+                        {/* <button
                           className="btn-buyOneClick"
                           style={{
                             width: "40%",
@@ -221,7 +221,7 @@ const Singleproduct = ({ addToCart }) => {
                           type="button" // Ensures it doesn't submit a form by default
                         >
                           Bir kliklə al
-                        </button>
+                        </button> */}
 
                         <button
                           className="btn-likeProduct"
