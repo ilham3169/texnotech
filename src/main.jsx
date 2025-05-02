@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import ReactGA from "react-ga4";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 ReactGA.initialize("G-2HZ45QEFQ5");
 ReactGA.send({
