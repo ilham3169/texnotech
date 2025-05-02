@@ -120,7 +120,7 @@ const Cart = ({
                   "currency": "AZN",
                   "language": "az",
                   "description": "Purchase from texnotech.com with courier delivery",
-                  "hppRedirectUrl": "https://texnotech.com",
+                  "hppRedirectUrl": "https://texnotech.com/payment-status",
                   "hppCofCapturePurposes": ["Cit"]
               }
           }`;
@@ -247,7 +247,7 @@ const Cart = ({
                   "currency": "AZN",
                   "language": "az",
                   "description": "Purchase from texnotech.com with self pickup",
-                  "hppRedirectUrl": "https://texnotech.com",
+                  "hppRedirectUrl": "https://texnotech.com/payment-status",
                   "hppCofCapturePurposes": ["Cit"]
               }
           }`;
