@@ -112,7 +112,7 @@ const Cart = ({
             totalPrice += item.discount * item.qty;
           });
 
-          const baseUrl = "https://txpgtst.kapitalbank.az/api";
+          const baseUrl = "https://e-commerce.kapitalbank.az/api";
           let bodyRequest = `{
               "order": {
                   "typeRid": "Order_SMS",
@@ -127,8 +127,9 @@ const Cart = ({
 
           const orderData = JSON.parse(bodyRequest);
 
-          const username = "TerminalSys/kapital";
-          const password = "kapital123";
+          const username = import.meta.env.VITE_KAPITAL_USERNAME;
+          const password = import.meta.env.VITE_KAPITAL_PASSWORD;
+
           const authString = `${username}:${password}`;
           const base64Auth = btoa(authString); 
 
@@ -139,14 +140,14 @@ const Cart = ({
                 'Authorization': `Basic ${base64Auth}` 
             },
             body: JSON.stringify(orderData)
-        })
+          })
         .then(response => {
           if (!response.ok) {
             throw new Error(`Kapital Bank API error: ${response.status}`);
           }
           return response.json();
         })
-        .then(data => {
+        .then(async data => {
           const { id, password, hppUrl } = data.order;
       
           const extractedData = {
@@ -226,7 +227,136 @@ const Cart = ({
 
 
         } else if (selectedDeliveryOption === 2) {
+
           console.log("Create Order with credit card and Self pickup");
+
+          let totalPrice = 0;
+          cartItems.forEach(item => {
+            console.log(`Product: ${item.name}`);
+            console.log(`Quantity: ${item.qty}`);
+            console.log(`Price: ${item.discount} AZN`);
+            console.log(`Product id: ${item.id}`);
+            totalPrice += item.discount * item.qty;
+          });
+
+          const baseUrl = "https://e-commerce.kapitalbank.az/api";
+          let bodyRequest = `{
+              "order": {
+                  "typeRid": "Order_SMS",
+                  "amount": "${totalPrice}",
+                  "currency": "AZN",
+                  "language": "az",
+                  "description": "Purchase from texnotech.com with self pickup",
+                  "hppRedirectUrl": "https://texnotech.com",
+                  "hppCofCapturePurposes": ["Cit"]
+              }
+          }`;
+
+          const orderData = JSON.parse(bodyRequest);
+    
+          const username = import.meta.env.VITE_KAPITAL_USERNAME;
+          const password = import.meta.env.VITE_KAPITAL_PASSWORD;
+
+          const authString = `${username}:${password}`;
+          const base64Auth = btoa(authString); 
+
+          fetch(`${baseUrl}/order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${base64Auth}` 
+            },
+            body: JSON.stringify(orderData)
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Kapital Bank API error: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(async data => {
+            const { id, password, hppUrl } = data.order;
+        
+            const extractedData = {
+                orderId: id,
+                orderPassword: password,
+                orderHppUrl: hppUrl
+            };
+        
+            console.log('Extracted Data:', extractedData);
+            
+            const orderDatax = {
+              name: clientName,
+              surname: clientSurname,
+              phone_number: clientPhone,
+              total_price: totalPrice,
+              status: "pending",
+              payment_status: "unpaid",
+              payment_method: "card",
+              id: extractedData.orderId,
+              delivery_method: "point"
+            };
+        
+            return fetch('https://back-texnotech.onrender.com/orders/add', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderDatax)
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Backend API error: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(() => {
+  
+            const orderId = extractedData.orderId; 
+  
+            cartItems.forEach(item => {
+              const orderItemsData = {
+                order_id: orderId,
+                product_id: item.id,
+                quantity: item.qty,
+                price_at_purchase: item.discount
+              };
+  
+              fetch('https://back-texnotech.onrender.com/order_items/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderItemsData)
+              })
+  
+              .then(response => response.json())
+              
+              .then(itemData => {
+                console.log(`Item added successfully:`, itemData);
+              })
+              
+              .catch(error => {
+                console.error(`Error adding item to order:`, error);
+              });
+            });
+  
+              let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
+              console.log(paymentUrl);
+              window.location.href = paymentUrl;
+              
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
+
+
+
+
+        
+        
         }
         setIsCheckoutModalOpen(false);
         setIsSuccessModalOpen(true);

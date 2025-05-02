@@ -169,8 +169,7 @@ const Singleproduct = ({ addToCart }) => {
                       <div className="text-start" style={{width: "fit-content", borderRadius: "5px", textDecoration:"underline"}}>                      
                         {
                           product.discount > 0 ? 
-                          <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{product.price - product.discount} ₼</MDBCardText>
-                          : <></>
+                            <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{(product.price - product.discount).toFixed(2)} ₼</MDBCardText>                          : <></>
                         }
                       </div>
                     </MDBRow>
