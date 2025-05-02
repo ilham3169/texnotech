@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Search.css";
+
 
 const Search = ({ cartItems }) => {
   const navigate = useNavigate();
@@ -64,7 +66,7 @@ const Search = ({ cartItems }) => {
             </Link>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => setShowCityModal(true)}>
+          <div className="geo-location-container" style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => setShowCityModal(true)}>
             <img style={{ width: "30px", paddingTop: "3px", marginRight: "5px" }} src="/assets/geo.png" alt="geo icon" />
             <div>{selectedCity}</div>
           </div>

@@ -1,0 +1,7 @@
+/* Hide geo icon and Ünvan on mobile */
+@media screen and (max-width: 768px) {
+    .geo-location-container {
+      display: none !important;
+    }
+  }
+  
