@@ -46,74 +46,77 @@ const Footer = () => {
       <div className="">
         <h2 className="my-footer-h2">Müştərilər üçün</h2>
         <ul>
+
           <li className="my-footer-li">
             <Link
-              to="/delivery" // Route to the Delivery page
+              to="/delivery" 
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Çatdırılma və istifadə şərtləri
             </Link>
           </li>
+
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EWpNMf1d77NFpiyoIlXsnGsBtdF--F5obgBmmuT8Eq9jIQ?e=y0g0eH"
-              target="blank"
-              style={{ textDecoration: "none", color: "inherit" }}
+            <Link
+              to="/refund" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Məhsulun geri qaytarılması şərtləri
-            </a>
-            </li>
-          <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EQuY6fcQIxdJrdGJSWBpBuEBMVpx4XxykJQ8gTDhZruTgw?e=8ydipd"
-              target="blank"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Geri qaytarma siyasəti
-            </a>
+            </Link>
           </li>
+
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EZWfIsSeGdVBowStGQvcD4wB58tkdthziMSA_d2UdkVEYg?e=ASE0dB"
-              target="blank"
-              style={{ textDecoration: "none", color: "inherit" }}
+            <Link
+              to="/refund-policy" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              Geri qayıtma siyasəti
+            </Link>
+          </li>
+
+          <li className="my-footer-li">
+            <Link
+              to="/insurance" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Zəmanət şərtləri
-            </a>
+            </Link>
           </li>
+
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/Ef4b_f5r4C9IsP0Ajql_DPUB849voDD_Vdceq60clU4V7Q?e=6b1D4V"
-              style={{ textDecoration: "none", color: "inherit" }}
-              target="blank"
+            <Link
+              to="/kredit" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              Kredit şərtləri
-            </a>
+              Kredit şərtləri
+            </Link>
           </li>
+
         </ul>
 
         <br />
         <h2 className="my-footer-h2">Məlumat</h2>
         <ul>
+          
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EcDhr_QjFFFBta1htsuvKeYB921MiI7-4G9ZZ7V-fIyJCg?e=iw2LN8"
-              style={{ textDecoration: "none", color: "inherit" }}
-              target="blank"
+            <Link
+              to="/konfidensialliq" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Konfidensiallıq siyasəti
-            </a>
+            </Link>
           </li>
+
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/EQvXAWnEB3ZGkzIoTNtY38IBc6mtRB0puiGFVO2t2N7KiQ?e=8v8smO"
-              style={{ textDecoration: "none", color: "inherit" }}
-              target="blank"
+           <Link
+              to="/price" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Qiymət siyasəti
-            </a>
+            </Link>
           </li>
-          <li className="my-footer-li">
+          
+          {/* <li className="my-footer-li">
             <a 
               href=""
               style={{ textDecoration: "none", color: "inherit" }}
@@ -122,15 +125,17 @@ const Footer = () => {
               Saytın istifadə şərtləri
             </a>
           </li>
+           */}
+
           <li className="my-footer-li">
-            <a 
-              href="https://bhoschool-my.sharepoint.com/:w:/g/personal/agshin_kerimov_std_bhos_edu_az/ES7Ymuyk2QlFsrvWWFK3AQ4BfEZmCR59ESWwBCuLNmI11A?e=lZgz9a"
-              style={{ textDecoration: "none", color: "inherit" }}
-              target="blank"
+            <Link
+              to="/korporativ" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               Korporativ satışlar
-            </a>
+            </Link>
           </li>
+
         </ul>
 
       </div>

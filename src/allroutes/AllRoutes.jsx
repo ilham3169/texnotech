@@ -10,6 +10,14 @@ import ErrorNotFound from "../components/ErrorNotFoundPage/ErrorNotFound";
 import ScrollToTop from "../components/ScrollToTop";
 import Delivery from "../components/Delivery/Delivery"
 import SearchResult from "../components/SearchResult/SearchResult"
+import Refund from "../components/Refund/Refund"
+import RefundPolicy from "../components/RefundPolicy/RefundPolicy"
+import Insurance from "../components/Insurance/Insurance"
+import Kredit from "../components/Kredit/Kredit"
+import Confidential from "../components/Confidential/Confidential"
+import Price from "../components/Price/Price"
+import Korporativ from "../components/Korporativ/Korporativ"
+
 
 const AllRoutes = ({
   productItems,
@@ -82,6 +90,58 @@ const AllRoutes = ({
             <Delivery/>
           }
         />  
+
+        <Route
+          path="/refund"
+          element={
+            <Refund/>
+          }
+        />
+
+        <Route  
+          path="/refund-policy"
+          element={
+            <RefundPolicy/>
+          }
+        />
+
+        <Route
+          path="/insurance"
+          element={
+            <Insurance/>
+          }
+        />  
+        
+        <Route
+          path="/kredit"
+          element={
+            <Kredit/>
+          }
+        />  
+
+        <Route
+          path="/konfidensialliq"
+          element={
+            <Confidential/>
+          }
+        /> 
+
+        <Route
+          path="/price"
+          element={
+            <Price/>
+          }
+        />
+
+        <Route
+          path="/korporativ"
+          element={
+            <Korporativ/>
+          }
+        />
+
+
+
 
         <Route
           path="/search-result"
