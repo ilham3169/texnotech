@@ -192,7 +192,8 @@ const Flashcard = ({ addToCart }) => {
                       gap: "8px",
                       width: "250px",
                       height: "43px",
-                      fontSize: 25
+                      fontSize: 25,
+                      marginLeft: "7.5%"
                     }}>
                       <i className="fa fa-cart-plus"></i>
                       <i> Səbətə əlavə et</i>
