@@ -351,12 +351,6 @@ const Cart = ({
             console.error('Error:', error);
           });
 
-
-
-
-
-        
-        
         }
         setIsCheckoutModalOpen(false);
         setIsSuccessModalOpen(true);
@@ -364,7 +358,7 @@ const Cart = ({
 
         if (selectedDeliveryOption === 1) {
         
-          console.log("Create Order with Cash and Courier delivery");
+          // console.log("Create Order with Cash and Courier delivery"); Kredit
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
           
           let totalPrice = 0;
@@ -383,7 +377,7 @@ const Cart = ({
             total_price: totalPrice,
             status: "pending",
             payment_status: "unpaid",
-            payment_method: "cash",
+            payment_method: "Kredit",
             delivery_method: "courier"
           };
 
@@ -423,8 +417,12 @@ const Cart = ({
               });
             });
 
+            
+
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
+
+
           })
           .catch(error => {
             console.error("Error creating order:", error);
@@ -497,11 +495,6 @@ const Cart = ({
           .catch(error => {
             console.error("Error creating order:", error);
           });
-
-
-
-          setIsCheckoutModalOpen(false);
-          setIsSuccessModalOpen(true);
         }
       }
     } else {
@@ -609,31 +602,29 @@ const Cart = ({
                 <h2>Sifarişin verilməsi</h2>
               </div>
 
+              <div style={{display: "flex", justifyContent: "center"}}>
+                <h2>Ödəniş üsulu</h2>
+              </div>
+              
               <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
                 <div style={{ height: "200%", width: "100%", padding: "2.5% 0 2.5% 5%"}}>
                   <div
                     className="cart-list product d_flex cart-responsive"
                     style={{
-                      backgroundColor: selectedDeliveryOption === 1 ? "#ffebeb" : "inherit",
+                      backgroundColor: selectedPaymentMethod === 1 ? "#ffebeb" : "inherit",
                     }}
                   >
                     <div className="img" style={{display: "flex", alignItems: "center"}}>
-                      <FaTruckArrowRight size="50px"/>
+                      <FaWallet size="40px"/>
                     </div>
-                    <div className="cart-details" style={{marginLeft: "2%"}}>
-                      <h3 style={{fontWeight: "350"}}>
-                        Kuryer ilə ünvana çatdırılma
+                    <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
+                      <h3 style={{marginTop: "0", fontWeight: "350"}}>
+                        Kredit
                       </h3>
-                      <h4 style={{marginTop: "0%"}}>
-                        Müddət: 1 gün
-                      </h4>
-                      <span style={{marginTop: "1%"}}>
-                        AZN 3.00
-                      </span>
                     </div>
                     <div style={{display: "flex", alignItems: "center"}}>
-                      <button onClick={() => handleDeliveryOption(1)} style={{border: "none"}}>
-                        <GrRadialSelected size="30px" style={{padding: "7% 5% 0% 1.5%"}}/>
+                      <button onClick={() => handlePaymentMethod(1)} style={{border: "none"}}>
+                        <GrRadialSelected size="30px" style={{padding: "11% 5% 0% 1.5%"}}/>
                       </button>
                     </div>
                   </div>
@@ -643,36 +634,30 @@ const Cart = ({
                   <div
                     className="cart-list product d_flex cart-responsive"
                     style={{
-                      backgroundColor: selectedDeliveryOption === 2 ? "#ffebeb" : "inherit",
+                      backgroundColor: selectedPaymentMethod === 2 ? "#ffebeb" : "inherit",
                     }}
                   >
                     <div className="img" style={{display: "flex", alignItems: "center"}}>
-                      <FaBoxOpen size="50px"/>
+                      <FaCreditCard size="40px"/>
                     </div>
-                    <div className="cart-details" style={{marginLeft: "2%"}}>
-                      <h3 style={{fontWeight: "350"}}>
-                        Təhvil məntəqələrindən təslim alma
+                    <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
+                      <h3 style={{marginTop: "0", fontWeight: "350"}}>
+                        Bank kartı
                       </h3>
-                      <h4 style={{marginTop: "0%"}}>
-                        Müddət: 0 gün
-                      </h4>
-                      <span style={{marginTop: "1%"}}>
-                        Pulsuz
-                      </span>
                     </div>
                     <div style={{display: "flex", alignItems: "center"}}>
-                      <button onClick={() => handleDeliveryOption(2)} style={{border: "none"}}>
-                        <GrRadialSelected size="30px" style={{padding: "7% 2% 0% 1.5%"}}/>
+                      <button onClick={() => handlePaymentMethod(2)} style={{border: "none"}}>
+                        <GrRadialSelected size="30px" style={{padding: "11% 2% 0% 1.5%"}}/>
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {selectedDeliveryOption != null && (
+              {selectedPaymentMethod != null && (
                 <>
                   <div style={{display: "flex", justifyContent: "center"}}>
-                    <h2>Ödəniş üsulu</h2>
+                    <h2>Çatdırılma üsulu</h2>
                   </div>
                   
                   <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
@@ -680,20 +665,26 @@ const Cart = ({
                       <div
                         className="cart-list product d_flex cart-responsive"
                         style={{
-                          backgroundColor: selectedPaymentMethod === 1 ? "#ffebeb" : "inherit",
+                          backgroundColor: selectedDeliveryOption === 1 ? "#ffebeb" : "inherit",
                         }}
                       >
                         <div className="img" style={{display: "flex", alignItems: "center"}}>
-                          <FaWallet size="40px"/>
+                          <FaTruckArrowRight size="50px"/>
                         </div>
-                        <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
-                          <h3 style={{marginTop: "0", fontWeight: "350"}}>
-                            Nağd
+                        <div className="cart-details" style={{marginLeft: "2%"}}>
+                          <h3 style={{fontWeight: "350"}}>
+                            Kuryer ilə ünvana çatdırılma
                           </h3>
+                          <h4 style={{marginTop: "0%"}}>
+                            Müddət: 1 gün
+                          </h4>
+                          <span style={{marginTop: "1%"}}>
+                            AZN 3.00
+                          </span>
                         </div>
                         <div style={{display: "flex", alignItems: "center"}}>
-                          <button onClick={() => handlePaymentMethod(1)} style={{border: "none"}}>
-                            <GrRadialSelected size="30px" style={{padding: "11% 5% 0% 1.5%"}}/>
+                          <button onClick={() => handleDeliveryOption(1)} style={{border: "none"}}>
+                            <GrRadialSelected size="30px" style={{padding: "7% 5% 0% 1.5%"}}/>
                           </button>
                         </div>
                       </div>
@@ -703,20 +694,26 @@ const Cart = ({
                       <div
                         className="cart-list product d_flex cart-responsive"
                         style={{
-                          backgroundColor: selectedPaymentMethod === 2 ? "#ffebeb" : "inherit",
+                          backgroundColor: selectedDeliveryOption === 2 ? "#ffebeb" : "inherit",
                         }}
                       >
                         <div className="img" style={{display: "flex", alignItems: "center"}}>
-                          <FaCreditCard size="40px"/>
+                          <FaBoxOpen size="50px"/>
                         </div>
-                        <div className="cart-details" style={{marginLeft: "2%", display: "flex", alignItems: "center"}}>
-                          <h3 style={{marginTop: "0", fontWeight: "350"}}>
-                            Bank kartı
+                        <div className="cart-details" style={{marginLeft: "2%"}}>
+                          <h3 style={{fontWeight: "350"}}>
+                            Təhvil məntəqələrindən təslim alma
                           </h3>
+                          <h4 style={{marginTop: "0%"}}>
+                            Müddət: 0 gün
+                          </h4>
+                          <span style={{marginTop: "1%"}}>
+                            Pulsuz
+                          </span>
                         </div>
                         <div style={{display: "flex", alignItems: "center"}}>
-                          <button onClick={() => handlePaymentMethod(2)} style={{border: "none"}}>
-                            <GrRadialSelected size="30px" style={{padding: "11% 2% 0% 1.5%"}}/>
+                          <button onClick={() => handleDeliveryOption(2)} style={{border: "none"}}>
+                            <GrRadialSelected size="30px" style={{padding: "7% 2% 0% 1.5%"}}/>
                           </button>
                         </div>
                       </div>
@@ -725,7 +722,7 @@ const Cart = ({
                 </>
               )}
 
-            {selectedPaymentMethod !== null && (
+            {selectedDeliveryOption !== null && (
               <>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <h2>Alıcı kontaktları</h2>
@@ -797,7 +794,7 @@ const Cart = ({
               </>
             )}
 
-              {selectedPaymentMethod != null && (
+              {selectedDeliveryOption != null && (
                 <div className="cart-total" style={{padding: "0 5% 3% 5%"}}>
                   <button 
                     className="checkout"
