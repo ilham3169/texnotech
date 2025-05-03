@@ -228,7 +228,7 @@ const Cart = ({
 
         } else if (selectedDeliveryOption === 2) {
 
-          console.log("Create Order with credit card and Self pickup");
+          console.log("Create Order FEMILI with credit card and Self pickup");
 
           let totalPrice = 0;
           cartItems.forEach(item => {
@@ -358,7 +358,6 @@ const Cart = ({
 
         if (selectedDeliveryOption === 1) {
         
-          // console.log("Create Order with Cash and Courier delivery"); Kredit
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
           
           let totalPrice = 0;
@@ -417,12 +416,13 @@ const Cart = ({
               });
             });
 
-            
-
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
 
-
+            // Redirect to WhatsApp with pre-filled message
+            const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən kreditlə almaq istəyirəm`).join('\n');
+            const encodedMessage = encodeURIComponent(message);
+            window.location.href = `https://api.whatsapp.com/send?phone=994705854432&text=${encodedMessage}`;
           })
           .catch(error => {
             console.error("Error creating order:", error);
@@ -676,10 +676,10 @@ const Cart = ({
                             Kuryer ilə ünvana çatdırılma
                           </h3>
                           <h4 style={{marginTop: "0%"}}>
-                            Müddət: 1 gün
+                            Müddət: 1-4 gün
                           </h4>
                           <span style={{marginTop: "1%"}}>
-                            AZN 3.00
+                            Qiymət məsafədən asılı olaraq dəyişir
                           </span>
                         </div>
                         <div style={{display: "flex", alignItems: "center"}}>
