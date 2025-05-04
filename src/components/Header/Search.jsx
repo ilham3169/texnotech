@@ -104,12 +104,12 @@ const Search = ({ cartItems }) => {
           </form>
 
           <div className="hours-count">
-            <p>Son 24 saatda</p>
+            <p style={{paddingTop: "25px"}}>Son 24 saatda</p>
             <p style={{paddingLeft: "10px", color: "green"}}>{users24h} istifadəçi</p>
           </div>
           
           <div className="success-order">
-            <p>Uğurlu ödəniş sayı</p>
+            <p style={{paddingTop: "25px"}}>Uğurlu ödəniş sayı</p>
             <p style={{paddingLeft: "50%", color: "green"}}>{successfulOrders}</p>
           </div>
 
