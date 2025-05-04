@@ -21,6 +21,25 @@ const Search = ({ cartItems }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [showCityModal, setShowCityModal] = useState(false);
   const [selectedCity, setSelectedCity] = useState("Bakı");
+  const [users24h, setUsers24h] = useState(0);
+  const [successfulOrders, setSuccessfulOrders] = useState(0);
+
+  useEffect(() => {
+    fetch("https://back-texnotech.onrender.com/analytics/users-last-24h")
+      .then(res => res.json())
+      .then(data => setUsers24h(data.count))
+      .catch(err => console.error("Error fetching users-last-24h:", err));
+  
+    // Fetch successful orders
+    fetch("https://back-texnotech.onrender.com/orders/success")
+      .then(res => res.json())
+      .then(data => setSuccessfulOrders(data.count))
+      .catch(err => console.error("Error fetching successful orders:", err));
+  }, []);
+
+
+
+
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -83,6 +102,16 @@ const Search = ({ cartItems }) => {
               placeholder="Axtarış edin..."
             />
           </form>
+
+          <div className="hours-count">
+            <p>Son 24 saatda</p>
+            <p style={{paddingLeft: "10px"}}>{users24h} istifadəçi</p>
+          </div>
+          
+          <div className="success-order">
+            <p>Uğurlu ödəniş sayı</p>
+            <p style={{paddingLeft: "50%", color: "green"}}>{successfulOrders}</p>
+          </div>
 
           <div className="icon f_flex width">
             <div className="cart">

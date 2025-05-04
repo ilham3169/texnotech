@@ -3,5 +3,13 @@
     .geo-location-container {
       display: none !important;
     }
+
+    .success-order{
+      display: none;
+    }
+
+    .hours-count{
+      display: none;
+    }
   }
   

@@ -159,6 +159,12 @@ const AllRoutes = ({
           }
         />  
 
+        <Route
+          path="/cart" 
+          element={<Cartpage />} 
+        /> 
+
+
 
         {/* Catch-all route for 404 errors */}
         <Route path="*" element={<ErrorNotFound cartItems={cartItems} />} />
