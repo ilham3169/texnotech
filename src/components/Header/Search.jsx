@@ -164,7 +164,7 @@ const Search = ({ cartItems }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            zIndex: 999,
+            zIndex: 1000,
           }}
           onClick={() => setShowCityModal(false)}
         >
