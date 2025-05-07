@@ -228,7 +228,7 @@ const Cart = ({
 
         } else if (selectedDeliveryOption === 2) {
 
-          console.log("Create Order FEMILI with credit card and Self pickup");
+          console.log("Create Order with credit card and Self pickup");
 
           let totalPrice = 0;
           cartItems.forEach(item => {
@@ -376,7 +376,7 @@ const Cart = ({
             total_price: totalPrice,
             status: "pending",
             payment_status: "unpaid",
-            payment_method: "Kredit",
+            payment_method: "kredit",
             delivery_method: "courier"
           };
 
@@ -419,7 +419,6 @@ const Cart = ({
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
 
-            // Redirect to WhatsApp with pre-filled message
             const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən kreditlə almaq istəyirəm`).join('\n');
             const encodedMessage = encodeURIComponent(message);
             window.location.href = `https://api.whatsapp.com/send?phone=994705854432&text=${encodedMessage}`;
@@ -429,7 +428,7 @@ const Cart = ({
           });
         } else if (selectedDeliveryOption === 2) {
 
-          console.log("Create Order with Cash and Self pickup");
+          console.log("Create Order with Kredit and Self pickup");
 
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
           
@@ -449,7 +448,7 @@ const Cart = ({
             total_price: totalPrice,
             status: "pending",
             payment_status: "unpaid",
-            payment_method: "cash",
+            payment_method: "kredit",
             delivery_method: "point"
           };
 
