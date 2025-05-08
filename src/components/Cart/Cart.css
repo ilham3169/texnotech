@@ -13,7 +13,376 @@
   height: fit-content;
   line-height: 50px;
   display: flex;
-  gap: 2rem;
+  gap: 2rem;.cart-items {
+    background: #f6f9fc;
+    min-height: 100vh;
+    padding: 0 10px;
+  }
+  
+  .cart-details {
+    flex: 1;
+  }
+  
+  .cart-items .cart-total {
+    height: fit-content;
+    line-height: 50px;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .product-cart {
+    background: #fff;
+    padding: 2.5rem 3rem;
+    line-height: 50px;
+    border-radius: 10px;
+    box-shadow: rgb(3 0 71 / 9%) 0 1px 3px;
+    margin-top: 10px;
+  }
+  
+  .cart-total .checkout {
+    height: fit-content;
+    width: fit-content;
+    background-color: antiquewhite;
+    color: black;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .cart-total .checkout:hover {
+    background: gray;
+    color: #ba0211;
+  }
+  
+  .cart-list {
+    background: white;
+    margin-top: 30px;
+  }
+  
+  .cart-items .img img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .cart-items .cart-details h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+  
+  .cart-items .cart-details h4 {
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 50px;
+    color: grey;
+  }
+  
+  .cart-details span {
+    color: #e94560;
+    font-weight: 500;
+  }
+  
+  .removeCart {
+    background: none;
+    font-size: 25px;
+    text-align: right;
+    margin-right: 10px;
+  }
+  
+  .cartControl {
+    margin-top: 50px;
+  }
+  
+  .cartControl button {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+  
+  .inCart {
+    background-color: transparent;
+  }
+  
+  .delCart {
+    background: #f6f9fc;
+  }
+  
+  .cart-total h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #e94560;
+    margin-left: 5px;
+  }
+  
+  .cart-total h2 {
+    border-bottom: 1px solid rgb(3 0 71 / 9%);
+    font-weight: 700;
+  }
+  
+  .cart-total h4 {
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  /* Price summary styling */
+  .price-summary {
+    width: 100%;
+    padding: 15px 0;
+  }
+  
+  .price-summary .d_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .price-summary h4 {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .price-summary h3 {
+    font-size: 18px;
+    color: #e94560;
+    font-weight: 600;
+  }
+  
+  /* Period selection styling */
+  .price-options {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .period-selection {
+    padding: 0;
+  }
+  
+  .period-selection .justify-content-center {
+    display: flex;
+    gap: 5px;
+    padding: 10px 0;
+  }
+  
+  .period-item {
+    flex: 1;
+    padding: 0;
+    width: 20%;
+  }
+  
+  .period-button {
+    width: 100%;
+    min-height: 100%;
+    border-radius: 5px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #e6e6e6;
+    transition: all 0.3s ease;
+  }
+  
+  .period-button.selected {
+    background: #575555;
+    color: white;
+    border-color: #575555;
+  }
+  
+  .interest-badge {
+    margin-left: 7px;
+    font-size: 12px;
+  }
+  
+  .cart-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .client-info-container .client-inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .client-info-container .client-inputs input {
+    width: 60%;
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .cart-container {
+      flex-direction: column;
+      padding: 0 10px;
+    }
+  
+    .cart-details {
+      width: 100%;
+    }
+  
+    .cart-items .cart-total {
+      width: 100%;
+      gap: 1.5rem;
+    }
+  
+    .product-cart {
+      padding: 1.5rem 2rem;
+      line-height: 40px;
+    }
+  
+    .cart-items .img img {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .cart-items .cart-details h3 {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  
+    .cart-items .cart-details h4 {
+      font-size: 14px;
+      margin-top: 30px;
+    }
+  
+    .cartControl {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+  
+    .cartControl button {
+      width: 35px;
+      height: 35px;
+      margin: 5px;
+      font-size: 18px;
+    }
+  
+    .removeCart {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+  
+    .cart-total .checkout {
+      padding: 12px;
+      width: 100%;
+      text-align: center;
+    }
+  
+    .cart-total h3 {
+      font-size: 18px;
+    }
+  
+    .cart-total h2 {
+      font-size: 20px;
+    }
+  
+    .cart-total h4 {
+      font-size: 14px;
+    }
+  
+    .client-info-container .client-inputs {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .client-info-container .client-inputs input {
+      width: 100%;
+      max-width: none  none;
+    }
+  
+    .price-summary h4 {
+      font-size: 14px;
+    }
+  
+    .price-summary h3 {
+      font-size: 16px;
+    }
+  
+    .period-button {
+      font-size: 12px;
+      padding: 6px;
+    }
+  
+    .interest-badge {
+      font-size: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-cart {
+      padding: 1rem 1.5rem;
+    }
+  
+    .cart-items .img img {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .cart-items .cart-details h3 {
+      font-size: 16px;
+    }
+  
+    .cart-items .cart-details h4 {
+      font-size: 12px;
+      margin-top: 20px;
+    }
+  
+    .cartControl button {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+    }
+  
+    .removeCart {
+      font-size: 18px;
+    }
+  
+    .cart-total .checkout {
+      padding: 10px;
+    }
+  
+    .cart-total h3 {
+      font-size: 16px;
+    }
+  
+    .cart-total h2 {
+      font-size: 18px;
+    }
+  
+    .client-info-container .client-inputs input {
+      font-size: 16px;
+      height: 45px;
+    }
+  
+    .price-summary h4 {
+      font-size: 12px;
+    }
+  
+    .price-summary h3 {
+      font-size: 14px;
+    }
+  
+    .period-button {
+      font-size: 10px;
+      padding: 4px;
+    }
+  
+    .interest-badge {
+      font-size: 8px;
+    }
+  }
   flex-direction: column;
   align-items: center;
 }

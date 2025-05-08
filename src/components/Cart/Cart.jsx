@@ -613,7 +613,7 @@ const Cart = ({
                         type="button"
                         onClick={() => handleButtonClick(period)}
                       >
-                        {period} ay - 0 %
+                        {period} ay
                       </button>
                     </MDBListGroupItem>
                   ))}
@@ -752,7 +752,7 @@ const Cart = ({
                         </div>
                         <div className="cart-details" style={{marginLeft: "2%"}}>
                           <h3 style={{fontWeight: "350"}}>
-                            Təhvil məntəqələrindən təslim alma
+                            Mağazadan təslim alma
                           </h3>
                           <h4 style={{marginTop: "0%"}}>
                             Müddət: 0 gün
