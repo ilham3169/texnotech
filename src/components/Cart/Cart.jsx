@@ -5,8 +5,27 @@ import { FaTruckArrowRight } from "react-icons/fa6";
 import { FaBoxOpen, FaWallet, FaCreditCard, FaCheck } from "react-icons/fa";
 import { GrRadialSelected } from "react-icons/gr";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'; 
 
+import { 
+  MDBContainer, 
+  MDBRow, 
+  MDBCol, 
+  MDBCard, 
+  MDBCardBody, 
+  MDBCardImage, 
+  MDBCardTitle, 
+  MDBCardText, 
+  MDBIcon, 
+  MDBListGroup, 
+  MDBListGroupItem, 
+  MDBBtn, 
+  MDBBtnGroup, 
+  MDBCardSubTitle, 
+  MDBBadge, 
+  MDBTableHead, 
+  MDBTableBody, 
+  MDBTable, 
+} from "mdb-react-ui-kit";
 
 const Cart = ({
   cartItems,
@@ -31,6 +50,10 @@ const Cart = ({
   const [clientSurname, setClientSurname] = useState("");
   const [clientPhone, setClientPhone] = useState("+994");
 
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [monthPrice, setMonthPrice] = useState(0);
+
+
   useEffect(() => {
     if (cartItems.length < 1) {
       setIsCheckoutButtonClicked(false);
@@ -41,8 +64,20 @@ const Cart = ({
       setClientPhone("");
       setSelectedDeliveryOption(null);
       setSelectedPaymentMethod(null);
+      setSelectedPeriod(null);
+      setMonthPrice(0);
     }
   }, [cartItems]);
+
+  const handleButtonClick = (period) => {
+    setSelectedPeriod(period);
+    if (totalPrice > 0 && period > 0) {
+      const monthly = totalPrice / period;
+      setMonthPrice(monthly);
+    } else {
+      setMonthPrice(0);
+    }
+  };
 
   const handleOrder = () => {
     if (isCheckoutButtonClicked) {
@@ -95,9 +130,7 @@ const Cart = ({
       clientSurname.length > 0 &&
       clientPhone.length === 13
     ) {
-
       if (selectedPaymentMethod === 2) {
-
         console.log("Redirect to Kapital Bank");
 
         if (selectedDeliveryOption === 1) {
@@ -131,13 +164,13 @@ const Cart = ({
           const password = import.meta.env.VITE_KAPITAL_PASSWORD;
 
           const authString = `${username}:${password}`;
-          const base64Auth = btoa(authString); 
+          const base64Auth = btoa(authString);
 
           fetch(`${baseUrl}/order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Basic ${base64Auth}` 
+                'Authorization': `Basic ${base64Auth}`
             },
             body: JSON.stringify(orderData)
           })
@@ -149,15 +182,15 @@ const Cart = ({
         })
         .then(async data => {
           const { id, password, hppUrl } = data.order;
-      
+
           const extractedData = {
               orderId: id,
               orderPassword: password,
               orderHppUrl: hppUrl
           };
-      
+
           console.log('Extracted Data:', extractedData);
-          
+
           const orderDatax = {
             name: clientName,
             surname: clientSurname,
@@ -169,7 +202,7 @@ const Cart = ({
             id: extractedData.orderId,
             delivery_method: "courier"
           };
-      
+
           return fetch('https://back-texnotech.onrender.com/orders/add', {
             method: 'POST',
             headers: {
@@ -184,50 +217,42 @@ const Cart = ({
             return response.json();
           })
           .then(() => {
+            const orderId = extractedData.orderId;
 
-          const orderId = extractedData.orderId; 
+            cartItems.forEach(item => {
+              const orderItemsData = {
+                order_id: orderId,
+                product_id: item.id,
+                quantity: item.qty,
+                price_at_purchase: item.discount
+              };
 
-          cartItems.forEach(item => {
-            const orderItemsData = {
-              order_id: orderId,
-              product_id: item.id,
-              quantity: item.qty,
-              price_at_purchase: item.discount
-            };
-
-            fetch('https://back-texnotech.onrender.com/order_items/add', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(orderItemsData)
-            })
-
-            .then(response => response.json())
-            
-            .then(itemData => {
-              console.log(`Item added successfully:`, itemData);
-            })
-            
-            .catch(error => {
-              console.error(`Error adding item to order:`, error);
+              fetch('https://back-texnotech.onrender.com/order_items/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderItemsData)
+              })
+              .then(response => response.json())
+              .then(itemData => {
+                console.log(`Item added successfully:`, itemData);
+              })
+              .catch(error => {
+                console.error(`Error adding item to order:`, error);
+              });
             });
-          });
 
             let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
             console.log(paymentUrl);
             window.location.href = paymentUrl;
-            
           });
         })
         .catch(error => {
           console.error('Error:', error);
         });
 
-
-
         } else if (selectedDeliveryOption === 2) {
-
           console.log("Create Order with credit card and Self pickup");
 
           let totalPrice = 0;
@@ -253,18 +278,18 @@ const Cart = ({
           }`;
 
           const orderData = JSON.parse(bodyRequest);
-    
+
           const username = import.meta.env.VITE_KAPITAL_USERNAME;
           const password = import.meta.env.VITE_KAPITAL_PASSWORD;
 
           const authString = `${username}:${password}`;
-          const base64Auth = btoa(authString); 
+          const base64Auth = btoa(authString);
 
           fetch(`${baseUrl}/order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Basic ${base64Auth}` 
+                'Authorization': `Basic ${base64Auth}`
             },
             body: JSON.stringify(orderData)
           })
@@ -276,15 +301,15 @@ const Cart = ({
           })
           .then(async data => {
             const { id, password, hppUrl } = data.order;
-        
+
             const extractedData = {
                 orderId: id,
                 orderPassword: password,
                 orderHppUrl: hppUrl
             };
-        
+
             console.log('Extracted Data:', extractedData);
-            
+
             const orderDatax = {
               name: clientName,
               surname: clientSurname,
@@ -296,7 +321,7 @@ const Cart = ({
               id: extractedData.orderId,
               delivery_method: "point"
             };
-        
+
             return fetch('https://back-texnotech.onrender.com/orders/add', {
               method: 'POST',
               headers: {
@@ -311,55 +336,47 @@ const Cart = ({
               return response.json();
             })
             .then(() => {
-  
-            const orderId = extractedData.orderId; 
-  
-            cartItems.forEach(item => {
-              const orderItemsData = {
-                order_id: orderId,
-                product_id: item.id,
-                quantity: item.qty,
-                price_at_purchase: item.discount
-              };
-  
-              fetch('https://back-texnotech.onrender.com/order_items/add', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderItemsData)
-              })
-  
-              .then(response => response.json())
-              
-              .then(itemData => {
-                console.log(`Item added successfully:`, itemData);
-              })
-              
-              .catch(error => {
-                console.error(`Error adding item to order:`, error);
+              const orderId = extractedData.orderId;
+
+              cartItems.forEach(item => {
+                const orderItemsData = {
+                  order_id: orderId,
+                  product_id: item.id,
+                  quantity: item.qty,
+                  price_at_purchase: item.discount
+                };
+
+                fetch('https://back-texnotech.onrender.com/order_items/add', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(orderItemsData)
+                })
+                .then(response => response.json())
+                .then(itemData => {
+                  console.log(`Item added successfully:`, itemData);
+                })
+                .catch(error => {
+                  console.error(`Error adding item to order:`, error);
+                });
               });
-            });
-  
+
               let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
               console.log(paymentUrl);
               window.location.href = paymentUrl;
-              
             });
           })
           .catch(error => {
             console.error('Error:', error);
           });
-
         }
         setIsCheckoutModalOpen(false);
         setIsSuccessModalOpen(true);
       } else if (selectedPaymentMethod === 1) {
-
         if (selectedDeliveryOption === 1) {
-        
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
-          
+
           let totalPrice = 0;
           cartItems.forEach(item => {
             console.log(`Product: ${item.name}`);
@@ -377,8 +394,11 @@ const Cart = ({
             status: "pending",
             payment_status: "unpaid",
             payment_method: "kredit",
-            delivery_method: "courier"
+            delivery_method: "courier",
+            // month: parseInt(selectedPeriod)
           };
+
+          console.log(orderData)
 
           fetch('https://back-texnotech.onrender.com/orders/add', {
             method: 'POST',
@@ -419,7 +439,7 @@ const Cart = ({
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
 
-            const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən kreditlə almaq istəyirəm`).join('\n');
+            const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən ${selectedPeriod} aylığa kreditlə almaq istəyirəm`).join('\n\n');
             const encodedMessage = encodeURIComponent(message);
             window.location.href = `https://api.whatsapp.com/send?phone=994705854432&text=${encodedMessage}`;
           })
@@ -427,11 +447,10 @@ const Cart = ({
             console.error("Error creating order:", error);
           });
         } else if (selectedDeliveryOption === 2) {
-
           console.log("Create Order with Kredit and Self pickup");
 
           console.log(`Client name -> ${clientName}\nClient Surname -> ${clientSurname}\nClient Phone -> ${clientPhone}`);
-          
+
           let totalPrice = 0;
           cartItems.forEach(item => {
             console.log(`Product: ${item.name}`);
@@ -449,8 +468,11 @@ const Cart = ({
             status: "pending",
             payment_status: "unpaid",
             payment_method: "kredit",
-            delivery_method: "point"
+            delivery_method: "point",
+            // month: parseInt(selectedPeriod)
           };
+
+          console.log(orderData);
 
           fetch('https://back-texnotech.onrender.com/orders/add', {
             method: 'POST',
@@ -564,12 +586,41 @@ const Cart = ({
               );
             })}
           </div>
+
           <div className="cart-total product-cart">
             <h2>Səbət</h2>
-            <div className="d_flex">
-              <h4>Toplam qiymət :</h4>
-              <h3> {totalPrice} AZN</h3>
+            <div className="price-summary">
+              <div className="d_flex">
+                <h4>Toplam qiymət:</h4>
+                <h3>{totalPrice.toFixed(2)} AZN</h3>
+              </div>
+              {selectedPeriod && (
+                <div className="d_flex">
+                  <h4>Aylıq ödəniş ({selectedPeriod} ay):</h4>
+                  <h3>{monthPrice.toFixed(2)} AZN</h3>
+                </div>
+              )}
             </div>
+            
+
+            <MDBRow className="price-options" style={{marginBottom: "5%"}}>
+              <MDBCol md='8' className="period-selection">
+                <MDBListGroup horizontal className="justify-content-center">
+                  {[3, 6, 9, 12, 18].map((period) => (
+                    <MDBListGroupItem key={period} className="period-item">
+                      <button
+                        className={`period-button ${selectedPeriod === period ? 'selected' : ''}`}
+                        type="button"
+                        onClick={() => handleButtonClick(period)}
+                      >
+                        {period} ay - 0 %
+                      </button>
+                    </MDBListGroupItem>
+                  ))}
+                </MDBListGroup>
+              </MDBCol>
+            </MDBRow>
+
             <button 
               className="checkout" 
               style={{background: "#ffebeb", fontSize: "15px"}} 
@@ -604,7 +655,7 @@ const Cart = ({
               <div style={{display: "flex", justifyContent: "center"}}>
                 <h2>Ödəniş üsulu</h2>
               </div>
-              
+
               <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
                 <div style={{ height: "200%", width: "100%", padding: "2.5% 0 2.5% 5%"}}>
                   <div
@@ -628,7 +679,7 @@ const Cart = ({
                     </div>
                   </div>
                 </div>
-                
+
                 <div style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 0"}}>
                   <div
                     className="cart-list product d_flex cart-responsive"
@@ -658,7 +709,7 @@ const Cart = ({
                   <div style={{display: "flex", justifyContent: "center"}}>
                     <h2>Çatdırılma üsulu</h2>
                   </div>
-                  
+
                   <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
                     <div style={{ height: "200%", width: "100%", padding: "2.5% 0 2.5% 5%"}}>
                       <div
@@ -688,7 +739,7 @@ const Cart = ({
                         </div>
                       </div>
                     </div>
-                    
+
                     <div style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 0"}}>
                       <div
                         className="cart-list product d_flex cart-responsive"
@@ -721,77 +772,77 @@ const Cart = ({
                 </>
               )}
 
-            {selectedDeliveryOption !== null && (
-              <>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <h2>Alıcı kontaktları</h2>
-                </div>
-                
-                <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-                  <div className="client-info-container" style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 5%" }}>
-                    <div className="cart-list product d_flex cart-responsive" style={{ background: "transparent" }}>
-                      <div className="cart-details client-inputs" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1%" }}>
-                        <input 
-                          id="checkoutInfoName" 
-                          placeholder="Ad" 
-                          type="text"
-                          style={{
-                            background: "#f6f9fc", 
-                            width: "60%", 
-                            height: "50px", 
-                            border: "1px solid #e6e6e6", 
-                            borderRadius: "8px", 
-                            padding: "12px 15px", 
-                            fontSize: "20px", 
-                            fontWeight: "300"
-                          }}
-                          value={clientName}
-                          onInput={handleTextInput}
-                          onChange={(e) => setClientName(e.target.value)}
-                        />
-                        
-                        <input
-                          id="checkoutInfoSurname" 
-                          placeholder="Soyad" 
-                          type="text"
-                          style={{
-                            background: "#f6f9fc", 
-                            width: "60%", 
-                            height: "50px", 
-                            border: "1px solid #e6e6e6", 
-                            borderRadius: "8px", 
-                            padding: "12px 15px", 
-                            fontSize: "20px", 
-                            fontWeight: "300"
-                          }}
-                          value={clientSurname}
-                          onInput={handleTextInput}
-                          onChange={(e) => setClientSurname(e.target.value)}
-                        />
-                        
-                        <input 
-                          id="checkoutInfoPhone" 
-                          placeholder="Telefon" 
-                          type="phone"
-                          style={{
-                            background: "#f6f9fc", 
-                            width: "60%", 
-                            height: "50px", 
-                            border: "1px solid #e6e6e6", 
-                            borderRadius: "8px", 
-                            padding: "12px 15px", 
-                            fontSize: "20px", 
-                            fontWeight: "300"
-                          }}
-                          value={clientPhone}
-                          onChange={handlePhoneInput}
-                        />
+              {selectedDeliveryOption !== null && (
+                <>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <h2>Alıcı kontaktları</h2>
+                  </div>
+
+                  <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                    <div className="client-info-container" style={{ height: "200%", width: "100%", padding: "2.5% 5% 2.5% 5%" }}>
+                      <div className="cart-list product d_flex cart-responsive" style={{ background: "transparent" }}>
+                        <div className="cart-details client-inputs" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1%" }}>
+                          <input 
+                            id="checkoutInfoName" 
+                            placeholder="Ad" 
+                            type="text"
+                            style={{
+                              background: "#f6f9fc", 
+                              width: "60%", 
+                              height: "50px", 
+                              border: "1px solid #e6e6e6", 
+                              borderRadius: "8px", 
+                              padding: "12px 15px", 
+                              fontSize: "20px", 
+                              fontWeight: "300"
+                            }}
+                            value={clientName}
+                            onInput={handleTextInput}
+                            onChange={(e) => setClientName(e.target.value)}
+                          />
+
+                          <input
+                            id="checkoutInfoSurname" 
+                            placeholder="Soyad" 
+                            type="text"
+                            style={{
+                              background: "#f6f9fc", 
+                              width: "60%", 
+                              height: "50px", 
+                              border: "1px solid #e6e6e6", 
+                              borderRadius: "8px", 
+                              padding: "12px 15px", 
+                              fontSize: "20px", 
+                              fontWeight: "300"
+                            }}
+                            value={clientSurname}
+                            onInput={handleTextInput}
+                            onChange={(e) => setClientSurname(e.target.value)}
+                          />
+
+                          <input 
+                            id="checkoutInfoPhone" 
+                            placeholder="Telefon" 
+                            type="phone"
+                            style={{
+                              background: "#f6f9fc", 
+                              width: "60%", 
+                              height: "50px", 
+                              border: "1px solid #e6e6e6", 
+                              borderRadius: "8px", 
+                              padding: "12px 15px", 
+                              fontSize: "20px", 
+                              fontWeight: "300"
+                            }}
+                            value={clientPhone}
+                            onChange={handlePhoneInput}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
 
               {selectedDeliveryOption != null && (
                 <div className="cart-total" style={{padding: "0 5% 3% 5%"}}>
@@ -813,67 +864,67 @@ const Cart = ({
           </motion.div>
         )}
 
-      {isSuccessModalOpen && (
-        <motion.div
-          className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-60"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={handleCloseSuccessModal}
-          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-        >
+        {isSuccessModalOpen && (
           <motion.div
-            className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg flex flex-col items-center justify-center"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.8 }}
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              maxWidth: "400px",
-              padding: "2rem",
-            }}
+            className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleCloseSuccessModal}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
           >
-            <FaCheck className="text-green-500 mb-4" size={40} />
-            <h2 className="text-xl font-bold text-gray-900 mb-2" style={{ textAlign: "center !important" }}>
-              Sifarişiniz Uğurla Qəbul Edildi!
-            </h2>
-            <p className="text-gray-700 mb-4 text-sm" style={{ textAlign: "center !important", marginBottom: "10px"}}>
-              Tezliklə sizinlə ətraflı məlumat üçün əlaqə saxlayacayıq.
-            </p>
-            <button
-              className="text-gray-900 px-5 py-2 rounded-lg transition-colors"
+            <motion.div
+              className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg flex flex-col items-center justify-center"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              onClick={(e) => e.stopPropagation()}
               style={{
-                background: "#ffebeb",
-                fontSize: "16px",
-                fontWeight: "500",
-                border: "1px solid #e6e6e6", 
-                borderRadius: "8px",
-                padding: "10px 20px",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                maxWidth: "400px",
+                padding: "2rem",
               }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "#ffd4d4";
-                e.target.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.15)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "#ffebeb"; 
-                e.target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)"; 
-              }}
-              onClick={handleCloseSuccessModal}
             >
-              Bağla
-            </button>
+              <FaCheck className="text-green-500 mb-4" size={40} />
+              <h2 className="text-xl font-bold text-gray-900 mb-2" style={{ textAlign: "center !important" }}>
+                Sifarişiniz Uğurla Qəbul Edildi!
+              </h2>
+              <p className="text-gray-700 mb-4 text-sm" style={{ textAlign: "center !important", marginBottom: "10px"}}>
+                Tezliklə sizinlə ətraflı məlumat üçün əlaqə saxlayacayıq.
+              </p>
+              <button
+                className="text-gray-900 px-5 py-2 rounded-lg transition-colors"
+                style={{
+                  background: "#ffebeb",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  border: "1px solid #e6e6e6", 
+                  borderRadius: "8px",
+                  padding: "10px 20px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = "#ffd4d4";
+                  e.target.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = "#ffebeb"; 
+                  e.target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)"; 
+                }}
+                onClick={handleCloseSuccessModal}
+              >
+                Bağla
+              </button>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
       </section>
     </>
   );
