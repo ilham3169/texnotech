@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react"; // Added useEffect import
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { ClipLoader } from "react-spinners";
 
-
-// setting up arrows to display next and previous arrows and make them work
+// Next and Prev Arrow components remain unchanged
 const NextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -65,31 +64,32 @@ const Flashcard = ({ addToCart }) => {
 
     fetchProducts();
     fetchImages();
-
   }, []);
 
   if (loading) {
     return (
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "10vh"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "10vh",
+        }}
+      >
         <ClipLoader color="#3498db" size={50} />
       </div>
-    ) 
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;  // Show error if fetch fails
+    return <div>Error: {error.message}</div>;
   }
 
   const settings = {
     dots: false,
     infinite: false,
     speed: 800,
-    slidesToShow: 5,  
+    slidesToShow: 5,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -125,60 +125,117 @@ const Flashcard = ({ addToCart }) => {
     ],
   };
 
-
   return (
-    <>
     <Slider {...settings}>
       {productItems
-        .filter(product => product.is_active)
+        .filter((product) => product.is_active)
         .map((product, index) => {
           const productUrl = `/products/${product.name
             .toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^a-z0-9-]/g, '')}-${product.id}`;
+            .replace(/ /g, "-")
+            .replace(/[^a-z0-9-]/g, "")}-${product.id}`;
 
           return (
             <div className="box" key={index}>
-              <div className="product">
-                
-                <div className="img">
+              <div
+                className="product"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "450px", // Fixed height for the entire card
+                  justifyContent: "space-between",
+                  padding: "10px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <div className="img" style={{ flex: "0 0 auto" }}>
                   <Link
                     to={{
                       pathname: productUrl,
-                      state: { productId: product.id }, // Pass productId as state
+                      state: { productId: product.id },
                     }}
                   >
-                    {product.discount > 0 ?
-                      <span className="discount" style={{fontSize: "15px"}}>
-                        -{Math.round((product.price - product.discount)  / product.price * 100)}%
+                    {product.discount > 0 ? (
+                      <span className="discount" style={{ fontSize: "15px" }}>
+                        -{Math.round(((product.price - product.discount) / product.price) * 100)}%
                       </span>
-                      :
-                      <></>
-                    }
-                    <div style={{height: "300px", with: "200px", display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden"}}>
-                      <img style={{maxHeight: "100%", maxWidth: "100%", objectFit: "contain"}} src={product.image_link} alt={product.name} />
+                    ) : null}
+                    <div
+                      style={{
+                        height: "250px", // Fixed height for image container
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        style={{
+                          maxHeight: "100%",
+                          maxWidth: "100%",
+                          objectFit: "contain", // Ensures image fits without stretching
+                        }}
+                        src={product.image_link}
+                        alt={product.name}
+                      />
                     </div>
-                    <h3 title={product.name} className="truncate" style={{display: "flex", justifyContent: "center", overflow: "clip"}}>
+                    <h3
+                      title={product.name}
+                      className="truncate"
+                      style={{
+                        textAlign: "center",
+                        margin: "10px 0",
+                        fontSize: "16px",
+                        height: "40px", // Fixed height for title
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {product.name.slice(0, 28)}
                     </h3>
                   </Link>
                 </div>
 
-                <div className="product-details" style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
-                  <div className="price" style={{height: "60%", display: 'flex', justifyContent: "center", alignItems: "center", gap: "5%"}}>
-                    
-                    <div style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
-                      <h4 style={{paddingLeft: "0px", fontSize: 20}}>
-                        {product.discount} AZN &nbsp;
-                        <span style={{textDecoration: "line-through", color: "grey", fontWeight: "500", fontSize: 25}}>{product.price} AZN
-                        </span>
-                      </h4>
-                    </div>
-                    
+                <div
+                  className="product-details"
+                  style={{
+                    flex: "0 0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    className="price"
+                    style={{
+                      gap: "5px",
+                      height: "50px",
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: "20px",
+                      margin: "0",
+                      paddingLeft: "0px"
+                    }}
+                    >
+                      {product.discount} AZN
+                      <span
+                        style={{
+                          textDecoration: "line-through",
+                          color: "grey",
+                          fontWeight: "500",
+                          fontSize: "18px",
+                          marginLeft: "5px",
+                        }}
+                      >
+                        {product.price} AZN
+                      </span>
+                    </h4>
                   </div>
                 </div>
 
-                <div>
+                <div style={{ flex: "0 0 auto", textAlign: "center" }}>
                   <button
                     onClick={() => addToCart(product)}
                     style={{
@@ -188,25 +245,19 @@ const Flashcard = ({ addToCart }) => {
                       border: "none",
                       borderRadius: "8px",
                       cursor: "pointer",
-                      alignItems: "center",
-                      gap: "8px",
-                      width: "250px",
-                      height: "43px",
-                      fontSize: 25,
-                      marginLeft: "7.5%"
-                    }}>
-                      <i className="fa fa-cart-plus"></i>
-                      <i> Səbətə əlavə et</i>
+                      width: "90%",
+                      height: "40px",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <i className="fa fa-cart-plus"></i> Səbətə əlavə et
                   </button>
                 </div>
-                
               </div>
             </div>
           );
         })}
     </Slider>
-
-    </>
   );
 };
 
