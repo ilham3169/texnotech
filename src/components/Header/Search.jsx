@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./Search.css";
+import Catalogue from './Catalogue'
 
 
 const Search = ({ cartItems }) => {
@@ -24,6 +26,9 @@ const Search = ({ cartItems }) => {
   const [users24h, setUsers24h] = useState(0);
   const [successfulOrders, setSuccessfulOrders] = useState(0);
 
+  const [showCatalogue, setShowCatalogue] = useState(false);
+
+
   useEffect(() => {
     fetch("https://back-texnotech.onrender.com/analytics/users-last-24h")
       .then(res => res.json())
@@ -36,9 +41,6 @@ const Search = ({ cartItems }) => {
       .then(data => setSuccessfulOrders(data.count))
       .catch(err => console.error("Error fetching successful orders:", err));
   }, []);
-
-
-
 
 
   useEffect(() => {
@@ -98,6 +100,7 @@ const Search = ({ cartItems }) => {
               onChange={(e) => setSearchText(e.target.value)}
               onFocus={() => setShowDropdown(allProducts.length > 0)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+              onClick={() => setShowCatalogue(true)}
               type="text"
               placeholder="Axtarış edin..."
             />
@@ -209,6 +212,22 @@ const Search = ({ cartItems }) => {
           </div>
         </div>
       )}
+      
+      {showCatalogue && (
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "1%",
+          marginRight: "25%",
+          marginLeft: "25%",
+          zIndex: 1000,
+        }}
+        >
+          <Catalogue onClose={() => setShowCatalogue(false)}/>
+        </div> 
+    )}
+
     </>
   );
 };
