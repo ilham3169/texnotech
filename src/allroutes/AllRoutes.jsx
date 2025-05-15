@@ -18,6 +18,7 @@ import Confidential from "../components/Confidential/Confidential"
 import Price from "../components/Price/Price"
 import Korporativ from "../components/Korporativ/Korporativ"
 import PaymentStatusPage from "../components/PaymentStatusPage/PaymentStatusPage"
+import CategoryResults from "../components/CategoryResults/CategoryResults"; // Import the new component
 
 
 const AllRoutes = ({
@@ -163,6 +164,12 @@ const AllRoutes = ({
           path="/cart" 
           element={<Cartpage />} 
         /> 
+
+        <Route
+          path="/category-results/:categoryId"
+          element={<CategoryResults cartItems={cartItems} addToCart={addToCart} />}
+        />
+
 
 
 

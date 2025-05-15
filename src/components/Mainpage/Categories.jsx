@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetch("https://back-texnotech.onrender.com/categories")
@@ -14,27 +13,18 @@ const Categories = () => {
 
   const reversedCategories = [...categories].reverse();
 
-
   return (
     <div className="category">
-      {reversedCategories.filter((category) => category.parent_category_id == null).map((category, index) => {
-        return (
-          <Link
-            to={{
-              pathname: `/all-products/${category.id}`,
-              state: { categoryId: category.id }, // Pass productId as state
-            }}
-            key={index}
-          >
-            <div
-              className="box-category box f_flex"
-            >
+      {reversedCategories
+        .filter((category) => category.parent_category_id == null)
+        .map((category, index) => (
+          <Link to={`/category-results/${category.id}`} key={index}>
+            <div className="box-category box f_flex">
               <img src={category.icon_image_link} alt="Category" />
               <span>{category.name}</span>
             </div>
           </Link>
-        );
-      })}
+        ))}
     </div>
   );
 };
