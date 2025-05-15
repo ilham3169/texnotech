@@ -199,7 +199,7 @@ const CategoryResults = ({ addToCart }) => {
               }}
             >
               <span style={{ color: "black", fontWeight: "500", fontSize: "17px" }}>
-                {(product.discount / 3).toFixed(2)} ₼ x 3 ay
+                {(product.discount / 3).toFixed(2)} ₼ x 3 ay 
               </span>
             </div>
           </div>
