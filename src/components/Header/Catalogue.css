@@ -158,3 +158,9 @@
 .cart-button:hover {
   background-color: #218838;
 }
+
+@media (max-width: 768px) {
+  .catalogue-container {
+    display: none;
+  }
+}
