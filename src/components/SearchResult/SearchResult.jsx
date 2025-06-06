@@ -225,7 +225,6 @@ const SearchResult = ({ addToCart }) => {
 
   return (
     <>
-    <Head/>
       <div className="filter-box">
         <select className="filter-select" onChange={handleBrandFilterChange}>
           <option value="popular">Brend Seçin</option>
@@ -298,7 +297,6 @@ const SearchResult = ({ addToCart }) => {
       {!hasMore && allProducts.length > 0 && (
         <div style={{ textAlign: "center", margin: "20px 0" }}>Bütün məhsullar yükləndi</div>
       )}
-      <Footer/>
     </>
   );
 };

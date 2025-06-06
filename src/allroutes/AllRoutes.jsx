@@ -6,6 +6,7 @@ import Loginpage from "../pages/loginpage/Loginpage";
 import Registrationpage from "../pages/registrationpage/Registrationpage";
 import Allproductspage from "../pages/all-productspage/Allproductspage";
 import Singleproductpage from "../pages/product-details/Singleproductpage";
+import Searchproductspage from "../pages/search-productspage/Searchproductspage";
 import ErrorNotFound from "../components/ErrorNotFoundPage/ErrorNotFound";
 import ScrollToTop from "../components/ScrollToTop";
 import Delivery from "../components/Delivery/Delivery"
@@ -153,7 +154,7 @@ const AllRoutes = ({
         <Route
           path="/search-result"
           element={
-            <SearchResult
+            <Searchproductspage
               cartItems={cartItems}
               addToCart={addToCart}
             />
