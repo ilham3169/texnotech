@@ -165,21 +165,33 @@ const Singleproduct = ({ addToCart }) => {
                   </MDBRow>
 
                   <MDBRow>
+
                     <MDBRow>
                       <div className="text-start" style={{width: "fit-content", borderRadius: "5px", textDecoration:"underline"}}>                      
                         {
                           product.discount > 0 ? 
-                            <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>-{(product.price - product.discount).toFixed(2)} ₼</MDBCardText>                          : <></>
+                            <>
+                              {/* <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>
+                                {product.price} ₼
+                              </MDBCardTitle> */}
+                              <MDBCardText style={{color: "black", fontSize: "20px", fontWeight: "600"}}>
+                                {(product.price - product.discount).toFixed(2)} ₼
+                              </MDBCardText>
+                            </>
+                          : 
+                            <MDBCardTitle style={{fontSize: "30px", fontWeight: "500"}}>
+                              {product.price} ₼
+                            </MDBCardTitle>
                         }
                       </div>
                     </MDBRow>
 
                     <MDBRow>
                       <div className="text-start" style={{display: "flex", gap: "10px"}}>
-                        <MDBCardTitle style={{fontSize: "30px", fontWeight: "600", color: "red"}}>{product.discount} ₼</MDBCardTitle>
+                        <MDBCardTitle style={{fontSize: "50px", fontWeight: "600", color: "red"}}>{product.discount} ₼</MDBCardTitle>
                         {
                           product.discount > 0 ? 
-                          <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>{product.price} ₼</MDBCardTitle>
+                          <MDBCardText style={{color: "black", fontSize: "23px", fontWeight: "600", textDecoration: "line-through", textDecorationColor: "red", paddingTop: "20px"}}>-{(product.price).toFixed(2)} ₼</MDBCardText>
                           : <></>
                         }
                       </div>
