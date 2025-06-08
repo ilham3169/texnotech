@@ -97,32 +97,44 @@ const Catalogue = ({ onClose }) => {
               <h3>Məhsullar</h3>
               <div className="product-grid">
                 {products.map((product, index) => (
-                  <div key={product.id} className="product-card">
-                    <img src={product.image_link} alt={product.name} />
-                    <h4 style={{height: "40px"}}>{product.name}</h4>
-
-                    <h4 style={{
-                      fontSize: "16px",
-                      margin: "0",
-                      paddingLeft: "0px",
-                      color: "red"
+                  <Link
+                    to={{
+                      pathname: `/products/${product.name
+                        .toLowerCase()
+                        .replace(/ /g, "-")
+                        .replace(/[^a-z0-9-]/g, "")}-${product.id}`,
+                      
+                      state: { productId: product.id },
                     }}
-                    >
-                      {product.discount} AZN
-                      <span
-                        style={{
-                          textDecoration: "line-through",
-                          color: "grey",
-                          fontWeight: "500",
-                          fontSize: "18px",
-                          marginLeft: "5px",
-                        }}
+                    key={index}
+                  >
+                    <div key={product.id} className="product-card">
+                      <img src={product.image_link} alt={product.name} />
+                      <h4 style={{height: "40px"}}>{product.name}</h4>
+
+                      <h4 style={{
+                        fontSize: "16px",
+                        margin: "0",
+                        paddingLeft: "0px",
+                        color: "red"
+                      }}
                       >
-                        {product.price} AZN
-                      </span>
-                    </h4>
-                    {/* <p style={{fontSize: "17px", color: "red", fontWeight: "600"}}>{product.price} ₼</p> */}
-                  </div>
+                        {product.discount} AZN
+                        <span
+                          style={{
+                            textDecoration: "line-through",
+                            color: "grey",
+                            fontWeight: "500",
+                            fontSize: "18px",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          {product.price} AZN
+                        </span>
+                      </h4>
+                      {/* <p style={{fontSize: "17px", color: "red", fontWeight: "600"}}>{product.price} ₼</p> */}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
