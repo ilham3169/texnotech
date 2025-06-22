@@ -124,7 +124,7 @@ const Cart = ({
     event.target.value = event.target.value.replace(/[^a-zA-ZəüöğışçƏÜÖĞİŞÇ ]/g, "");
   };
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
     if (
       clientName.length > 0 &&
       clientSurname.length > 0 &&
@@ -216,7 +216,7 @@ const Cart = ({
             }
             return response.json();
           })
-          .then(() => {
+          .then(async () => {
             const orderId = extractedData.orderId;
 
             cartItems.forEach(item => {
@@ -245,6 +245,35 @@ const Cart = ({
 
             let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
             console.log(paymentUrl);
+
+            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                order_id: orderId,
+                name: orderDatax.name,
+                surname: orderDatax.surname,
+                phone_number: orderDatax.phone_number, 
+                total_price: totalPrice,
+                payment_method: orderDatax.payment_method,
+                delivery_method: orderDatax.delivery_method, 
+                month: orderDatax.month || null, 
+              })
+            })
+            .then(response => {
+              if (!response.ok) {
+                console.error(`Backend Telegram API error: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log("Telegram message sent:", data);
+            })
+            .catch(error => {
+              console.error("Error sending Telegram message:", error);
+            });
+
+
             window.location.href = paymentUrl;
           });
         })
@@ -335,7 +364,7 @@ const Cart = ({
               }
               return response.json();
             })
-            .then(() => {
+            .then(async () => {
               const orderId = extractedData.orderId;
 
               cartItems.forEach(item => {
@@ -364,6 +393,34 @@ const Cart = ({
 
               let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
               console.log(paymentUrl);
+
+              await fetch("http://127.0.0.1:8000/send-telegram-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  order_id: orderId,
+                  name: orderDatax.name,
+                  surname: orderDatax.surname,
+                  phone_number: orderDatax.phone_number, 
+                  total_price: totalPrice,
+                  payment_method: orderDatax.payment_method,
+                  delivery_method: orderDatax.delivery_method, 
+                  month: orderDatax.month || null, 
+                })
+              })
+              .then(response => {
+                if (!response.ok) {
+                  console.error(`Backend Telegram API error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log("Telegram message sent:", data);
+              })
+              .catch(error => {
+                console.error("Error sending Telegram message:", error);
+              });
+
               window.location.href = paymentUrl;
             });
           })
@@ -408,7 +465,7 @@ const Cart = ({
             body: JSON.stringify(orderData)
           })
           .then(response => response.json())
-          .then(data => {
+          .then(async data => {
             console.log("Order created successfully:", data);
             const orderId = data.id;
 
@@ -441,6 +498,34 @@ const Cart = ({
 
             const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən ${selectedPeriod} aylığa kreditlə almaq istəyirəm`).join('\n\n');
             const encodedMessage = encodeURIComponent(message);
+
+            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                order_id: orderId,
+                name: clientName,
+                surname: clientSurname,
+                phone_number: clientPhone, 
+                total_price: totalPrice,
+                payment_method: "Kredit",
+                delivery_method: "Courier", 
+                month: parseInt(selectedPeriod) || null, 
+               })
+              })
+              .then(response => {
+                if (!response.ok) {
+                  console.error(`Backend Telegram API error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log("Telegram message sent:", data);
+              })
+              .catch(error => {
+                console.error("Error sending Telegram message:", error);
+              });
+              
             window.location.href = `https://api.whatsapp.com/send?phone=994705854432&text=${encodedMessage}`;
           })
           .catch(error => {
@@ -482,7 +567,7 @@ const Cart = ({
             body: JSON.stringify(orderData)
           })
           .then(response => response.json())
-          .then(data => {
+          .then(async data => {
             console.log("Order created successfully:", data);
             const orderId = data.id;
 
@@ -509,6 +594,33 @@ const Cart = ({
                 console.error(`Error adding item to order:`, error);
               });
             });
+
+            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                order_id: orderId,
+                name: clientName,
+                surname: clientSurname,
+                phone_number: clientPhone, 
+                total_price: totalPrice,
+                payment_method: "Kredit",
+                delivery_method: "Point", 
+                month: parseInt(selectedPeriod) || null, 
+               })
+              })
+              .then(response => {
+                if (!response.ok) {
+                  console.error(`Backend Telegram API error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log("Telegram message sent:", data);
+              })
+              .catch(error => {
+                console.error("Error sending Telegram message:", error);
+              });
 
             setIsCheckoutModalOpen(false);
             setIsSuccessModalOpen(true);
