@@ -246,7 +246,7 @@ const Cart = ({
             let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
             console.log(paymentUrl);
 
-            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+            await fetch("https://back-texnotech.onrender.com/send-telegram-message", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -394,7 +394,7 @@ const Cart = ({
               let paymentUrl = `${extractedData.orderHppUrl}?id=${extractedData.orderId}&password=${extractedData.orderPassword}`;
               console.log(paymentUrl);
 
-              await fetch("http://127.0.0.1:8000/send-telegram-message", {
+              await fetch("https://back-texnotech.onrender.com/send-telegram-message", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -499,7 +499,7 @@ const Cart = ({
             const message = cartItems.map(item => `${item.name} məhsulunu ${item.discount} AZN qiymətə sizdən ${selectedPeriod} aylığa kreditlə almaq istəyirəm`).join('\n\n');
             const encodedMessage = encodeURIComponent(message);
 
-            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+            await fetch("https://back-texnotech.onrender.com/send-telegram-message", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -595,7 +595,7 @@ const Cart = ({
               });
             });
 
-            await fetch("http://127.0.0.1:8000/send-telegram-message", {
+            await fetch("https://back-texnotech.onrender.com/send-telegram-message", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
