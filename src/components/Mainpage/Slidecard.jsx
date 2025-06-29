@@ -21,7 +21,9 @@ const Slidecard = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch("https://back-texnotech.onrender.com/api/banners");
+        const response = await fetch(
+          "https://back-texnotech.onrender.com/api/banners"
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -69,13 +71,27 @@ const Slidecard = () => {
       <Slider {...settings}>
         {banners.map((value, index) => {
           return (
-            <div className="box d_flex top" key={index} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <div
+              className="box d_flex top"
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <img
                   src={value.cover}
                   alt="slider-image"
                   fetchpriority="high"
-                  style={{width: "1084px", height: "508px"}}
+                  style={{ width: "1084px", height: "508px" }}
                 />
               </div>
             </div>
