@@ -221,19 +221,20 @@ const Search = ({ cartItems }) => {
           </div>
 
           <div className="mobile-search-section">
-            <form onSubmit={handleSearchSubmit} className="mobile-search-box">
-              <i className="fa fa-search" onClick={handleSearch} />
-              <input
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onFocus={() => setShowDropdown(allProducts.length > 0)}
-                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                onClick={() => setShowCatalogue(true)}
-                type="text"
-                placeholder="Axtarış edin..."
-              />
-            </form>
-
+            <div className="mobile-search-box">
+              <form onSubmit={handleSearchSubmit}>
+                <i className="fa fa-search" onClick={handleSearch} />
+                <input
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  onFocus={() => setShowDropdown(allProducts.length > 0)}
+                  onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                  onClick={() => setShowCatalogue(true)}
+                  type="text"
+                  placeholder="Axtarış edin..."
+                />
+              </form>
+            </div>
             <div
               className="mobile-location"
               onClick={() => setShowCityModal(true)}
@@ -242,6 +243,15 @@ const Search = ({ cartItems }) => {
               <span>{selectedCity}</span>
             </div>
           </div>
+        </div>
+
+        {/* Fixed Mobile Location Button */}
+        <div
+          className="mobile-location-fixed"
+          onClick={() => setShowCityModal(true)}
+        >
+          <img src="/assets/geo.png" alt="geo icon" />
+          <span>{selectedCity}</span>
         </div>
 
         <div>

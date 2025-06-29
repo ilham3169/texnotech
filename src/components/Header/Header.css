@@ -355,6 +355,11 @@ button {
   height: 16px;
 }
 
+/* Fixed Mobile Location Button */
+.mobile-location-fixed {
+  display: none; /* Hidden by default on desktop */
+}
+
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
   /* Hide desktop header on mobile */
@@ -365,6 +370,63 @@ button {
   /* Show mobile header on mobile */
   .mobile-header {
     display: block;
+  }
+
+  /* Show and position the fixed mobile location button */
+  .mobile-location-fixed {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 12px;
+    color: #333;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid #e0e0e0;
+  }
+
+  .mobile-location-fixed:hover {
+    background: #e9ecef;
+  }
+
+  .mobile-location-fixed img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Make mobile-location fixed on mobile devices */
+  .mobile-location {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+  }
+
+  .mobile-location:hover {
+    background: #e9ecef;
+  }
+
+  /* Remove mobile-location from mobile search section flow */
+  .mobile-search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: white;
+  }
+
+  .mobile-search-section .mobile-location {
+    display: none; /* Hide from normal flow since it's now fixed */
   }
 
   /* Adjust search dropdown for mobile */
@@ -466,8 +528,9 @@ button {
     gap: 8px;
   }
 
+  /* Remove align-self since mobile-location is now fixed positioned */
   .mobile-location {
-    align-self: flex-start;
+    /* Fixed positioning already applied in 768px media query */
   }
 
   .search-dropdown {
