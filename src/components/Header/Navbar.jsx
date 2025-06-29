@@ -36,7 +36,7 @@ const Navbar = () => {
               aria-label="Home"
               className="link-hover"
               to="/"
-              style={{ textDecoration: "none", color: "black", fontSize: 25}}
+              style={{ textDecoration: "none", color: "black", fontSize: 25 }}
             >
               Əsas Səhifə
             </Link>
@@ -49,14 +49,14 @@ const Navbar = () => {
                 pathname: `/all-products/-1`,
                 state: { categoryId: -1 },
               }}
-              style={{ textDecoration: "none", color: "black" , fontSize: 25}}
+              style={{ textDecoration: "none", color: "black", fontSize: 25 }}
             >
               Bütün Məhsullar
             </Link>
           </li>
         </ul>
       </div>
-      <header className={`header-container ${showNavbar ? "show" : "hide"}`}>
+      {/* <header className={`header-container ${showNavbar ? "show" : "hide"}`}>
         <div className="menu-items">
           <div className="categories"></div>
         </div>
@@ -71,7 +71,7 @@ const Navbar = () => {
             <i className="fa fa-bars open"></i>
           )}
         </button>
-      </header>
+      </header> */}
     </>
   );
 };
