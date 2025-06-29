@@ -9,8 +9,9 @@
 body {
   background-color: #ffffff;
   font-family: "Poppins", sans-serif;
-  max-width: 80 rem;
+  max-width: 80rem;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .background {
@@ -484,7 +485,7 @@ li {
   }
 
   .container {
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
 
   .c_flex {
@@ -511,10 +512,10 @@ li {
     padding: 1rem;
   }
   .footer-container {
-    width: 103vw;
+    width: 100%;
   }
   .head {
-    width: 103vw !important;
+    width: 100% !important;
   }
 
   .appstore {
@@ -527,7 +528,7 @@ li {
 
   .search .active {
     z-index: 999;
-    width: 103vw;
+    width: 100%;
   }
 
   .active {
@@ -604,6 +605,21 @@ li {
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: baseline;
+  }
+}
+
+@media only screen and (max-width: 655px) {
+  .container {
+    margin: 0 0.25rem;
+  }
+
+  .footer-container {
+    width: 100%;
+    padding: 1rem 0.5rem;
+  }
+
+  .head {
+    width: 100% !important;
   }
 }
 

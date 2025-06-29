@@ -161,7 +161,7 @@ header ul li a:hover {
   position: fixed;
   top: -1rem;
   z-index: 999;
-  width: 100vw;
+  width: 100%;
   background-color: #fff;
   box-shadow: -1px 11px 24px -11px rgba(0, 0, 0, 0.2);
   transition: 0.5s;

@@ -265,9 +265,9 @@ const Singleproduct = ({ addToCart }) => {
                   >
                     <div
                       className="d-flex align-items-center"
-                      style={{ marginLeft: "-1.5%", width: "120%" }}
+                      style={{ width: "100%" }}
                     >
-                      <MDBBtnGroup style={{ width: "120%", gap: "5px" }}>
+                      <MDBBtnGroup style={{ width: "100%", gap: "5px" }}>
                         <button
                           className="btn-addToCart"
                           style={{
