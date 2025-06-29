@@ -18,7 +18,7 @@ const Flashcard = ({ addToCart }) => {
     const fetchProducts = async () => {
       try {
         const cachedData = localStorage.getItem("newArrivals");
-        if (cachedData.length > 2) {
+        if (cachedData && cachedData.length > 2) {
           setProductItems(JSON.parse(cachedData));
           setLoading(false);
           return;
@@ -165,7 +165,9 @@ const Flashcard = ({ addToCart }) => {
   }
 
   return (
-    <section className="newarrivals background">
+    <>
+    {filteredProducts.length > 0 ? (
+      <section className="newarrivals background">
       <div className="container">
         <div className="heading">
           <img
@@ -175,23 +177,15 @@ const Flashcard = ({ addToCart }) => {
           <h2>Yeni Gələn Məhsullar</h2>
         </div>
         <div className="content product-new-arrival">
-          {filteredProducts.length > 0 ? (
-            filteredProducts
-          ) : (
-            <div
-              style={{
-                gridColumn: "1 / -1",
-                textAlign: "center",
-                padding: "2rem",
-                color: "#666",
-              }}
-            >
-              Heç bir yeni məhsul tapılmadı
-            </div>
-          )}
+          {filteredProducts}
         </div>
       </div>
     </section>
+    ) : (
+      <></>
+    )}
+    </>
+    
   );
 };
 
