@@ -97,6 +97,11 @@ const Search = ({ cartItems }) => {
       .then((res) => res.json())
       .then((data) => setSuccessfulOrders(data.count))
       .catch((err) => console.error("Error fetching successful orders:", err));
+
+    const cacheSelectedCity = localStorage.getItem("selectedCity");
+    if (cacheSelectedCity) {
+      setSelectedCity(cacheSelectedCity);
+    }
   }, []);
 
   useEffect(() => {
@@ -328,6 +333,7 @@ const Search = ({ cartItems }) => {
                   onClick={() => {
                     setSelectedCity(city);
                     setShowCityModal(false);
+                    localStorage.setItem('selectedCity', city);
                   }}
                   style={{
                     padding: "6px 10px",
