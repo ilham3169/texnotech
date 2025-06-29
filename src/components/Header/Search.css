@@ -1,15 +1,37 @@
 /* Hide geo icon and Ünvan on mobile */
 @media screen and (max-width: 768px) {
-    .geo-location-container {
-      display: none !important;
-    }
-
-    .success-order{
-      display: none;
-    }
-
-    .hours-count{
-      display: none;
-    }
+  .geo-location-container {
+    display: none !important;
   }
-  
+
+  .success-order {
+    display: none;
+  }
+
+  .hours-count {
+    display: none;
+  }
+
+  /* Ensure mobile search box is properly styled */
+  .mobile-search-box {
+    min-height: 44px; /* Minimum touch target size */
+  }
+
+  /* Improve mobile search dropdown positioning */
+  .search-dropdown {
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+  .mobile-search-box {
+    height: 48px; /* Larger touch target for very small screens */
+  }
+
+  .mobile-search-box input {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
