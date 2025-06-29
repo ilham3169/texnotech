@@ -79,7 +79,7 @@
 .btn-addToCart {
   background: red;
   color: white;
-  border: 1px solid transparent,
+  border: 1px solid transparent;
 }
 
 .btn-addToCart:hover {
@@ -92,7 +92,6 @@
   background: transparent;
   border: 1px solid blue;
   color: blue;
-
 }
 
 .btn-buyOneClick:hover {
@@ -117,7 +116,6 @@
   background: transparent;
   border: 1px solid black;
   color: black;
-
 }
 
 .btn-addToCartB:hover {

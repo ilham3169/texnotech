@@ -16,14 +16,13 @@ const Homepage = ({ productItems, addToCart, cartItems, shopItems }) => {
     <>
       <Header cartItems={cartItems} />
       <Mainpage />
-      {/* <ExtraSlideData /> */}
       <Flashdeals productItems={productItems} addToCart={addToCart} />
-      <Newarrivals addToCart={addToCart}/>
+      {/* <TopCategories /> */}
+      <Newarrivals addToCart={addToCart} />
       <Features />
       <Footer />
     </>
   );
 };
-
 
 export default Homepage;
