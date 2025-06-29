@@ -18,13 +18,15 @@ const Flashcard = ({ addToCart }) => {
     const fetchProducts = async () => {
       try {
         const cachedData = localStorage.getItem("newArrivals");
-        if (cachedData) {
+        if (cachedData.length > 2) {
           setProductItems(JSON.parse(cachedData));
           setLoading(false);
           return;
         }
 
-        const response = await fetch("https://back-texnotech.onrender.com/products/new-arrivals");
+        const response = await fetch(
+          "https://back-texnotech.onrender.com/products/new-arrivals"
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -45,71 +47,120 @@ const Flashcard = ({ addToCart }) => {
     return productItems
       .filter((product) => product.is_new && product.is_active)
       .map((product) => (
-        <div key={product.id}>
-          <Link to={{ pathname: productUrl(product), state: { productId: product.id } }}>
-            <div className="box">
-              <div className="img">
-                <img src={product.image_link} alt={product.name} loading="lazy" />
-              </div>
-              <div className="discount-badge">
-                <span className="discount-text">
-                  -{Math.round(((product.price - product.discount) / product.price) * 100)}%
-                </span>
-              </div>
-              <h4 style={{ textAlign: "center", marginTop: "10px" }}>
-                {product.name}
-              </h4>
+        <div key={product.id} className="product-card">
+          <div className="box">
+            <div className="img-container">
+              <Link
+                to={{
+                  pathname: productUrl(product),
+                  state: { productId: product.id },
+                }}
+              >
+                <div className="img">
+                  <img
+                    src={product.image_link}
+                    alt={product.name}
+                    loading="lazy"
+                  />
+                </div>
+              </Link>
+              {product.discount > 0 && (
+                <div className="discount-badge">
+                  <span className="discount-text">
+                    -
+                    {Math.round(
+                      ((product.price - product.discount) / product.price) * 100
+                    )}
+                    %
+                  </span>
+                </div>
+              )}
             </div>
-          </Link>
-          <div className="price price-container">
-            <span style={{ display: "block", textAlign: "center", fontWeight: "600" }}>
-              {product.discount} AZN
-            </span>
-            <span
-              style={{
-                display: "block",
-                textAlign: "center",
-                textDecoration: "line-through",
-                color: "grey",
-                paddingLeft: "7%"
-              }}
-            >
-              {product.price} AZN
-            </span>
 
-            
-            <button
-              aria-label="Add to cart"
-              onClick={() => addToCart(product)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transform: "scale(1.2)",
-                background: "transparent",
-                cursor: "pointer",
-                paddingLeft: "5 %"
-              }}
-            >
-              <i className="fa fa-cart-plus" style={{ color: "red", padding: "50% 20% 40% 100%" }}></i>
-            </button>
+            <div className="product-info">
+              <Link
+                to={{
+                  pathname: productUrl(product),
+                  state: { productId: product.id },
+                }}
+              >
+                <h4 className="product-title">
+                  {product.name.length > 30
+                    ? product.name.substring(0, 30) + "..."
+                    : product.name}
+                </h4>
+              </Link>
+
+              <div className="price-container">
+                <span className="current-price">{product.discount} AZN</span>
+                {product.discount > 0 && (
+                  <span className="original-price">{product.price} AZN</span>
+                )}
+
+                <button
+                  aria-label="Add to cart"
+                  onClick={() => addToCart(product)}
+                  className="add-to-cart-btn"
+                >
+                  <i className="fa fa-cart-plus"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       ));
   }, [productItems, addToCart]);
 
-  if (loading || error) {
+  if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "10vh",
-        }}
-      >
-        {loading ? <ClipLoader color="#3498db" size={50} /> : <div>Error: {error.message}</div>}
-      </div>
+      <section className="newarrivals background">
+        <div className="container">
+          <div className="heading">
+            <img
+              src="https://img.icons8.com/glyph-neue/64/26e07f/new.png"
+              alt="new-arrivals-logo"
+            />
+            <h2>Yeni Gələn Məhsullar</h2>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "200px",
+            }}
+          >
+            <ClipLoader color="#3498db" size={50} />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="newarrivals background">
+        <div className="container">
+          <div className="heading">
+            <img
+              src="https://img.icons8.com/glyph-neue/64/26e07f/new.png"
+              alt="new-arrivals-logo"
+            />
+            <h2>Yeni Gələn Məhsullar</h2>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "200px",
+              color: "#e94560",
+            }}
+          >
+            Error: {error.message}
+          </div>
+        </div>
+      </section>
     );
   }
 
@@ -123,7 +174,22 @@ const Flashcard = ({ addToCart }) => {
           />
           <h2>Yeni Gələn Məhsullar</h2>
         </div>
-        <div className="content product-new-arrival">{filteredProducts}</div>
+        <div className="content product-new-arrival">
+          {filteredProducts.length > 0 ? (
+            filteredProducts
+          ) : (
+            <div
+              style={{
+                gridColumn: "1 / -1",
+                textAlign: "center",
+                padding: "2rem",
+                color: "#666",
+              }}
+            >
+              Heç bir yeni məhsul tapılmadı
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
