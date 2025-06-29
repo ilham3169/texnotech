@@ -40,23 +40,23 @@ const Allproducts = ({ addToCart }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       if (Array.isArray(data)) {
-        products = data.map((product) => ({
+        setAllProducts(data.map((product) => ({
           name: product.name,
           img: product.image_link,
           price: product.price,
           id: product.id,
           discount: product.discount,
           is_active: product.is_active,
-        }));
+        })));
       } else if (data.results && Array.isArray(data.results)) {
-        products = data.results.map((product) => ({
+        setAllProducts(data.results.map((product) => ({
           name: product.name,
           img: product.image_link,
           price: product.price,
           id: product.id,
           discount: product.discount,
           is_active: product.is_active,
-        }));
+        })));
       }
       setAllProducts(products);
     } catch (error) {
