@@ -119,7 +119,8 @@ const Singleproduct = ({ addToCart }) => {
                 className="text-black"
                 style={{ border: "0", borderRadius: "12px" }}
               >
-                <MDBRow>
+                {/* Desktop Layout - Vertical Thumbnails */}
+                <MDBRow className="d-none d-md-flex">
                   <MDBCol md="2" className="d-flex align-items-center">
                     <MDBListGroup light style={{}}>
                       {productImages.length > 0 &&
@@ -152,6 +153,61 @@ const Singleproduct = ({ addToCart }) => {
                     </Zoom>
                   </MDBCol>
                 </MDBRow>
+
+                {/* Mobile Layout - Horizontal Thumbnails */}
+                <div className="d-md-none">
+                  <MDBRow>
+                    <MDBCol>
+                      <Zoom>
+                        <MDBCardImage
+                          src={mainImage}
+                          position="top"
+                          alt="Product Image"
+                          style={{ width: "100%", height: "auto" }}
+                        />
+                      </Zoom>
+                    </MDBCol>
+                  </MDBRow>
+
+                  <MDBRow className="mt-3">
+                    <MDBCol>
+                      <div className="d-flex justify-content-center">
+                        <div
+                          className="d-flex flex-row gap-2 overflow-auto mobile-image-gallery"
+                          style={{ maxWidth: "100%" }}
+                        >
+                          {productImages.length > 0 &&
+                            productImages.map((image, index) => (
+                              <div
+                                key={index}
+                                onClick={() =>
+                                  handleImageClick(image.image_link)
+                                }
+                                className="mobile-thumbnail"
+                                style={{
+                                  cursor: "pointer",
+                                  border: "1px solid #ddd",
+                                  borderRadius: "8px",
+                                  padding: "4px",
+                                  backgroundColor: "white",
+                                }}
+                              >
+                                <MDBCardImage
+                                  src={image.image_link}
+                                  alt={`Product Image ${index + 1}`}
+                                  style={{
+                                    width: "100%",
+                                    height: "auto",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </MDBCol>
+                  </MDBRow>
+                </div>
               </MDBCard>
             </MDBCol>
 
@@ -161,7 +217,6 @@ const Singleproduct = ({ addToCart }) => {
                 style={{ border: "0", borderRadius: "12px" }}
               >
                 <MDBCardBody>
-
                   <MDBRow>
                     <div className="text-start">
                       <MDBCardTitle
@@ -470,7 +525,13 @@ const Singleproduct = ({ addToCart }) => {
                         </MDBCardSubTitle>
                       </MDBRow>
 
-                      <MDBRow style={{ marginLeft: "0", minWidth: "100%", marginTop: "1%"}}>
+                      <MDBRow
+                        style={{
+                          marginLeft: "0",
+                          minWidth: "100%",
+                          marginTop: "1%",
+                        }}
+                      >
                         <button
                           style={{
                             width: "25%",
@@ -492,89 +553,6 @@ const Singleproduct = ({ addToCart }) => {
                       </MDBRow>
                     </div>
                   </MDBRow>
-
-
-                  {/* <MDBRow>
-                      <div className="text-start">
-                        <MDBRow>
-                          <MDBCardSubTitle style={{fontWeight: "500"}}>Birgə satılanlar:</MDBCardSubTitle>
-                        </MDBRow>
-                        <MDBRow className="mt-2">
-                          <MDBCol>
-                            <MDBCard style={{ width: '100%', height: "100%"}}>
-                              <MDBRow className='g-3'>
-                                <MDBCol md='5'>
-                                  <MDBCardImage style={{padding: "5px"}} height="100%" width="100%" src='https://kontakt.az/media/catalog/product/cache/ec3348cd707f11bd7a951e83328510dc/t/m/tm-dg-acs-1109-ap-0004_111-d240ae1c.webp' alt='...' />
-                                </MDBCol>
-                                <MDBCol md='7'>
-                                  <MDBCardBody>
-                                    <MDBRow>
-                                      <MDBCardSubTitle style={{fontSize: "17px", fontWeight: "300"}}>Apple 20W USB-C Adapter</MDBCardSubTitle>
-                                      <MDBCardText style={{fontSize: "19px", fontWeight: "500", 
-                                        color: "black"}}>69,99 ₼</MDBCardText>
-                                    </MDBRow>
-                                    <MDBRow style={{marginTop: "40%"}}>
-                                      <button
-                                        className="btn-addToCartB"
-                                        style={{
-                                          width: "30%",
-                                          height: "100%",
-                                          borderRadius: "4px",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          padding: "5%",
-                                          cursor: "pointer", 
-                                        }}
-                                        type="button"
-                                      >
-                                        <MDBIcon outline fas icon="shopping-cart" />
-                                      </button>
-                                    </MDBRow>
-                                  </MDBCardBody>
-                                </MDBCol>
-                              </MDBRow>
-                            </MDBCard>
-                          </MDBCol>
-                          <MDBCol >
-                            <MDBCard style={{ width: '100%', height: "100%"}}>
-                              <MDBRow className='g-3'>
-                                <MDBCol md='5'>
-                                  <MDBCardImage style={{padding: "5px"}} height="100%" width="100%" src='https://kontakt.az/media/catalog/product/cache/ec3348cd707f11bd7a951e83328510dc/t/m/tm-dg-acs-1109-tw-0680_1-85520e62.webp' alt='...' />
-                                </MDBCol>
-                                <MDBCol md='7'>
-                                  <MDBCardBody>
-                                    <MDBRow>
-                                      <MDBCardSubTitle style={{fontSize: "17px", fontWeight: "300"}}>Qulaqlıq Apple AirPods 4</MDBCardSubTitle>
-                                      <MDBCardText style={{fontSize: "19px", fontWeight: "500", 
-                                        color: "black"}}>349,99 ₼</MDBCardText>
-                                    </MDBRow>
-                                    <MDBRow style={{marginTop: "40%"}}>
-                                      <button
-                                        className="btn-addToCartB"
-                                        style={{
-                                          width: "30%",
-                                          height: "100%",
-                                          borderRadius: "4px",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          padding: "5%",
-                                          cursor: "pointer", // Makes the button more interactive
-                                        }}
-                                        type="button" // Ensures it doesn't submit a form by default
-                                      >
-                                        <MDBIcon outline fas icon="shopping-cart" />
-                                      </button> 
-                                    </MDBRow>
-                                  </MDBCardBody>
-                                </MDBCol>
-                              </MDBRow>
-                            </MDBCard>
-                          </MDBCol>
-                        </MDBRow>
-                      </div>
-                    </MDBRow> */}
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
