@@ -161,6 +161,7 @@ const Singleproduct = ({ addToCart }) => {
                 style={{ border: "0", borderRadius: "12px" }}
               >
                 <MDBCardBody>
+
                   <MDBRow>
                     <div className="text-start">
                       <MDBCardTitle
@@ -170,6 +171,7 @@ const Singleproduct = ({ addToCart }) => {
                       </MDBCardTitle>
                     </div>
                   </MDBRow>
+
                   <MDBRow>
                     <div className="text-end">
                       <MDBCardSubTitle
@@ -183,6 +185,7 @@ const Singleproduct = ({ addToCart }) => {
                       </MDBCardSubTitle>
                     </div>
                   </MDBRow>
+
                   <MDBRow>
                     <hr />
                   </MDBRow>
@@ -199,9 +202,6 @@ const Singleproduct = ({ addToCart }) => {
                       >
                         {product.discount > 0 ? (
                           <>
-                            {/* <MDBCardTitle style={{fontSize: "30px", fontWeight: "500", textDecoration: "line-through", color: "grey"}}>
-                                {product.price} ₼
-                              </MDBCardTitle> */}
                             <MDBCardText
                               style={{
                                 color: "black",
@@ -284,22 +284,6 @@ const Singleproduct = ({ addToCart }) => {
                         >
                           Səbətə at
                         </button>
-
-                        {/* <button
-                          className="btn-buyOneClick"
-                          style={{
-                            width: "40%",
-                            minHeight: "100%",
-                            borderRadius: "5px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer", // Makes the button more interactive
-                          }}
-                          type="button" // Ensures it doesn't submit a form by default
-                        >
-                          Bir kliklə al
-                        </button> */}
 
                         <button
                           className="btn-likeProduct"
@@ -485,7 +469,8 @@ const Singleproduct = ({ addToCart }) => {
                           Əlavə xidmətlər:
                         </MDBCardSubTitle>
                       </MDBRow>
-                      <MDBRow style={{ marginLeft: "0", minWidth: "125%" }}>
+
+                      <MDBRow style={{ marginLeft: "0", minWidth: "100%", marginTop: "1%"}}>
                         <button
                           style={{
                             width: "25%",
@@ -508,9 +493,6 @@ const Singleproduct = ({ addToCart }) => {
                     </div>
                   </MDBRow>
 
-                  {/* <MDBRow>
-                      <hr style={{margin: "1.5% 0"}}/>
-                    </MDBRow> */}
 
                   {/* <MDBRow>
                       <div className="text-start">
