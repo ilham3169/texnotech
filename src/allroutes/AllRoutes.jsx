@@ -5,6 +5,7 @@ import Homepage from "../pages/homepage/Homepage";
 import Loginpage from "../pages/loginpage/Loginpage";
 import Registrationpage from "../pages/registrationpage/Registrationpage";
 import Allproductspage from "../pages/all-productspage/Allproductspage";
+import Categoryresultspage from "../pages/category-resultspage/Categoryresultspage";
 import Singleproductpage from "../pages/product-details/Singleproductpage";
 import Searchproductspage from "../pages/search-productspage/Searchproductspage";
 import ErrorNotFound from "../components/ErrorNotFoundPage/ErrorNotFound";
@@ -76,6 +77,18 @@ const AllRoutes = ({
             />
           }
         />
+
+        <Route
+          path="/category-results/:categoryId"
+          element={
+            <Categoryresultspage
+              cartItems={cartItems}
+              allProductsData={allProductsData}
+              addToCart={addToCart}
+            />
+          }
+        />
+
         <Route
           path="/products/:productId"
           element={
