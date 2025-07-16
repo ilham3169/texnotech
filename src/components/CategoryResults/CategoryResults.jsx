@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
-import "./CategoryResults.css"; // Reuse SearchResult.css for consistent styling
-import Head from "../Header/Head";
-import Footer from "../Footer/Footer";
+import "./CategoryResults.css";
+
 
 const CategoryResults = ({ addToCart }) => {
+  
   const { categoryId } = useParams();
   const domain = "https://back-texnotech.onrender.com/";
 
   const [allProducts, setAllProducts] = useState([]);
   const [brandNames, setBrandNames] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [pageSize] = useState(5); // Load 5 products per page
+  const [pageSize] = useState(10); // Load 10 products per page
 
   // Filter states
   const [priceRange, setPriceRange] = useState({ min: 0, max: 20000 });
@@ -22,73 +22,76 @@ const CategoryResults = ({ addToCart }) => {
   const [brandFilter, setBrandFilter] = useState(null);
   const [priceFilter, setPriceFilter] = useState(null);
 
-  const observer = useRef();
+  
+  const fetchProducts = async (page) => {
+    setLoading(true);
+    let link = `${domain}products?page=${page}&page_size=${pageSize}&category_id=${categoryId}`;
 
-  const fetchProducts = useCallback(
-    async (page) => {
-      if (!hasMore || loading) return;
-      setLoading(true);
-      let link = `${domain}products?page=${page}&page_size=${pageSize}&category_id=${categoryId}`;
+    if (brandFilter && brandFilter !== "popular") link += `&brand_id=${brandFilter}`;
+    if (availabilityFilter) link += `&available=${availabilityFilter}`;
+    if (discountFilter) link += `&discount=${discountFilter}`;
+    if (priceFilter) link += `&max_price=${priceFilter}`;
 
-      if (brandFilter && brandFilter !== "popular") link += `&brand_id=${brandFilter}`;
-      if (availabilityFilter) link += `&available=${availabilityFilter}`;
-      if (discountFilter) link += `&discount=${discountFilter}`;
-      if (priceFilter) link += `&max_price=${priceFilter}`;
+    try {
+      console.log(`Trying to fetch for ${link}`);
+      const response = await fetch(link);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
 
-      try {
-        console.log(`Trying to fetch for ${link}`);
-        const response = await fetch(link);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
+      const products = Array.isArray(data)
+        ? data.map((product) => ({
+            name: product.name,
+            img: product.image_link,
+            price: product.price,
+            id: product.id,
+            discount: product.discount,
+            is_active: product.is_active,
+          }))
+        : [];
 
-        const products = Array.isArray(data)
-          ? data.map((product) => ({
-              name: product.name,
-              img: product.image_link,
-              price: product.price,
-              id: product.id,
-              discount: product.discount,
-              is_active: product.is_active,
-            }))
-          : [];
+      setAllProducts((prev) => {
+        const existingIds = new Set(prev.map((p) => p.id));
+        const newProducts = products.filter((p) => !existingIds.has(p.id));
+        return [...prev, ...newProducts];
+      });
+      setAllProducts(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-        setAllProducts((prev) => {
-          const existingIds = new Set(prev.map((p) => p.id));
-          const newProducts = products.filter((p) => !existingIds.has(p.id));
-          return [...prev, ...newProducts];
-        });
-        if (products.length < pageSize && page > 1) {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setHasMore(false);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [categoryId, brandFilter, priceFilter, availabilityFilter, discountFilter, hasMore, pageSize]
-  );
+  // Fetch total number of products for pagination
+  const fetchTotalProducts = async () => {
+    let countUrl = `${domain}products/num-products`;
+
+    try {
+      const response = await fetch(countUrl);
+      if (!response.ok) throw new Error("Failed to fetch product count");
+      const count = await response.json();
+      setTotalProducts(Number(count));
+    } catch (error) {
+      console.error("Error fetching product count:", error);
+    }
+  };
 
   // Filter handlers
   const handleAvailabilityFilterChange = (e) => {
     setAvailabilityFilter(e.target.checked);
     setCurrentPage(1);
-    setHasMore(true);
     setAllProducts([]);
   };
 
   const handleDiscountFilterChange = (e) => {
     setDiscountFilter(e.target.checked);
     setCurrentPage(1);
-    setHasMore(true);
     setAllProducts([]);
   };
 
   const handleBrandFilterChange = (e) => {
     setBrandFilter(e.target.value);
     setCurrentPage(1);
-    setHasMore(true);
     setAllProducts([]);
   };
 
@@ -97,36 +100,24 @@ const CategoryResults = ({ addToCart }) => {
     setPriceFilter(newValue);
     setPriceRange((prev) => ({ ...prev, max: newValue }));
     setCurrentPage(1);
-    setHasMore(true);
     setAllProducts([]);
   };
-
-  const lastProductRef = useCallback(
-    (node) => {
-      if (loading || !hasMore) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            setCurrentPage((prev) => prev + 1);
-          }
-        },
-        { threshold: 1.0 }
-      );
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
 
   useEffect(() => {
     setAllProducts([]);
     setCurrentPage(1);
-    setHasMore(true);
   }, [categoryId]);
 
   useEffect(() => {
     fetchProducts(currentPage);
-  }, [currentPage, fetchProducts]);
+    fetchTotalProducts()
+  }, [
+    currentPage,
+    brandFilter,
+    priceFilter,
+    availabilityFilter,
+    discountFilter
+  ]);
 
   useEffect(() => {
     fetch(`${domain}brands`)
@@ -210,9 +201,25 @@ const CategoryResults = ({ addToCart }) => {
 
   const activeProducts = allProducts.filter((product) => product.is_active === true);
 
+  const totalPages =
+    totalProducts > 0 ? Math.ceil(totalProducts / pageSize) : 0;
+
+  const windowSize = 5;
+  const halfWindow = Math.floor(windowSize / 2);
+
+  let startPage = Math.max(1, currentPage - halfWindow);
+  let endPage = Math.min(totalPages, startPage + windowSize - 1);
+
+  if (endPage - startPage < windowSize - 1) {
+    startPage = Math.max(1, endPage - windowSize + 1);
+  }
+  const visiblePages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    visiblePages.push(i);
+  }
+
   return (
     <>
-      <Head />
       <div className="filter-box">
         <select className="filter-select" onChange={handleBrandFilterChange}>
           <option value="popular">Brend Seçin</option>
@@ -270,22 +277,39 @@ const CategoryResults = ({ addToCart }) => {
       )}
 
       <div className="custom-grid">
-        {activeProducts.map((product, index) => {
-          if (index === activeProducts.length - 1) {
-            return <ProductItem key={product.id} product={product} ref={lastProductRef} />;
-          }
-          return <ProductItem key={product.id} product={product} />;
-        })}
+        {activeProducts.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
       </div>
 
-      {loading && allProducts.length > 0 && (
-        <div style={{ textAlign: "center", margin: "20px 0" }}>Digər məhsullar yüklənir...</div>
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div
+          className="pagination-controls"
+          style={{ textAlign: "center", margin: "30px 0" }}
+        >
+          {visiblePages.map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={currentPage === page ? "active-page-btn" : "page-btn"}
+              style={{
+                margin: "0 5px",
+                padding: "8px 16px",
+                borderRadius: "5px",
+                border:
+                  currentPage === page ? "2px solid #5f4eff" : "1px solid #ccc",
+                background: currentPage === page ? "#5f4eff" : "#fff",
+                color: currentPage === page ? "#fff" : "#333",
+                cursor: "pointer",
+                fontWeight: currentPage === page ? "bold" : "normal",
+              }}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
       )}
-
-      {!hasMore && allProducts.length > 0 && (
-        <div style={{ textAlign: "center", margin: "20px 0" }}>Bütün məhsullar yükləndi</div>
-      )}
-      <Footer />
     </>
   );
 };

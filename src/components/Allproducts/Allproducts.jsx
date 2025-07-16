@@ -69,8 +69,7 @@ const Allproducts = ({ addToCart }) => {
   // Fetch total number of products for pagination
   const fetchTotalProducts = async () => {
     let countUrl = `${domain}products/num-products`;
-    // If your backend supports filtering on this endpoint, add filters as query params
-    // Example: if (categoryFilter) countUrl += `?category_id=${categoryFilter}`;
+
     try {
       const response = await fetch(countUrl);
       if (!response.ok) throw new Error("Failed to fetch product count");
